@@ -2,8 +2,8 @@
 
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/error/failure.dart';
-import 'package:asset_management_api/features/users/datasource/model/user_model.dart';
-import 'package:asset_management_api/features/users/datasource/source/user_local_data_source.dart';
+import 'package:asset_management_api/features/users/data/model/user_model.dart';
+import 'package:asset_management_api/features/users/data/source/user_local_data_source.dart';
 import 'package:asset_management_api/features/users/domain/entities/user.dart';
 import 'package:asset_management_api/features/users/domain/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';

@@ -1,10 +1,10 @@
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, avoid_dynamic_calls
 
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/helpers/hash_password.dart';
-import 'package:asset_management_api/features/users/datasource/model/user_model.dart';
-import 'package:asset_management_api/features/users/datasource/source/user_local_data_source.dart';
+import 'package:asset_management_api/features/users/data/model/user_model.dart';
+import 'package:asset_management_api/features/users/data/source/user_local_data_source.dart';
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   UserLocalDataSourceImpl(this._database);

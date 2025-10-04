@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:asset_management_api/features/users/datasource/model/user_model.dart';
+import 'package:asset_management_api/features/users/data/model/user_model.dart';
 
 abstract class UserLocalDataSource {
   Future<UserModel> createUser(UserModel params);

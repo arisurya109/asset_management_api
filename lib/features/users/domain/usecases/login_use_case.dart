@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/users/domain/entities/user.dart';
 import 'package:asset_management_api/features/users/domain/repositories/user_repository.dart';
@@ -8,13 +10,7 @@ class LoginUseCase {
 
   final UserRepository _repository;
 
-  Future<Either<Failure, User>> call({
-    required String username,
-    required String password,
-  }) async {
-    return _repository.login(
-      username: username,
-      password: password,
-    );
+  Future<Either<Failure, User>> call(String username, String password) async {
+    return _repository.login(username, password);
   }
 }

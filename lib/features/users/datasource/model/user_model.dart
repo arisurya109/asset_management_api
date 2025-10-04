@@ -1,9 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:asset_management_api/features/users/domain/entities/user.dart';
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
-class User extends Equatable {
+class UserModel extends Equatable {
   int? id;
   String? username;
   String? password;
@@ -13,7 +14,7 @@ class User extends Equatable {
   String? createdBy;
   List<dynamic>? modules;
 
-  User({
+  UserModel({
     this.id,
     this.username,
     this.password,
@@ -38,32 +39,42 @@ class User extends Equatable {
     ];
   }
 
-  Map<String, dynamic> toResponseLogin() {
-    return <String, dynamic>{
-      'id': id,
-      'username': username,
-      'name': name,
-      'modules': modules,
-    };
-  }
-
-  Map<String, dynamic> toResponse() {
-    return {
-      'id': id,
-      'username': username,
-      'name': name,
-      'is_active': isActive,
-      'created_at': createdAt?.toIso8601String(),
-    };
-  }
-
-  factory User.fromRequest(Map<String, dynamic> map) {
+  User toEntity() {
     return User(
+      id: id,
+      username: username,
+      name: name,
+      password: password,
+      isActive: isActive,
+      createdBy: createdBy,
+      modules: modules,
+      createdAt: createdAt,
+    );
+  }
+
+  factory UserModel.fromEntity(User params) {
+    return UserModel(
+      id: params.id,
+      username: params.username,
+      password: params.password,
+      name: params.name,
+      isActive: params.isActive,
+      createdAt: params.createdAt,
+      createdBy: params.createdBy,
+      modules: params.modules,
+    );
+  }
+
+  factory UserModel.fromDatabase(Map<String, dynamic> map) {
+    return UserModel(
       id: map['id'] != null ? map['id'] as int : null,
       username: map['username'] != null ? map['username'] as String : null,
       password: map['password'] != null ? map['password'] as String : null,
       name: map['name'] != null ? map['name'] as String : null,
+      isActive: map['is_active'] != null ? map['is_active'] as int : null,
       createdBy: map['created_by'] != null ? map['created_by'] as String : null,
+      createdAt:
+          map['created_at'] != null ? map['created_at'] as DateTime : null,
       modules: map['modules'] != null ? map['modules'] as List<dynamic> : null,
     );
   }

@@ -4,12 +4,16 @@ import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/users/domain/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class LogoutUseCase {
-  LogoutUseCase(this._repository);
+class ChangePasswordUseCase {
+  ChangePasswordUseCase(this._repository);
 
   final UserRepository _repository;
 
-  Future<Either<Failure, void>> call() async {
-    return _repository.logout();
+  Future<Either<Failure, String>> call(
+    String username,
+    String oldPassword,
+    String newPassword,
+  ) async {
+    return _repository.changePassword(username, oldPassword, newPassword);
   }
 }

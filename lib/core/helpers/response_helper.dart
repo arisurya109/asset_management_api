@@ -5,63 +5,79 @@ import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
 
 class ResponseHelper {
-  const ResponseHelper._();
+  ResponseHelper._();
+
+  static Future<Response> badRequest({
+    required String description,
+  }) async {
+    return ResponseHelper.responseFailure(
+      code: HttpStatus.badRequest,
+      status: 'Invalid Request',
+      description: description,
+    );
+  }
+
+  static Future<Response> unAuthorized({
+    required String description,
+  }) async {
+    return ResponseHelper.responseFailure(
+      code: HttpStatus.unauthorized,
+      status: 'Akses Denied',
+      description: description,
+    );
+  }
+
+  static Future<Response> methodNotAllowed({
+    required String description,
+  }) async {
+    return ResponseHelper.responseFailure(
+      code: HttpStatus.methodNotAllowed,
+      status: 'Method not allowed',
+      description: description,
+    );
+  }
+
+  static Future<Response> notFound({
+    required String description,
+  }) async {
+    return ResponseHelper.responseFailure(
+      code: HttpStatus.notFound,
+      status: 'Not Found',
+      description: description,
+    );
+  }
+
+  static Future<Response> responseFailure({
+    required int code,
+    required String status,
+    required String description,
+  }) async {
+    return Response.json(
+      statusCode: code,
+      body: {
+        'error': {
+          'status': status,
+          'description': description,
+        },
+      },
+    );
+  }
 
   static Future<Response> json({
-    required int status,
-    required String message,
-    required dynamic body,
+    required int code,
+    required String status,
+    Object? body,
     String? token,
   }) async {
-    if (token != null) {
-      return Response.json(statusCode: status, body: {
-        'message': message,
-        'token': token,
-        'data': body,
-      });
-    } else {
-      return Response.json(
-        statusCode: status,
-        body: {
-          'message': message,
-          'data': body,
-        },
-      );
-    }
-  }
+    final responseBody = <String, dynamic>{
+      'status': status,
+      if (token != null) 'token': token,
+      if (body != null) 'data': body,
+    };
 
-  static Future<Response> methodNotAllowed() async {
-    return ResponseHelper.json(
-      status: HttpStatus.methodNotAllowed,
-      message: 'Method Not Allowed',
-      body: null,
-    );
-  }
-
-  static Future<Response> unAuthorized() async {
-    return ResponseHelper.json(
-      status: HttpStatus.unauthorized,
-      message: 'UnAuthorized',
-      body: null,
-    );
-  }
-
-  static Future<Response> badRequest({required String message}) async {
-    return ResponseHelper.json(
-      status: HttpStatus.badRequest,
-      message: message,
-      body: null,
-    );
-  }
-
-  static Future<Response> abortWithStatus({
-    required int status,
-    required String message,
-  }) async {
-    return ResponseHelper.json(
-      status: status,
-      message: message,
-      body: null,
+    return Response.json(
+      statusCode: code,
+      body: responseBody,
     );
   }
 }

@@ -1,29 +1,47 @@
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: avoid_print, public_member_api_docs
 
-import 'package:asset_management_api/core/helpers/constant.dart';
+import 'package:dotenv/dotenv.dart';
 import 'package:mysql1/mysql1.dart';
 
-class DatabaseConfig {
-  DatabaseConfig._();
+class Database {
+  factory Database() => _instance;
 
-  MySqlConnection? _database;
-
-  Future<MySqlConnection> get database async {
-    if (_database != null) {
-      _database = await _setConnection();
-      return _database!;
-    }
-    return _database!;
+  Database._internal() {
+    _loadEnv();
   }
 
-  Future<MySqlConnection> _setConnection() async {
-    return MySqlConnection.connect(
-      ConnectionSettings(
-        db: Constant.databaseName,
-        host: Constant.host,
-        user: Constant.userName,
-        password: Constant.password,
-      ),
-    );
+  static final Database _instance = Database._internal();
+
+  late final DotEnv env;
+  MySqlConnection? _connection;
+
+  void _loadEnv() {
+    env = DotEnv()..load();
+  }
+
+  Future<MySqlConnection> get connection async {
+    _connection ??= await _connect();
+    return _connection!;
+  }
+
+  Future<void> close() async {
+    await _connection?.close();
+    _connection = null;
+  }
+
+  Future<MySqlConnection?> _connect() async {
+    try {
+      return await MySqlConnection.connect(
+        ConnectionSettings(
+          host: env['DB_HOST']!,
+          user: env['DB_USER'],
+          password: env['DB_PASSWORD'],
+          db: env['DB_NAME'],
+          port: int.parse(env['DB_PORT']!),
+        ),
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 }

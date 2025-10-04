@@ -5,12 +5,12 @@ import 'package:asset_management_api/features/users/domain/entities/user.dart';
 import 'package:asset_management_api/features/users/domain/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class FindAllUserUseCase {
-  FindAllUserUseCase(this._repository);
+class UpdateStatusUserUseCase {
+  UpdateStatusUserUseCase(this._repository);
 
   final UserRepository _repository;
 
-  Future<Either<Failure, List<User>>> call(int idRequest) async {
-    return _repository.findAllUser(idRequest);
+  Future<Either<Failure, User>> call(int id, int params) async {
+    return _repository.updateStatusUser(id, params);
   }
 }

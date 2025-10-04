@@ -6,6 +6,7 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 abstract class JwtService {
   Future<String> generateToken(Map<String, dynamic> code);
   Future<bool> verifyToken(RequestContext context);
+  Future<int> getIdUser(RequestContext context);
 }
 
 class JwtServiceImpl implements JwtService {
@@ -14,7 +15,7 @@ class JwtServiceImpl implements JwtService {
     final jwt = JWT(code);
 
     final token = jwt.sign(
-      SecretKey('secret-key'),
+      SecretKey('c0b4d1b4c4'),
       expiresIn: const Duration(hours: 8),
     );
 
@@ -29,7 +30,7 @@ class JwtServiceImpl implements JwtService {
       final token = await _validateHeadersAndGetToken(headers);
 
       if (token != null) {
-        JWT.verify(token, SecretKey('secret-key'));
+        JWT.verify(token, SecretKey('c0b4d1b4c4'));
         return true;
       } else {
         return false;
@@ -51,5 +52,17 @@ class JwtServiceImpl implements JwtService {
       }
     }
     return token;
+  }
+
+  @override
+  Future<int> getIdUser(RequestContext context) async {
+    final headers = context.request.headers;
+
+    final token = await _validateHeadersAndGetToken(headers);
+
+    final jwt = JWT.decode(token!);
+
+    // ignore: avoid_dynamic_calls
+    return jwt.payload['id'] as int;
   }
 }

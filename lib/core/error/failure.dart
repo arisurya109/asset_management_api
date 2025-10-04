@@ -18,3 +18,15 @@ class DatabaseFailure extends Failure {
 class NotFoundFailure extends Failure {
   const NotFoundFailure(super.message);
 }
+
+class CreateFailure extends Failure {
+  const CreateFailure(super.message);
+}
+
+class UpdateFailure extends Failure {
+  const UpdateFailure(super.message);
+}
+
+class DeleteFailure extends Failure {
+  const DeleteFailure(super.message);
+}

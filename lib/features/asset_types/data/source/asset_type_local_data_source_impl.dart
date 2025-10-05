@@ -15,7 +15,7 @@ class AssetTypeLocalDataSourceImpl implements AssetTypeLocalDataSource {
 
     final response = await db.transaction((txn) async {
       final checkTypeName = await txn.query(
-        'SELECT COUNT(id) t_asset_types WHERE UPPER(type_name) = UPPER(?)',
+        'SELECT COUNT(id) FROM t_asset_types WHERE UPPER(type_name) = UPPER(?)',
         [params.typeName],
       );
 

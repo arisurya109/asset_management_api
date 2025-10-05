@@ -48,7 +48,7 @@ class BrandLocalDataSourceImpl implements BrandLocalDataSource {
               a.asset_name AS asset_name
             FROM
               t_brands AS b
-            LEFT JOIN t_assets AS a ON b.asset_id = b.id
+            LEFT JOIN t_assets AS a ON b.asset_id = a.id
             WHERE b.id = ?
             ''',
             [addBrand.insertId],
@@ -76,7 +76,7 @@ class BrandLocalDataSourceImpl implements BrandLocalDataSource {
         a.asset_name AS asset_name
       FROM
         t_brands AS b
-      LEFT JOIN t_assets AS a ON b.asset_id = b.id
+      LEFT JOIN t_assets AS a ON b.asset_id = a.id
       ORDER BY b.id ASC
       ''',
     );
@@ -104,7 +104,7 @@ class BrandLocalDataSourceImpl implements BrandLocalDataSource {
         a.asset_name AS asset_name
       FROM
         t_brands AS b
-      LEFT JOIN t_assets AS a ON b.asset_id = b.id
+      LEFT JOIN t_assets AS a ON b.asset_id = a.id
       WHERE b.id = ?
       ''',
       [params],
@@ -133,7 +133,7 @@ class BrandLocalDataSourceImpl implements BrandLocalDataSource {
         a.asset_name AS asset_name
       FROM
         t_brands AS b
-      LEFT JOIN t_assets AS a ON b.asset_id = b.id
+      LEFT JOIN t_assets AS a ON b.asset_id = a.id
       WHERE b.asset_id = ?
       ORDER BY b.id ASC
       ''',
@@ -182,11 +182,11 @@ class BrandLocalDataSourceImpl implements BrandLocalDataSource {
               a.asset_name AS asset_name
             FROM
               t_brands AS b
-            LEFT JOIN t_assets AS a ON b.asset_id = b.id
-            WHERE b.asset_id = ?
+            LEFT JOIN t_assets AS a ON b.asset_id = a.id
+            WHERE b.id = ?
             ORDER BY b.id ASC
             ''',
-            [params],
+            [params.id],
           );
 
           return newBrand.first.fields;

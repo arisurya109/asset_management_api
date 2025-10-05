@@ -133,9 +133,7 @@ class BrandResponse {
       final paramsId = await context.parseUri(id);
       final params = await context.requestJSON();
 
-      params
-        ..remove('id')
-        ..addEntries({'id': paramsId}.entries);
+      params.addEntries({'id': paramsId}.entries);
 
       final response = await usecase(Brand.fromRequest(params));
 

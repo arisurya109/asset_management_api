@@ -47,6 +47,7 @@ dart_frog dev
 ----
 
 # API Documentation
+- **Module**
 - **Login**
 - **Change Password**
 - **User**
@@ -55,6 +56,60 @@ dart_frog dev
 - **Asset Types**
 
 ----
+
+## Get All Module
+
+**GET** ```/api/module```
+
+**RESPONSE JSON**
+```JSON
+{
+    "status": "Successfully get all module permission",
+    "data": [
+        {
+            "id": 1,
+            "module_permission_name": "user_view",
+            "module_permission_label": "User Management_View"
+        },
+        {
+            "id": 2,
+            "module_permission_name": "user_add",
+            "module_permission_label": "User Management_Add"
+        },
+        {
+            "id": 3,
+            "module_permission_name": "user_update",
+            "module_permission_label": "User Management_Update"
+        },
+        {
+            "id": 4,
+            "module_permission_name": "user_delete",
+            "module_permission_label": "User Management_Delete"
+        }
+    ]
+}
+```
+
+----
+
+## Get Module By Id
+
+**GET** ```/api/module/:id```
+
+**RESPONSE JSON**
+```JSON
+{
+    "status": "Successfully get module permission",
+    "data": {
+        "id": 1,
+        "module_permission_name": "user_view",
+        "module_permission_label": "User Management_View"
+    }
+}
+```
+
+----
+
 ## Login
 
 **POST** ```/api/login```

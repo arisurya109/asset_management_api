@@ -1,5 +1,6 @@
 import 'package:asset_management_api/injectors/injector_export.dart';
 import 'package:asset_management_api/injectors/logger_injector.dart';
+import 'package:asset_management_api/injectors/module_permission_injector.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 Handler middleware(Handler handler) {
@@ -9,5 +10,6 @@ Handler middleware(Handler handler) {
       .use(userInjector)
       .use(assetInjector)
       .use(brandInjector)
-      .use(assetTypeInjector);
+      .use(assetTypeInjector)
+      .use(moduleInjector);
 }

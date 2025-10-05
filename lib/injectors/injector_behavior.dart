@@ -5,6 +5,7 @@ import 'package:asset_management_api/core/services/jwt.dart';
 import 'package:asset_management_api/features/asset_types/asset_type_export.dart';
 import 'package:asset_management_api/features/assets/asset_export.dart';
 import 'package:asset_management_api/features/brands/brand_export.dart';
+import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
 
 final JwtService jwtService = JwtServiceImpl();
@@ -73,3 +74,12 @@ final FindAssetTypeByIdBrandUseCase findAssetTypeByIdBrandUseCase =
     FindAssetTypeByIdBrandUseCase(assetTypeRepository);
 final UpdateAssetTypeUseCase updateAssetTypeUseCase =
     UpdateAssetTypeUseCase(assetTypeRepository);
+
+final ModulePermissionLocalDataSource modulePermissionLocalDataSource =
+    ModulePermissionLocalDataSourceImpl(database);
+final ModulePermissionRepository modulePermissionRepository =
+    ModulePermissionRepositoryImpl(modulePermissionLocalDataSource);
+final FindAllModulePermissionUseCase findAllModulePermissionUseCase =
+    FindAllModulePermissionUseCase(modulePermissionRepository);
+final FindModulePermissionByIdUseCase findModulePermissionByIdUseCase =
+    FindModulePermissionByIdUseCase(modulePermissionRepository);

@@ -71,20 +71,21 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
         final responseModule = await txn.query(
           '''
-          SELECT 
-          CONCAT(m.module_name, '_', p.permission_name) AS module
-          FROM t_user_permission_module upm
-          JOIN t_modules m ON upm.module_id = m.id
-          JOIN t_permissions p ON upm.permission_id = p.id
-          WHERE upm.user_id = ?
-          ORDER BY upm.module_id
+          SELECT
+	          CONCAT(m.module_name, '_', p.permission_name) AS modules
+          FROM
+	          t_user_permission_module AS upm
+          LEFT JOIN t_module_permission AS mp ON upm.module_permission_id = mp.id
+          LEFT JOIN t_modules AS m ON mp.module_id = m.id
+          LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
+          WHERE upm.user_id = ? 
           ''',
           [responseUser.first.fields['id']],
         );
 
         final newUser = responseUser.first.fields;
 
-        final modules = responseModule.map((e) => e['module']).toList();
+        final modules = responseModule.map((e) => e['modules']).toList();
 
         newUser.addEntries({'modules': modules}.entries);
         return newUser;
@@ -240,17 +241,19 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
         final responseModule = await txn.query(
           '''
-          SELECT CONCAT(m.module_name, '_', p.permission_name) AS module
-          FROM t_user_permission_module AS upm
-          JOIN t_modules AS m ON upm.module_id = m.id
-          JOIN t_permissions AS p ON upm.permission_id = p.id
-          WHERE upm.user_id = ?
-          ORDER BY upm.module_id
+          SELECT
+	          CONCAT(m.module_name, '_', p.permission_name) AS modules
+          FROM
+	          t_user_permission_module AS upm
+          LEFT JOIN t_module_permission AS mp ON upm.module_permission_id = mp.id
+          LEFT JOIN t_modules AS m ON mp.module_id = m.id
+          LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
+          WHERE upm.user_id = ? 
           ''',
           [user['id']],
         );
 
-        final module = responseModule.map((e) => e['module']).toList();
+        final module = responseModule.map((e) => e['modules']).toList();
 
         user.addEntries({'modules': module}.entries);
 

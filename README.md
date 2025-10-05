@@ -177,14 +177,10 @@ Change password user, after user login to sistem
 ```JSON
 {
     "username" : "Testing6",
-    "password" : "Testing6",
+    "password" : "Testing Password",
     "name" : "Testing6",
-    "created_by" : "TESTING",
     "modules" : [
-        {"module_id" : 1, "permission_id" : 1},
-        {"module_id" : 1, "permission_id" : 2},
-        {"module_id" : 1, "permission_id" : 3},
-        {"module_id" : 1, "permission_id" : 4}
+        1, 4
     ]
 }
 ```

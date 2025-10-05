@@ -15,6 +15,7 @@ dependencies:
   equatable: ^2.0.7
   json_serializable: ^6.11.1
   mysql1: ^0.20.0
+  path: ^1.9.1
 
 dev_dependencies:
   dart_frog_lint: ^0.1.0

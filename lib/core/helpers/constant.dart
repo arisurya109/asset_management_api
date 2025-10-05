@@ -13,4 +13,5 @@ abstract class Constant {
 abstract class ErrorMsg {
   static const String unAuthorized = 'Invalid token, please login again';
   static const String methodAllowed = 'Http method does not exist';
+  static const String notAccessModul = 'You do not have access to this module.';
 }

@@ -39,17 +39,13 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
             message: 'Failed to create new user, please try again',
           );
         } else {
-          for (final perm in params.modules!) {
+          for (final modulePermissionId in params.modules!) {
             await txn.query(
               '''
-              INSERT INTO t_user_permission_module (user_id, module_id, permission_id)
-              VALUES (?, ?, ?)
+              INSERT INTO t_user_permission_module (user_id, module_permission_id)
+              VALUES (?, ?)
               ''',
-              [
-                insertedNewUser.insertId,
-                perm['module_id'],
-                perm['permission_id'],
-              ],
+              [insertedNewUser.insertId, modulePermissionId],
             );
           }
         }

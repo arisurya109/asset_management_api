@@ -8,8 +8,8 @@ import 'package:asset_management_api/features/brands/brand_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
 
-final JwtService jwtService = JwtServiceImpl(database);
 final Database database = Database();
+final JwtService jwtService = JwtServiceImpl(database);
 
 // User
 final UserLocalDataSource userLocalDataSource =

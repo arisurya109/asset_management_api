@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: asset_management_api_test
 -- ------------------------------------------------------
--- Server version	8.0.30
+-- Server version	8.0.43
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,31 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `t_areas`
+--
+
+DROP TABLE IF EXISTS `t_areas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_areas` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `area_name` varchar(100) DEFAULT NULL,
+  `area_init` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_areas`
+--
+
+LOCK TABLES `t_areas` WRITE;
+/*!40000 ALTER TABLE `t_areas` DISABLE KEYS */;
+INSERT INTO `t_areas` VALUES (1,'Head Office','HO'),(2,'Warehouse Bitung','WHB'),(3,'Toko','TK');
+/*!40000 ALTER TABLE `t_areas` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `t_asset_types`
@@ -94,6 +119,91 @@ LOCK TABLES `t_brands` WRITE;
 /*!40000 ALTER TABLE `t_brands` DISABLE KEYS */;
 INSERT INTO `t_brands` VALUES (1,2,'CN','Canon Update'),(2,3,'DL','Dell');
 /*!40000 ALTER TABLE `t_brands` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_location_container`
+--
+
+DROP TABLE IF EXISTS `t_location_container`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_location_container` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `location_id` int DEFAULT NULL,
+  `container_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `container_name` (`container_name`),
+  KEY `location_id` (`location_id`),
+  CONSTRAINT `t_location_container_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `t_locations` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_location_container`
+--
+
+LOCK TABLES `t_location_container` WRITE;
+/*!40000 ALTER TABLE `t_location_container` DISABLE KEYS */;
+INSERT INTO `t_location_container` VALUES (1,5,'LD.01.01.01'),(2,5,'LD.01.01.02'),(3,5,'LD.01.02.01'),(4,5,'LD.01.02.02');
+/*!40000 ALTER TABLE `t_location_container` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_location_container_detail`
+--
+
+DROP TABLE IF EXISTS `t_location_container_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_location_container_detail` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `location_container_id` int DEFAULT NULL,
+  `container_detail_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `container_detail_name` (`container_detail_name`),
+  KEY `location_container_id` (`location_container_id`),
+  CONSTRAINT `t_location_container_detail_ibfk_1` FOREIGN KEY (`location_container_id`) REFERENCES `t_location_container` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_location_container_detail`
+--
+
+LOCK TABLES `t_location_container_detail` WRITE;
+/*!40000 ALTER TABLE `t_location_container_detail` DISABLE KEYS */;
+INSERT INTO `t_location_container_detail` VALUES (1,1,'BOX-LD-001'),(2,1,'BOX-LD-002'),(3,1,'BOX-LD-003'),(4,1,'BOX-LD-004'),(5,1,'BOX-LD-005'),(6,1,'BOX-LD-006'),(7,1,'BOX-LD-007'),(8,1,'BOX-LD-008'),(9,1,'BOX-LD-009');
+/*!40000 ALTER TABLE `t_location_container_detail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_locations`
+--
+
+DROP TABLE IF EXISTS `t_locations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_locations` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `area_id` int DEFAULT NULL,
+  `location_code` int DEFAULT NULL,
+  `location_name` varchar(100) DEFAULT NULL,
+  `location_init` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `area_id` (`area_id`),
+  CONSTRAINT `t_locations_ibfk_1` FOREIGN KEY (`area_id`) REFERENCES `t_areas` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_locations`
+--
+
+LOCK TABLES `t_locations` WRITE;
+/*!40000 ALTER TABLE `t_locations` DISABLE KEYS */;
+INSERT INTO `t_locations` VALUES (1,2,901,'Distribution Center','DC'),(2,2,904,'Return To Vendor Distribution Center','RTV'),(3,2,905,'Ecommerce Distribution Center','E-DC'),(4,2,904,'Ecommerce Return To Vendor Distribution Center','E-RTV'),(5,2,909,'Gudang I','WHI'),(6,3,246,'Lippo Batu Malang','MLP');
+/*!40000 ALTER TABLE `t_locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -200,7 +310,7 @@ CREATE TABLE `t_user_permission_module` (
 
 LOCK TABLES `t_user_permission_module` WRITE;
 /*!40000 ALTER TABLE `t_user_permission_module` DISABLE KEYS */;
-INSERT INTO `t_user_permission_module` VALUES (1,1),(1,2),(1,3),(1,4),(11,1),(11,4),(12,1),(12,4);
+INSERT INTO `t_user_permission_module` VALUES (1,1),(1,2),(1,3),(1,4),(11,1),(11,4),(12,1),(12,4),(13,1),(13,4);
 /*!40000 ALTER TABLE `t_user_permission_module` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,7 +331,7 @@ CREATE TABLE `t_users` (
   `created_by` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +340,7 @@ CREATE TABLE `t_users` (
 
 LOCK TABLES `t_users` WRITE;
 /*!40000 ALTER TABLE `t_users` DISABLE KEYS */;
-INSERT INTO `t_users` VALUES (1,'TESTING','TESTING1','9eae9f3c86aaa919bf84bab1abfce3c1e13c72f9184cad4f6107b9d5a1597385',1,'2025-10-04 01:59:27','ADMIN'),(4,'TESTING2','TESTING2','64d75d49184c277952cc26398f661d9c50a5f059b4c5bc2a993323b22718f158',0,'2025-10-04 02:29:25','ADMIN'),(6,'Testing3','Testing3','ce367d990000238a0f5c84a1e321c7afa4f2b189618bfb95bb8d67b00141a5ad',1,'2025-10-04 20:32:58','TESTING'),(7,'Testing4','Testing4','806e0f0f0ca2f793811b4b9860e6267e940e1b2f841a1739cfb8d8228c6e84a1',0,'2025-10-04 20:34:18','TESTING'),(8,'Testing5','Testing5','b07274720300138d9405bda5f83c981f3ae25ac31324034c846ab339647d4ff0',1,'2025-10-04 20:35:31','TESTING'),(9,'Testing6','Testing6','f09fde143d2f36445deeb14ce478b14e3a28a8502f47c3e3b038c2227548fbb3',1,'2025-10-05 07:10:23','TESTING'),(11,'Testing7','Testing7','9eae9f3c86aaa919bf84bab1abfce3c1e13c72f9184cad4f6107b9d5a1597385',1,'2025-10-06 04:47:51',NULL),(12,'Testing8','Testing8','9eae9f3c86aaa919bf84bab1abfce3c1e13c72f9184cad4f6107b9d5a1597385',1,'2025-10-06 04:50:54','TESTING');
+INSERT INTO `t_users` VALUES (1,'TESTING','TESTING1','9eae9f3c86aaa919bf84bab1abfce3c1e13c72f9184cad4f6107b9d5a1597385',1,'2025-10-04 01:59:27','ADMIN'),(4,'TESTING2','TESTING2','64d75d49184c277952cc26398f661d9c50a5f059b4c5bc2a993323b22718f158',0,'2025-10-04 02:29:25','ADMIN'),(6,'Testing3','Testing3','ce367d990000238a0f5c84a1e321c7afa4f2b189618bfb95bb8d67b00141a5ad',1,'2025-10-04 20:32:58','TESTING'),(7,'Testing4','Testing4','806e0f0f0ca2f793811b4b9860e6267e940e1b2f841a1739cfb8d8228c6e84a1',0,'2025-10-04 20:34:18','TESTING'),(8,'Testing5','Testing5','b07274720300138d9405bda5f83c981f3ae25ac31324034c846ab339647d4ff0',1,'2025-10-04 20:35:31','TESTING'),(9,'Testing6','Testing6','f09fde143d2f36445deeb14ce478b14e3a28a8502f47c3e3b038c2227548fbb3',1,'2025-10-05 07:10:23','TESTING'),(11,'Testing7','Testing7','9eae9f3c86aaa919bf84bab1abfce3c1e13c72f9184cad4f6107b9d5a1597385',1,'2025-10-06 04:47:51',NULL),(12,'Testing8','Testing8','9eae9f3c86aaa919bf84bab1abfce3c1e13c72f9184cad4f6107b9d5a1597385',1,'2025-10-06 04:50:54','TESTING'),(13,'Testing9','Testing9','9eae9f3c86aaa919bf84bab1abfce3c1e13c72f9184cad4f6107b9d5a1597385',1,'2025-10-06 17:45:51','TESTING');
 /*!40000 ALTER TABLE `t_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,4 +357,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-06  4:53:39
+-- Dump completed on 2025-10-07 11:03:38

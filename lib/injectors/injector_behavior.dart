@@ -4,8 +4,8 @@ import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
 import 'package:asset_management_api/features/areas/area_export.dart';
 import 'package:asset_management_api/features/asset_types/asset_type_export.dart';
-import 'package:asset_management_api/features/assets/asset_export.dart';
 import 'package:asset_management_api/features/brands/brand_export.dart';
+import 'package:asset_management_api/features/categories/category_export.dart';
 import 'package:asset_management_api/features/locations/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
@@ -32,18 +32,18 @@ final ChangePasswordUseCase changePasswordUseCase =
     ChangePasswordUseCase(userRepository);
 
 // Asset
-final AssetLocalDataSource assetLocalDataSource =
-    AssetLocalDataSourceImpl(database);
-final AssetRepository assetRepository =
-    AssetRepositoryImpl(assetLocalDataSource);
-final CreateAssetUseCase createAssetUseCase =
-    CreateAssetUseCase(assetRepository);
-final FindAllAssetUseCase findAllAssetUseCase =
-    FindAllAssetUseCase(assetRepository);
-final UpdateAssetUseCase updateAssetUseCase =
-    UpdateAssetUseCase(assetRepository);
-final FindAssetByIdUseCase findAssetByIdUseCase =
-    FindAssetByIdUseCase(assetRepository);
+final CategoryLocalDataSource categoryLocalDataSource =
+    CategoryLocalDataSourceImpl(database);
+final CategoryRepository categoryRepository =
+    CategoryRepositoryImpl(categoryLocalDataSource);
+final CreateCategoryUseCase createCategoryUseCase =
+    CreateCategoryUseCase(categoryRepository);
+final FindAllCategoryUseCase findAllCategoryUseCase =
+    FindAllCategoryUseCase(categoryRepository);
+final UpdateCategoryUseCase updateCategoryUseCase =
+    UpdateCategoryUseCase(categoryRepository);
+final FindCategoryByIdUseCase findCategoryByIdUseCase =
+    FindCategoryByIdUseCase(categoryRepository);
 
 // Brand
 final BrandLocalDataSource brandLocalDataSource =

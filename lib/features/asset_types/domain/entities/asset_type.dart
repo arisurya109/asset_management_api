@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynamic_calls
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynam
 
 import 'package:equatable/equatable.dart';
 
@@ -34,8 +34,10 @@ class AssetType extends Equatable {
     return AssetType(
       id: map['id'] != null ? map['id'] as int : null,
       typeName: map['type_name'] != null ? map['type_name'] as String : null,
+      // ignore: avoid_dynamic_calls
       brandId: map['brand']['id'] != null ? map['brand']['id'] as int : null,
       brandName:
+          // ignore: avoid_dynamic_calls
           map['brand']['name'] != null ? map['brand']['name'] as String : null,
     );
   }

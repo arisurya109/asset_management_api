@@ -2,9 +2,11 @@
 
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
+import 'package:asset_management_api/features/areas/area_export.dart';
 import 'package:asset_management_api/features/asset_types/asset_type_export.dart';
 import 'package:asset_management_api/features/assets/asset_export.dart';
 import 'package:asset_management_api/features/brands/brand_export.dart';
+import 'package:asset_management_api/features/locations/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
 
@@ -83,3 +85,24 @@ final FindAllModulePermissionUseCase findAllModulePermissionUseCase =
     FindAllModulePermissionUseCase(modulePermissionRepository);
 final FindModulePermissionByIdUseCase findModulePermissionByIdUseCase =
     FindModulePermissionByIdUseCase(modulePermissionRepository);
+
+final AreaLocalDataSource areaLocalDataSource =
+    AreaLocalDataSourceImpl(database);
+final AreaRepository areaRepository = AreaRepositoryImpl(areaLocalDataSource);
+final FindAllAreaUseCase findAllAreaUseCase =
+    FindAllAreaUseCase(areaRepository);
+final FindAreaByIdUseCase findAreaByIdUseCase =
+    FindAreaByIdUseCase(areaRepository);
+
+final LocationLocalDataSource locationLocalDataSource =
+    LocationLocalDataSourceImpl(database);
+final LocationRespository locationRespository =
+    LocationRepositoryImpl(locationLocalDataSource);
+final FindAllLocationUseCase findAllLocationUseCase =
+    FindAllLocationUseCase(locationRespository);
+final FindLocationByIdUseCase findLocationByIdUseCase =
+    FindLocationByIdUseCase(locationRespository);
+final CreateLocationUseCase createLocationUseCase =
+    CreateLocationUseCase(locationRespository);
+final UpdateLocationUseCase updateLocationUseCase =
+    UpdateLocationUseCase(locationRespository);

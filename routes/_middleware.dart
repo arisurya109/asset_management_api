@@ -1,3 +1,4 @@
+import 'package:asset_management_api/injectors/area_injector.dart';
 import 'package:asset_management_api/injectors/injector_export.dart';
 import 'package:asset_management_api/injectors/logger_injector.dart';
 import 'package:asset_management_api/injectors/module_permission_injector.dart';
@@ -11,5 +12,6 @@ Handler middleware(Handler handler) {
       .use(assetInjector)
       .use(brandInjector)
       .use(assetTypeInjector)
-      .use(moduleInjector);
+      .use(moduleInjector)
+      .use(areaInjector);
 }

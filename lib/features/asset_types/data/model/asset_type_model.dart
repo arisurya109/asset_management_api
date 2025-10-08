@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynamic_calls
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynam
 
 import 'package:asset_management_api/features/asset_types/domain/entities/asset_type.dart';
 import 'package:equatable/equatable.dart';

@@ -7,5 +7,6 @@ import 'package:dartz/dartz.dart';
 abstract class ModulePermissionRepository {
   Future<Either<Failure, List<ModulePermission>>> findAllModulePermission();
   Future<Either<Failure, ModulePermission>> findModulePermissionById(
-      int params);
+    int params,
+  );
 }

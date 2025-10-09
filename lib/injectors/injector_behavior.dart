@@ -6,6 +6,9 @@ import 'package:asset_management_api/features/areas/area_export.dart';
 import 'package:asset_management_api/features/asset_types/asset_type_export.dart';
 import 'package:asset_management_api/features/brands/brand_export.dart';
 import 'package:asset_management_api/features/categories/category_export.dart';
+import 'package:asset_management_api/features/container/container_export.dart';
+import 'package:asset_management_api/features/container_detail/container_detail_export.dart';
+import 'package:asset_management_api/features/location_detail/location_detail_export.dart';
 import 'package:asset_management_api/features/locations/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
@@ -16,9 +19,7 @@ final JwtService jwtService = JwtServiceImpl(database);
 // User
 final UserLocalDataSource userLocalDataSource =
     UserLocalDataSourceImpl(database);
-
 final UserRepository userRepository = UserRepositoryImpl(userLocalDataSource);
-
 final FindAllUserUseCase findAllUserUseCase =
     FindAllUserUseCase(userRepository);
 final CreateUserUseCase createUserUseCase = CreateUserUseCase(userRepository);
@@ -31,7 +32,7 @@ final LoginUseCase loginUseCase = LoginUseCase(userRepository);
 final ChangePasswordUseCase changePasswordUseCase =
     ChangePasswordUseCase(userRepository);
 
-// Asset
+// Categories
 final CategoryLocalDataSource categoryLocalDataSource =
     CategoryLocalDataSourceImpl(database);
 final CategoryRepository categoryRepository =
@@ -77,6 +78,7 @@ final FindAssetTypeByIdBrandUseCase findAssetTypeByIdBrandUseCase =
 final UpdateAssetTypeUseCase updateAssetTypeUseCase =
     UpdateAssetTypeUseCase(assetTypeRepository);
 
+// Module Permission
 final ModulePermissionLocalDataSource modulePermissionLocalDataSource =
     ModulePermissionLocalDataSourceImpl(database);
 final ModulePermissionRepository modulePermissionRepository =
@@ -86,6 +88,7 @@ final FindAllModulePermissionUseCase findAllModulePermissionUseCase =
 final FindModulePermissionByIdUseCase findModulePermissionByIdUseCase =
     FindModulePermissionByIdUseCase(modulePermissionRepository);
 
+// Area
 final AreaLocalDataSource areaLocalDataSource =
     AreaLocalDataSourceImpl(database);
 final AreaRepository areaRepository = AreaRepositoryImpl(areaLocalDataSource);
@@ -94,6 +97,7 @@ final FindAllAreaUseCase findAllAreaUseCase =
 final FindAreaByIdUseCase findAreaByIdUseCase =
     FindAreaByIdUseCase(areaRepository);
 
+// Location
 final LocationLocalDataSource locationLocalDataSource =
     LocationLocalDataSourceImpl(database);
 final LocationRespository locationRespository =
@@ -106,3 +110,39 @@ final CreateLocationUseCase createLocationUseCase =
     CreateLocationUseCase(locationRespository);
 final UpdateLocationUseCase updateLocationUseCase =
     UpdateLocationUseCase(locationRespository);
+
+// Location Detail
+final LocationDetailLocalDataSource locationDetailLocalDataSource =
+    LocationDetailLocalDataSourceImpl(database);
+final LocationDetailRepository locationDetailRepository =
+    LocationDetailRepositoryImpl(locationDetailLocalDataSource);
+final FindAllLocationDetailUseCase findAllLocationDetailUseCase =
+    FindAllLocationDetailUseCase(locationDetailRepository);
+final UpdateLocationDetalUseCase updateLocationDetalUseCase =
+    UpdateLocationDetalUseCase(locationDetailRepository);
+final CreateLocationDetailUseCase createLocationDetailUseCase =
+    CreateLocationDetailUseCase(locationDetailRepository);
+
+// Container
+final ContainerLocalDataSource containerLocalDataSource =
+    ContainerLocalDataSourceImpl(database);
+final ContainerRepository containerRepository =
+    ContainerRepositoryImpl(containerLocalDataSource);
+final FindAllContainerUseCase findAllContainerUseCase =
+    FindAllContainerUseCase(containerRepository);
+final CreateContainerUseCase createContainerUseCase =
+    CreateContainerUseCase(containerRepository);
+final UpdateContainerUseCase updateContainerUseCase =
+    UpdateContainerUseCase(containerRepository);
+
+// Container Detail
+final ContainerDetailLocalDataSource containerDetailLocalDataSource =
+    ContainerDetailLocalDataSourceImpl(database);
+final ContainerDetailRepository containerDetailRepository =
+    ContainerDetailRepositoryImpl(containerDetailLocalDataSource);
+final FindAllContainerDetailUseCase findAllContainerDetailUseCase =
+    FindAllContainerDetailUseCase(containerDetailRepository);
+final CreateContainerDetailUseCase createContainerDetailUseCase =
+    CreateContainerDetailUseCase(containerDetailRepository);
+final UpdateContainerDetailUseCase updateContainerDetailUseCase =
+    UpdateContainerDetailUseCase(containerDetailRepository);

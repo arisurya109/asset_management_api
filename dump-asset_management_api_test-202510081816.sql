@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: asset_management_api_test
 -- ------------------------------------------------------
--- Server version	8.0.43
+-- Server version	8.0.30
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -68,32 +68,6 @@ INSERT INTO `t_asset_types` VALUES (1,1,'MF3010 Update');
 UNLOCK TABLES;
 
 --
--- Table structure for table `t_assets`
---
-
-DROP TABLE IF EXISTS `t_assets`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `t_assets` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `asset_code` varchar(50) DEFAULT NULL,
-  `asset_name` varchar(100) DEFAULT NULL,
-  `asset_init` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_assets`
---
-
-LOCK TABLES `t_assets` WRITE;
-/*!40000 ALTER TABLE `t_assets` DISABLE KEYS */;
-INSERT INTO `t_assets` VALUES (1,'D0001','DESKTOP STAND','DS'),(2,'D0002','PRINTER','PRN'),(3,'D0003','MONITOR UPDATE','MN');
-/*!40000 ALTER TABLE `t_assets` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_brands`
 --
 
@@ -107,7 +81,7 @@ CREATE TABLE `t_brands` (
   `brand_name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `asset_id` (`asset_id`),
-  CONSTRAINT `t_brands_ibfk_1` FOREIGN KEY (`asset_id`) REFERENCES `t_assets` (`id`)
+  CONSTRAINT `t_brands_ibfk_1` FOREIGN KEY (`asset_id`) REFERENCES `t_categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -122,59 +96,111 @@ INSERT INTO `t_brands` VALUES (1,2,'CN','Canon Update'),(2,3,'DL','Dell');
 UNLOCK TABLES;
 
 --
--- Table structure for table `t_location_container`
+-- Table structure for table `t_categories`
 --
 
-DROP TABLE IF EXISTS `t_location_container`;
+DROP TABLE IF EXISTS `t_categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `t_location_container` (
+CREATE TABLE `t_categories` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `location_id` int DEFAULT NULL,
-  `container_name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `container_name` (`container_name`),
-  KEY `location_id` (`location_id`),
-  CONSTRAINT `t_location_container_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `t_locations` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `category_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `category_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `category_init` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_location_container`
+-- Dumping data for table `t_categories`
 --
 
-LOCK TABLES `t_location_container` WRITE;
-/*!40000 ALTER TABLE `t_location_container` DISABLE KEYS */;
-INSERT INTO `t_location_container` VALUES (1,5,'LD.01.01.01'),(2,5,'LD.01.01.02'),(3,5,'LD.01.02.01'),(4,5,'LD.01.02.02');
-/*!40000 ALTER TABLE `t_location_container` ENABLE KEYS */;
+LOCK TABLES `t_categories` WRITE;
+/*!40000 ALTER TABLE `t_categories` DISABLE KEYS */;
+INSERT INTO `t_categories` VALUES (1,'D0001','DESKTOP STAND','DS'),(2,'D0002','PRINTER','PRN'),(3,'D0003','MONITOR UPDATE','MN');
+/*!40000 ALTER TABLE `t_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `t_location_container_detail`
+-- Table structure for table `t_container`
 --
 
-DROP TABLE IF EXISTS `t_location_container_detail`;
+DROP TABLE IF EXISTS `t_container`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `t_location_container_detail` (
+CREATE TABLE `t_container` (
   `id` int NOT NULL AUTO_INCREMENT,
   `location_container_id` int DEFAULT NULL,
-  `container_detail_name` varchar(50) DEFAULT NULL,
+  `container_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `container_detail_name` (`container_detail_name`),
+  UNIQUE KEY `container_detail_name` (`container_name`),
   KEY `location_container_id` (`location_container_id`),
-  CONSTRAINT `t_location_container_detail_ibfk_1` FOREIGN KEY (`location_container_id`) REFERENCES `t_location_container` (`id`)
+  CONSTRAINT `t_container_ibfk_1` FOREIGN KEY (`location_container_id`) REFERENCES `t_location_detail` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_location_container_detail`
+-- Dumping data for table `t_container`
 --
 
-LOCK TABLES `t_location_container_detail` WRITE;
-/*!40000 ALTER TABLE `t_location_container_detail` DISABLE KEYS */;
-INSERT INTO `t_location_container_detail` VALUES (1,1,'BOX-LD-001'),(2,1,'BOX-LD-002'),(3,1,'BOX-LD-003'),(4,1,'BOX-LD-004'),(5,1,'BOX-LD-005'),(6,1,'BOX-LD-006'),(7,1,'BOX-LD-007'),(8,1,'BOX-LD-008'),(9,1,'BOX-LD-009');
-/*!40000 ALTER TABLE `t_location_container_detail` ENABLE KEYS */;
+LOCK TABLES `t_container` WRITE;
+/*!40000 ALTER TABLE `t_container` DISABLE KEYS */;
+INSERT INTO `t_container` VALUES (1,1,'BOX-LD-001'),(2,1,'BOX-LD-002'),(3,1,'BOX-LD-003'),(4,1,'BOX-LD-004'),(5,1,'BOX-LD-005'),(6,1,'BOX-LD-006'),(7,1,'BOX-LD-007'),(8,1,'BOX-LD-008'),(9,1,'BOX-LD-009');
+/*!40000 ALTER TABLE `t_container` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_container_detail`
+--
+
+DROP TABLE IF EXISTS `t_container_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_container_detail` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `container_id` int DEFAULT NULL,
+  `container_detail_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `container_detail_id` (`container_id`),
+  CONSTRAINT `t_container_detail_ibfk_1` FOREIGN KEY (`container_id`) REFERENCES `t_container` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_container_detail`
+--
+
+LOCK TABLES `t_container_detail` WRITE;
+/*!40000 ALTER TABLE `t_container_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_container_detail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_location_detail`
+--
+
+DROP TABLE IF EXISTS `t_location_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_location_detail` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `location_id` int DEFAULT NULL,
+  `location_detail_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `container_name` (`location_detail_name`),
+  KEY `location_id` (`location_id`),
+  CONSTRAINT `t_location_detail_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `t_locations` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_location_detail`
+--
+
+LOCK TABLES `t_location_detail` WRITE;
+/*!40000 ALTER TABLE `t_location_detail` DISABLE KEYS */;
+INSERT INTO `t_location_detail` VALUES (1,5,'LD.01.01.01'),(2,5,'LD.01.01.02'),(3,5,'LD.01.02.01'),(4,5,'LD.01.02.02');
+/*!40000 ALTER TABLE `t_location_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -357,4 +383,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-07 11:03:38
+-- Dump completed on 2025-10-08 18:16:28

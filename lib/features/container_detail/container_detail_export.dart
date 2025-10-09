@@ -1,0 +1,10 @@
+export 'data/model/container_detail_model.dart';
+export 'data/repositories/container_detail_repository_impl.dart';
+export 'data/source/container_detail_local_data_source.dart';
+export 'data/source/container_detail_local_data_source_impl.dart';
+export 'domain/entities/container_detail.dart';
+export 'domain/repositories/container_detail_repository.dart';
+export 'domain/usecases/create_container_detail_use_case.dart';
+export 'domain/usecases/find_all_container_detail_use_case.dart';
+export 'domain/usecases/update_container_detail_use_case.dart';
+export 'presentation/response/container_detail_response.dart';

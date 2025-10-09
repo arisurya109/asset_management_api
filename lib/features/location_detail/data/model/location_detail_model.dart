@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynamic_calls
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynam
 
 import 'package:asset_management_api/features/location_detail/domain/entities/location_detail.dart';
 import 'package:equatable/equatable.dart';

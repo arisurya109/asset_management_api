@@ -1,0 +1,16 @@
+// ignore_for_file: public_member_api_docs
+
+import 'package:asset_management_api/core/error/failure.dart';
+import 'package:asset_management_api/features/container_detail/domain/entities/container_detail.dart';
+import 'package:asset_management_api/features/container_detail/domain/repositories/container_detail_repository.dart';
+import 'package:dartz/dartz.dart';
+
+class CreateContainerDetailUseCase {
+  CreateContainerDetailUseCase(this._repository);
+
+  final ContainerDetailRepository _repository;
+
+  Future<Either<Failure, ContainerDetail>> call(ContainerDetail params) async {
+    return _repository.createContainerDetail(params);
+  }
+}

@@ -78,7 +78,58 @@ class LocationDetailLocalDataSourceImpl
   }
 
   @override
-  Future<LocationDetailModel> updateLocationDetail(LocationDetailModel params) {
-    throw UnimplementedError();
+  Future<LocationDetailModel> updateLocationDetail(
+    LocationDetailModel params,
+  ) async {
+    final db = await _database.connection;
+
+    final response = await db.transaction((txn) async {
+      final checkLocationDetail = await txn.query(
+        'SELECT COUNT(id) FROM t_location_detail WHERE id = ?',
+        [params.locationId],
+      );
+
+      if (checkLocationDetail.first.fields['COUNT(id)'] == 0) {
+        throw UpdateException(
+          message: 'Failed to update location detail, location is not found',
+        );
+      }
+
+      final updateLocation = await txn.query(
+        '''
+        UPDATE t_location_detail
+        SET location_name = ?
+        WHERE id = ?
+        ''',
+        [params.locationId],
+      );
+
+      if (updateLocation.affectedRows == null ||
+          updateLocation.affectedRows == 0) {
+        throw UpdateException(
+          message: 'Failed to update location, please try again',
+        );
+      }
+
+      final newLocation = await txn.query(
+        '''
+        SELECT
+          ld.id AS id,
+          ld.location_detail_name AS location_detail_name,
+          l.id AS location_id,
+          l.location_code AS location_code,
+          l.location_name AS location_name,
+        FROM
+          t_location_detail AS ld
+        LEFT JOIN t_locations AS l ON ld.location_id = l.id
+        WHERE l.id = ?
+        ''',
+        [params.id],
+      );
+
+      return newLocation.first.fields;
+    });
+
+    return LocationDetailModel.fromDatabase(response!);
   }
 }

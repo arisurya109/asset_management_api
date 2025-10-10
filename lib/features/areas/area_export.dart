@@ -1,9 +1,0 @@
-export 'data/model/area_model.dart';
-export 'data/repositories/area_repository_impl.dart';
-export 'data/source/area_local_data_source.dart';
-export 'data/source/area_local_data_source_impl.dart';
-export 'domain/entities/area.dart';
-export 'domain/repositories/area_repository.dart';
-export 'domain/usecases/find_all_area_use_case.dart';
-export 'domain/usecases/find_area_by_id_use_case.dart';
-export 'presentation/response/area_response.dart';

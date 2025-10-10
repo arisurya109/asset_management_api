@@ -1,3 +1,6 @@
 {
-	"recommendations": ["VeryGoodVentures.dart-frog"]
+  "recommendations": [
+    "VeryGoodVentures.dart-frog",
+    "hzgood.dart-data-class-generator"
+  ]
 }

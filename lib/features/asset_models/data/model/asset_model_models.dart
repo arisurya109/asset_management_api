@@ -7,6 +7,7 @@ class AssetModelModels extends Equatable {
   AssetModelModels({
     this.id,
     this.name,
+    this.code,
     this.hasSerial,
     this.isConsumable,
     this.unit,
@@ -24,6 +25,7 @@ class AssetModelModels extends Equatable {
     return AssetModelModels(
       id: params['id'] != null ? params['id'] as int : null,
       name: params['name'] != null ? params['name'] as String : null,
+      code: params['code'] != null ? params['code'] as String : null,
       hasSerial:
           params['has_serial'] != null ? params['has_serial'] as int : null,
       isConsumable: params['is_consumable'] != null
@@ -53,6 +55,7 @@ class AssetModelModels extends Equatable {
     return AssetModelModels(
       id: params.id,
       name: params.name,
+      code: params.code,
       hasSerial: params.hasSerial,
       isConsumable: params.isConsumable,
       unit: params.unit,
@@ -80,11 +83,13 @@ class AssetModelModels extends Equatable {
   String? typeName;
   String? categoryName;
   String? brandName;
+  String? code;
 
   AssetModel toEntity() {
     return AssetModel(
       id: id,
       name: name,
+      code: code,
       hasSerial: hasSerial,
       isConsumable: isConsumable,
       unit: unit,
@@ -103,6 +108,7 @@ class AssetModelModels extends Equatable {
   List<Object?> get props => [
         id,
         name,
+        code,
         hasSerial,
         unit,
         createdBy,

@@ -15,4 +15,5 @@ abstract class UserLocalDataSource {
     String oldPassword,
     String newPassword,
   );
+  Future<UserModel> autoLogin(int id);
 }

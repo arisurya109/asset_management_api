@@ -17,4 +17,5 @@ abstract class UserRepository {
     String oldPassword,
     String newPassword,
   );
+  Future<Either<Failure, User>> autoLogin(int id);
 }

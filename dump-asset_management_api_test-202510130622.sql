@@ -85,6 +85,7 @@ CREATE TABLE `t_asset_models` (
   `category_id` int DEFAULT NULL,
   `brand_id` int DEFAULT NULL,
   `is_consumable` int DEFAULT NULL,
+  `code` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`),
   KEY `last_updated_by` (`last_updated_by`),
@@ -96,7 +97,7 @@ CREATE TABLE `t_asset_models` (
   CONSTRAINT `t_asset_models_ibfk_3` FOREIGN KEY (`type_id`) REFERENCES `t_asset_types` (`id`),
   CONSTRAINT `t_asset_models_ibfk_4` FOREIGN KEY (`category_id`) REFERENCES `t_asset_categories` (`id`),
   CONSTRAINT `t_asset_models_ibfk_5` FOREIGN KEY (`brand_id`) REFERENCES `t_asset_brands` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +106,7 @@ CREATE TABLE `t_asset_models` (
 
 LOCK TABLES `t_asset_models` WRITE;
 /*!40000 ALTER TABLE `t_asset_models` DISABLE KEYS */;
-INSERT INTO `t_asset_models` VALUES (1,'OPTIPLEX 7010',1,1,'2025-10-09 15:09:26',1,NULL,NULL,3,2,1,0),(2,'E1916H',1,1,'2025-10-09 15:09:26',1,NULL,NULL,3,1,1,0),(4,'Beetle M2 Plus',1,1,'2025-10-09 15:09:26',1,NULL,NULL,1,2,4,0),(5,'Beetle A Series',1,1,'2025-10-09 15:09:26',1,NULL,NULL,1,2,4,0);
+INSERT INTO `t_asset_models` VALUES (1,'OPTIPLEX 7010',1,1,'2025-10-09 15:09:26',1,NULL,NULL,3,2,1,0,NULL),(2,'E1916H',1,1,'2025-10-09 15:09:26',1,NULL,NULL,3,1,1,0,NULL),(4,'Beetle M2 Plus',1,1,'2025-10-09 15:09:26',1,NULL,NULL,1,2,4,0,NULL),(5,'Beetle A Series',1,1,'2025-10-09 15:09:26',1,NULL,NULL,1,2,4,0,NULL),(8,'TESTING UPS 1',1,1,'2025-10-12 06:11:52',1,NULL,NULL,3,3,1,NULL,NULL),(9,'OPTIPLEX 7090',0,0,'2025-10-12 06:22:26',1,NULL,NULL,3,1,1,1,NULL),(10,'TESTING CODE 1',1,1,'2025-10-12 19:01:22',1,NULL,NULL,1,1,4,0,NULL),(11,'TESTING CODE 2',1,1,'2025-10-12 19:05:17',1,NULL,NULL,1,1,4,0,'123456789');
 /*!40000 ALTER TABLE `t_asset_models` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,16 +153,15 @@ CREATE TABLE `t_assets` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` int DEFAULT NULL,
   `asset_model_id` int DEFAULT NULL,
-  `purchase_order_id` int DEFAULT NULL,
   `color_id` int DEFAULT NULL,
   `location_id` int DEFAULT NULL,
   `location_detail_id` int DEFAULT NULL,
   `location_team_id` int DEFAULT NULL,
   `location_rack_id` int DEFAULT NULL,
   `location_box_id` int DEFAULT NULL,
+  `purchase_order_number` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `color_id` (`color_id`),
-  KEY `purchase_order_id` (`purchase_order_id`),
   KEY `registred_by` (`registred_by`),
   KEY `updated_by` (`updated_by`),
   KEY `asset_model_id` (`asset_model_id`),
@@ -172,7 +172,6 @@ CREATE TABLE `t_assets` (
   KEY `location_box_id` (`location_box_id`),
   CONSTRAINT `t_assets_ibfk_1` FOREIGN KEY (`color_id`) REFERENCES `t_colors` (`id`),
   CONSTRAINT `t_assets_ibfk_10` FOREIGN KEY (`location_box_id`) REFERENCES `t_location_boxs` (`id`),
-  CONSTRAINT `t_assets_ibfk_2` FOREIGN KEY (`purchase_order_id`) REFERENCES `t_purchase_orders` (`id`),
   CONSTRAINT `t_assets_ibfk_3` FOREIGN KEY (`registred_by`) REFERENCES `t_users` (`id`),
   CONSTRAINT `t_assets_ibfk_4` FOREIGN KEY (`updated_by`) REFERENCES `t_users` (`id`),
   CONSTRAINT `t_assets_ibfk_5` FOREIGN KEY (`asset_model_id`) REFERENCES `t_asset_models` (`id`),
@@ -189,7 +188,7 @@ CREATE TABLE `t_assets` (
 
 LOCK TABLES `t_assets` WRITE;
 /*!40000 ALTER TABLE `t_assets` DISABLE KEYS */;
-INSERT INTO `t_assets` VALUES (1,'AST-CPU-2510090001','SN1','IN_USER','NEW',NULL,'2025-10-09 15:35:56',1,NULL,NULL,1,NULL,NULL,2,3,6,NULL,NULL),(2,'AST-MNT-2510090001','SN2','IN_USER','NEW',NULL,'2025-10-09 15:35:56',1,NULL,NULL,1,NULL,NULL,2,3,6,NULL,NULL);
+INSERT INTO `t_assets` VALUES (1,'AST-CPU-2510090001','SN1','IN_USER','NEW',NULL,'2025-10-09 15:35:56',1,NULL,NULL,1,NULL,2,3,6,NULL,NULL,NULL),(2,'AST-MNT-2510090001','SN2','IN_USER','NEW',NULL,'2025-10-09 15:35:56',1,NULL,NULL,1,NULL,2,3,6,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `t_assets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,6 +228,7 @@ CREATE TABLE `t_location_boxs` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `location_rack_id` int DEFAULT NULL,
+  `box_type` enum('CARDBOX','TOTEBOX') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `location_rack_id` (`location_rack_id`),
   CONSTRAINT `t_location_boxs_ibfk_1` FOREIGN KEY (`location_rack_id`) REFERENCES `t_location_racks` (`id`)
@@ -241,7 +241,7 @@ CREATE TABLE `t_location_boxs` (
 
 LOCK TABLES `t_location_boxs` WRITE;
 /*!40000 ALTER TABLE `t_location_boxs` DISABLE KEYS */;
-INSERT INTO `t_location_boxs` VALUES (1,'BOX-LD-001',1),(2,'BOX-LD-010',2);
+INSERT INTO `t_location_boxs` VALUES (1,'BOX-LD-001',1,NULL),(2,'BOX-LD-010',2,NULL);
 /*!40000 ALTER TABLE `t_location_boxs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,7 +368,7 @@ CREATE TABLE `t_module_permission` (
   KEY `permission_id` (`permission_id`),
   CONSTRAINT `t_module_permission_ibfk_1` FOREIGN KEY (`module_id`) REFERENCES `t_modules` (`id`),
   CONSTRAINT `t_module_permission_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `t_permissions` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -377,7 +377,7 @@ CREATE TABLE `t_module_permission` (
 
 LOCK TABLES `t_module_permission` WRITE;
 /*!40000 ALTER TABLE `t_module_permission` DISABLE KEYS */;
-INSERT INTO `t_module_permission` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4);
+INSERT INTO `t_module_permission` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,2,1),(6,2,2),(7,2,3),(8,2,4);
 /*!40000 ALTER TABLE `t_module_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -394,7 +394,7 @@ CREATE TABLE `t_modules` (
   `module_label` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `module_name` (`module_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -403,7 +403,7 @@ CREATE TABLE `t_modules` (
 
 LOCK TABLES `t_modules` WRITE;
 /*!40000 ALTER TABLE `t_modules` DISABLE KEYS */;
-INSERT INTO `t_modules` VALUES (1,'user','User Management');
+INSERT INTO `t_modules` VALUES (1,'user','User Management'),(2,'master','Asset Master');
 /*!40000 ALTER TABLE `t_modules` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -580,7 +580,7 @@ CREATE TABLE `t_user_permission_module` (
 
 LOCK TABLES `t_user_permission_module` WRITE;
 /*!40000 ALTER TABLE `t_user_permission_module` DISABLE KEYS */;
-INSERT INTO `t_user_permission_module` VALUES (1,1),(1,2),(1,3),(1,4),(11,1),(11,4),(12,1),(12,4),(13,1),(13,4);
+INSERT INTO `t_user_permission_module` VALUES (1,1),(1,2),(1,3),(1,4),(11,1),(11,4),(12,1),(12,4),(13,1),(13,4),(1,5),(1,6),(1,7),(1,8),(13,5);
 /*!40000 ALTER TABLE `t_user_permission_module` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -627,4 +627,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-10 22:23:41
+-- Dump completed on 2025-10-13  6:22:50

@@ -259,4 +259,40 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
     return UserModel.fromDatabase(response!);
   }
+
+  @override
+  Future<UserModel> autoLogin(int id) async {
+    final db = await _database.connection;
+
+    final responseUser = await db.query(
+      '''
+      SELECT id, username, name, is_active
+      FROM t_users
+      WHERE id = ?
+      ''',
+      [id],
+    );
+
+    final user = responseUser.first.fields;
+
+    final responseModule = await db.query(
+      '''
+          SELECT
+	          CONCAT(m.module_name, '_', p.permission_name) AS modules
+          FROM
+	          t_user_permission_module AS upm
+          LEFT JOIN t_module_permission AS mp ON upm.module_permission_id = mp.id
+          LEFT JOIN t_modules AS m ON mp.module_id = m.id
+          LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
+          WHERE upm.user_id = ? 
+          ''',
+      [id],
+    );
+
+    final module = responseModule.map((e) => e['modules']).toList();
+
+    user.addEntries({'modules': module}.entries);
+
+    return UserModel.fromDatabase(user);
+  }
 }

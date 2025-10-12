@@ -15,7 +15,7 @@ class AssetTypeLocalDataSourceImpl implements AssetTypeLocalDataSource {
     final db = await _database.connection;
 
     final response = await db.query(
-      'INSERT INTO t_types(name) VALUES (?)',
+      'INSERT INTO t_asset_types(name) VALUES (?)',
       [params.name],
     );
 
@@ -29,7 +29,7 @@ class AssetTypeLocalDataSourceImpl implements AssetTypeLocalDataSource {
     final db = await _database.connection;
 
     final response = await db.query(
-      'SELECT * FROM t_types',
+      'SELECT * FROM t_asset_types',
     );
 
     return response.map((e) => AssetTypeModel.fromDatabase(e.fields)).toList();
@@ -40,7 +40,7 @@ class AssetTypeLocalDataSourceImpl implements AssetTypeLocalDataSource {
     final db = await _database.connection;
 
     final response = await db.query(
-      'SELECT * FROM t_types WHERE id = ?',
+      'SELECT * FROM t_asset_types WHERE id = ?',
       [params],
     );
 
@@ -52,7 +52,7 @@ class AssetTypeLocalDataSourceImpl implements AssetTypeLocalDataSource {
     final db = await _database.connection;
 
     final response = await db.query(
-      'UPDATE t_types SET name = ? WHERE id = ?',
+      'UPDATE t_asset_types SET name = ? WHERE id = ?',
       [params.name, params.id],
     );
 

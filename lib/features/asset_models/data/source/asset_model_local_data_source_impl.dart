@@ -16,26 +16,28 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
 
     final response = await db.transaction((txn) async {
       final checkName = await txn.query(
-        'SELECT COUNT(id) FROM t_asset_models WHERE UPPER(name) = UPPER(?)',
-        [params.name],
+        'SELECT COUNT(id) FROM t_asset_models WHERE UPPER(name) = UPPER(?) OR UPPER(code) = UPPER(?)',
+        [params.name, params.code],
       );
 
       if (checkName.first.fields['COUNT(id)'] as int > 0) {
         throw CreateException(
-          message: 'Failed to create asset, name already exists',
+          message: 'Failed to create asset, name or code already exists',
         );
       } else {
         final response = await txn.query('''
-          INSERT INTO t_asset_models(name, has_serial, unit, created_by, type_id, category_id, brand_id)
-          VALUES (?, ?, ?, ?, ?, ?, ?)
+          INSERT INTO t_asset_models(name, code, has_serial, unit, created_by, type_id, category_id, brand_id, is_consumable)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
           ''', [
           params.name,
+          params.code,
           params.hasSerial,
           params.unit,
-          params.categoryId,
+          params.createdBy,
           params.typeId,
           params.categoryId,
           params.brandId,
+          params.isConsumable,
         ]);
 
         if (response.insertId == null || response.insertId == 0) {
@@ -48,6 +50,7 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
             SELECT
               am.id AS id, 
               am.name AS name,
+              am.code AS code,
               am.has_serial AS has_serial,
               am.is_consumable AS is_consumable,
               am.unit AS unit,
@@ -59,8 +62,8 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
               ab.name AS brand_name
             FROM t_asset_models AS am
             LEFT JOIN t_asset_types AS at ON am.type_id = at.id
-            LEFT JOIN t_asset_categories AS ac ON ac.category_id = ac.id
-            LEFT JOIN t_asset_brands AS ab ON ac.brand_id = ab.id
+            LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+            LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
             WHERE am.id = ?
             ''',
             [response.insertId],
@@ -82,6 +85,7 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
       SELECT
         am.id AS id, 
         am.name AS name,
+        am.code AS code,
         am.has_serial AS has_serial,
         am.is_consumable AS is_consumable,
         am.unit AS unit,
@@ -93,8 +97,8 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
         ab.name AS brand_name
       FROM t_asset_models AS am
       LEFT JOIN t_asset_types AS at ON am.type_id = at.id
-      LEFT JOIN t_asset_categories AS ac ON ac.category_id = ac.id
-      LEFT JOIN t_asset_brands AS ab ON ac.brand_id = ab.id
+      LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+      LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
       ''',
     );
 
@@ -118,6 +122,7 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
       SELECT
         am.id AS id, 
         am.name AS name,
+        am.code AS code,
         am.has_serial AS has_serial,
         am.is_consumable AS is_consumable,
         am.unit AS unit,
@@ -129,8 +134,8 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
         ab.name AS brand_name
       FROM t_asset_models AS am
       LEFT JOIN t_asset_types AS at ON am.type_id = at.id
-      LEFT JOIN t_asset_categories AS ac ON ac.category_id = ac.id
-      LEFT JOIN t_asset_brands AS ab ON ac.brand_id = ab.id
+      LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+      LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
       WHERE am.id = ? LIMIT 1
       ''',
       [params],
@@ -178,6 +183,7 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
           SELECT
             am.id AS id, 
             am.name AS name,
+            am.code AS code,
             am.has_serial AS has_serial,
             am.is_consumable AS is_consumable,
             am.unit AS unit,
@@ -189,8 +195,8 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
             ab.name AS brand_name
           FROM t_asset_models AS am
           LEFT JOIN t_asset_types AS at ON am.type_id = at.id
-          LEFT JOIN t_asset_categories AS ac ON ac.category_id = ac.id
-          LEFT JOIN t_asset_brands AS ab ON ac.brand_id = ab.id
+          LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+          LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
           WHERE am.id = ? LIMIT 1
           ''',
           [params.id],

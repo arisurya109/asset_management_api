@@ -26,6 +26,11 @@ class AssetModelResponse {
     } else {
       final params = await context.requestJSON();
       final usecase = context.read<CreateAssetModelUseCase>();
+      final id = await jwt.getIdUser(context);
+
+      params
+        ..remove('created_by')
+        ..addEntries({'created_by': id}.entries);
 
       final response = await usecase(AssetModel.fromRequest(params));
 
@@ -33,7 +38,7 @@ class AssetModelResponse {
         (l) => ResponseHelper.badRequest(description: l.message!),
         (r) => ResponseHelper.json(
           code: HttpStatus.created,
-          status: 'Successfully create asset model',
+          status: 'Successfully create new asset model',
           body: r.toResponse(),
         ),
       );

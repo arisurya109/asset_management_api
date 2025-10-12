@@ -90,4 +90,14 @@ class UserRepositoryImpl implements UserRepository {
       return Left(NotFoundFailure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, User>> autoLogin(int id) async {
+    try {
+      final response = await _source.autoLogin(id);
+      return Right(response.toEntity());
+    } catch (e) {
+      return Left(CreateFailure(e.toString()));
+    }
+  }
 }

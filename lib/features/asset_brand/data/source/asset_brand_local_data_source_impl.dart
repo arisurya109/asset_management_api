@@ -53,7 +53,7 @@ class AssetBrandLocalDataSourceImpl implements AssetBrandLocalDataSource {
     final db = await _database.connection;
 
     final response = await db.query(
-      'SELECT * FROM t_asset_brand',
+      'SELECT * FROM t_asset_brands',
     );
 
     if (response.firstOrNull == null) {

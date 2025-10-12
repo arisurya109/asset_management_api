@@ -7,7 +7,9 @@ import 'package:asset_management_api/features/asset_categories/asset_category_ex
 import 'package:asset_management_api/features/asset_models/asset_model_export.dart';
 
 import 'package:asset_management_api/features/asset_type/asset_type_export.dart';
+import 'package:asset_management_api/features/locations/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
+import 'package:asset_management_api/features/users/domain/usecases/auto_login_use_case.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
 
 final Database database = Database();
@@ -28,6 +30,7 @@ final UpdateUserUseCase updateUserUseCase = UpdateUserUseCase(userRepository);
 final LoginUseCase loginUseCase = LoginUseCase(userRepository);
 final ChangePasswordUseCase changePasswordUseCase =
     ChangePasswordUseCase(userRepository);
+final AutoLoginUseCase autoLoginUseCase = AutoLoginUseCase(userRepository);
 
 // Module Permission
 final ModulePermissionLocalDataSource modulePermissionLocalDataSource =
@@ -94,3 +97,29 @@ final CreateAssetModelUseCase createAssetModelUseCase =
     CreateAssetModelUseCase(assetModelRepository);
 final UpdateAssetModelUseCase updateAssetModelUseCase =
     UpdateAssetModelUseCase(assetModelRepository);
+
+// Location
+final LocationLocalDataSource locationLocalDataSource =
+    LocationLocalDataSourceImpl(database);
+final LocationRepository locationRepository =
+    LocationRepositoryImpl(locationLocalDataSource);
+final CreateLocationUseCase createLocationUseCase =
+    CreateLocationUseCase(locationRepository);
+final CreateLocationBoxUseCase createLocationBoxUseCase =
+    CreateLocationBoxUseCase(locationRepository);
+final CreateLocationDetailUseCase createLocationDetailUseCase =
+    CreateLocationDetailUseCase(locationRepository);
+final CreateLocationRackUseCase createLocationRackUseCase =
+    CreateLocationRackUseCase(locationRepository);
+final CreateLocationTeamUseCase createLocationTeamUseCase =
+    CreateLocationTeamUseCase(locationRepository);
+final FindAllLocationBoxUseCase findAllLocationBoxUseCase =
+    FindAllLocationBoxUseCase(locationRepository);
+final FindAllLocationRackUseCase findAllLocationRackUseCase =
+    FindAllLocationRackUseCase(locationRepository);
+final FindAllLocationTeamUseCase findAllLocationTeamUseCase =
+    FindAllLocationTeamUseCase(locationRepository);
+final FindAllLocationDetailUseCase findAllLocationDetailUseCase =
+    FindAllLocationDetailUseCase(locationRepository);
+final FindAllLocationUseCase findAllLocationUseCase =
+    FindAllLocationUseCase(locationRepository);

@@ -6,11 +6,14 @@ import 'package:asset_management_api/core/helpers/response_helper.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:dart_frog/dart_frog.dart';
 
-Future<Response> onRequest(RequestContext context) async {
-  if (context.httpMethodPost) {
-    return await LocationResponse.createLocation(context);
-  } else if (context.httpMethodGet) {
-    return await LocationResponse.findAllLocation(context);
+Future<Response> onRequest(
+  RequestContext context,
+  String id,
+) async {
+  if (context.httpMethodGet) {
+    return await LocationResponse.findByIdLocation(context, id);
+  } else if (context.httpMethodPut) {
+    return await LocationResponse.updateLocation(context, id);
   }
   return ResponseHelper.methodNotAllowed(description: ErrorMsg.methodAllowed);
 }

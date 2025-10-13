@@ -44,3 +44,46 @@ class Database {
     }
   }
 }
+
+class DatabaseErpOld {
+  factory DatabaseErpOld() => _instance;
+
+  DatabaseErpOld._internal() {
+    _loadEnv();
+  }
+
+  static final DatabaseErpOld _instance = DatabaseErpOld._internal();
+
+  late final DotEnv env;
+  MySqlConnection? _connection;
+
+  void _loadEnv() {
+    env = DotEnv()..load();
+  }
+
+  Future<MySqlConnection> get connection async {
+    _connection ??= await _connect();
+    return _connection!;
+  }
+
+  Future<void> close() async {
+    await _connection?.close();
+    _connection = null;
+  }
+
+  Future<MySqlConnection?> _connect() async {
+    try {
+      return await MySqlConnection.connect(
+        ConnectionSettings(
+          host: env['DB_HOST']!,
+          user: env['DB_USER'],
+          password: env['DB_PASSWORD'],
+          db: env['DB_NAME_OLD'],
+          port: int.parse(env['DB_PORT']!),
+        ),
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+}

@@ -7,12 +7,13 @@ import 'package:asset_management_api/features/asset_categories/asset_category_ex
 import 'package:asset_management_api/features/asset_models/asset_model_export.dart';
 
 import 'package:asset_management_api/features/asset_type/asset_type_export.dart';
-import 'package:asset_management_api/features/locations/location_export.dart';
+import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
 import 'package:asset_management_api/features/users/domain/usecases/auto_login_use_case.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
 
 final Database database = Database();
+final DatabaseErpOld databaseErpOld = DatabaseErpOld();
 final JwtService jwtService = JwtServiceImpl(database);
 
 // User
@@ -105,21 +106,9 @@ final LocationRepository locationRepository =
     LocationRepositoryImpl(locationLocalDataSource);
 final CreateLocationUseCase createLocationUseCase =
     CreateLocationUseCase(locationRepository);
-final CreateLocationBoxUseCase createLocationBoxUseCase =
-    CreateLocationBoxUseCase(locationRepository);
-final CreateLocationDetailUseCase createLocationDetailUseCase =
-    CreateLocationDetailUseCase(locationRepository);
-final CreateLocationRackUseCase createLocationRackUseCase =
-    CreateLocationRackUseCase(locationRepository);
-final CreateLocationTeamUseCase createLocationTeamUseCase =
-    CreateLocationTeamUseCase(locationRepository);
-final FindAllLocationBoxUseCase findAllLocationBoxUseCase =
-    FindAllLocationBoxUseCase(locationRepository);
-final FindAllLocationRackUseCase findAllLocationRackUseCase =
-    FindAllLocationRackUseCase(locationRepository);
-final FindAllLocationTeamUseCase findAllLocationTeamUseCase =
-    FindAllLocationTeamUseCase(locationRepository);
-final FindAllLocationDetailUseCase findAllLocationDetailUseCase =
-    FindAllLocationDetailUseCase(locationRepository);
-final FindAllLocationUseCase findAllLocationUseCase =
+final FindAllLocationUseCase findAllocationUseCase =
     FindAllLocationUseCase(locationRepository);
+final FindByIdLocationUseCase findByIdocationUseCase =
+    FindByIdLocationUseCase(locationRepository);
+final UpdateLocationUseCase updateocationUseCase =
+    UpdateLocationUseCase(locationRepository);

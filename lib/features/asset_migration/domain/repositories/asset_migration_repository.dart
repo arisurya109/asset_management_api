@@ -6,8 +6,9 @@ import 'package:dartz/dartz.dart';
 
 abstract class AssetMigrationRepository {
   Future<Either<Failure, List<AssetMigration>>> findAllAsset();
-  Future<Either<Failure, AssetMigration>> createNewAsset(AssetMigration params);
-  Future<Either<Failure, AssetMigration>> isMigrationAsset(
+  Future<Either<Failure, AssetMigration>> createAssetConsumable(
     AssetMigration params,
   );
+  Future<Either<Failure, AssetMigration>> createNewAsset(AssetMigration params);
+  Future<Either<Failure, AssetMigration>> migrationAsset(AssetMigration params);
 }

@@ -7,16 +7,19 @@ class AssetTypeModel extends Equatable {
   AssetTypeModel({
     this.id,
     this.name,
+    this.init,
   });
 
   int? id;
   String? name;
+  String? init;
 
   // ignore: sort_constructors_first
   factory AssetTypeModel.fromDatabase(Map<String, dynamic> params) {
     return AssetTypeModel(
       id: params['id'] != null ? params['id'] as int : null,
       name: params['name'] != null ? params['name'] as String : null,
+      init: params['init'] != null ? params['init'] as String : null,
     );
   }
 
@@ -25,6 +28,7 @@ class AssetTypeModel extends Equatable {
     return AssetTypeModel(
       id: params.id,
       name: params.name,
+      init: params.init,
     );
   }
 
@@ -32,9 +36,10 @@ class AssetTypeModel extends Equatable {
     return AssetType(
       id: id,
       name: name,
+      init: init,
     );
   }
 
   @override
-  List<Object?> get props => [id, name];
+  List<Object?> get props => [id, name, init];
 }

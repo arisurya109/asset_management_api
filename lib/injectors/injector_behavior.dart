@@ -4,6 +4,7 @@ import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
 import 'package:asset_management_api/features/asset_brand/asset_brand_export.dart';
 import 'package:asset_management_api/features/asset_categories/asset_category_export.dart';
+import 'package:asset_management_api/features/asset_migration/asset_migration_export.dart';
 import 'package:asset_management_api/features/asset_models/asset_model_export.dart';
 
 import 'package:asset_management_api/features/asset_type/asset_type_export.dart';
@@ -112,3 +113,17 @@ final FindByIdLocationUseCase findByIdocationUseCase =
     FindByIdLocationUseCase(locationRepository);
 final UpdateLocationUseCase updateocationUseCase =
     UpdateLocationUseCase(locationRepository);
+
+// Asset Migration
+final AssetMigrationLocalDataSource assetMigrationLocalDataSource =
+    AssetMigrationLocalDataSourceImpl(database, databaseErpOld);
+final AssetMigrationRepository assetMigrationRepository =
+    AssetMigrationRepositoryImpl(assetMigrationLocalDataSource);
+final CreateAssetConsumableUseCase createAssetConsumableUseCase =
+    CreateAssetConsumableUseCase(assetMigrationRepository);
+final CreateNewAssetUseCase createNewAssetUseCase =
+    CreateNewAssetUseCase(assetMigrationRepository);
+final FindAllAssetMigrationUseCase findAllAssetMigrationUseCase =
+    FindAllAssetMigrationUseCase(assetMigrationRepository);
+final MigrationAssetUseCase migrationAssetUseCase =
+    MigrationAssetUseCase(assetMigrationRepository);

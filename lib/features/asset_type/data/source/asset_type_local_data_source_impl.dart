@@ -15,7 +15,7 @@ class AssetTypeLocalDataSourceImpl implements AssetTypeLocalDataSource {
     final db = await _database.connection;
 
     final response = await db.query(
-      'INSERT INTO t_asset_types(name) VALUES (?)',
+      'INSERT INTO t_asset_types(name, init) VALUES (?, init)',
       [params.name],
     );
 

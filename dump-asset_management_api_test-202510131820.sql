@@ -97,7 +97,7 @@ CREATE TABLE `t_asset_models` (
   CONSTRAINT `t_asset_models_ibfk_3` FOREIGN KEY (`type_id`) REFERENCES `t_asset_types` (`id`),
   CONSTRAINT `t_asset_models_ibfk_4` FOREIGN KEY (`category_id`) REFERENCES `t_asset_categories` (`id`),
   CONSTRAINT `t_asset_models_ibfk_5` FOREIGN KEY (`brand_id`) REFERENCES `t_asset_brands` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +106,7 @@ CREATE TABLE `t_asset_models` (
 
 LOCK TABLES `t_asset_models` WRITE;
 /*!40000 ALTER TABLE `t_asset_models` DISABLE KEYS */;
-INSERT INTO `t_asset_models` VALUES (1,'OPTIPLEX 7010',1,1,'2025-10-09 15:09:26',1,NULL,NULL,3,2,1,0,NULL),(2,'E1916H',1,1,'2025-10-09 15:09:26',1,NULL,NULL,3,1,1,0,NULL),(4,'Beetle M2 Plus',1,1,'2025-10-09 15:09:26',1,NULL,NULL,1,2,4,0,NULL),(5,'Beetle A Series',1,1,'2025-10-09 15:09:26',1,NULL,NULL,1,2,4,0,NULL),(8,'TESTING UPS 1',1,1,'2025-10-12 06:11:52',1,NULL,NULL,3,3,1,NULL,NULL),(9,'OPTIPLEX 7090',0,0,'2025-10-12 06:22:26',1,NULL,NULL,3,1,1,1,NULL),(10,'TESTING CODE 1',1,1,'2025-10-12 19:01:22',1,NULL,NULL,1,1,4,0,NULL),(11,'TESTING CODE 2',1,1,'2025-10-12 19:05:17',1,NULL,NULL,1,1,4,0,'123456789');
+INSERT INTO `t_asset_models` VALUES (1,'OPTIPLEX 7010',1,1,'2025-10-09 15:09:26',1,NULL,NULL,3,2,1,0,NULL),(2,'E1916H',1,1,'2025-10-09 15:09:26',1,NULL,NULL,3,1,1,0,NULL),(4,'Beetle M2 Plus',1,1,'2025-10-09 15:09:26',1,NULL,NULL,1,2,4,0,NULL),(5,'Beetle A Series',1,1,'2025-10-09 15:09:26',1,NULL,NULL,1,2,4,0,NULL),(8,'TESTING UPS 1',1,1,'2025-10-12 06:11:52',1,NULL,NULL,3,3,1,NULL,NULL),(9,'OPTIPLEX 7090',0,0,'2025-10-12 06:22:26',1,NULL,NULL,3,1,1,1,NULL),(10,'TESTING CODE 1',1,1,'2025-10-12 19:01:22',1,NULL,NULL,1,1,4,0,NULL),(11,'TESTING CODE 2',1,1,'2025-10-12 19:05:17',1,NULL,NULL,1,1,4,0,'123456789'),(12,'SAMPLE2',1,1,'2025-10-13 12:27:18',1,NULL,NULL,3,2,4,0,'098765');
 /*!40000 ALTER TABLE `t_asset_models` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,31 +154,20 @@ CREATE TABLE `t_assets` (
   `updated_by` int DEFAULT NULL,
   `asset_model_id` int DEFAULT NULL,
   `color_id` int DEFAULT NULL,
-  `location_id` int DEFAULT NULL,
-  `location_detail_id` int DEFAULT NULL,
-  `location_team_id` int DEFAULT NULL,
-  `location_rack_id` int DEFAULT NULL,
-  `location_box_id` int DEFAULT NULL,
   `purchase_order_number` varchar(100) DEFAULT NULL,
+  `quantity` int DEFAULT '1',
+  `location_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `color_id` (`color_id`),
   KEY `registred_by` (`registred_by`),
   KEY `updated_by` (`updated_by`),
   KEY `asset_model_id` (`asset_model_id`),
   KEY `location_id` (`location_id`),
-  KEY `location_detail_id` (`location_detail_id`),
-  KEY `location_team_id` (`location_team_id`),
-  KEY `location_rack_id` (`location_rack_id`),
-  KEY `location_box_id` (`location_box_id`),
   CONSTRAINT `t_assets_ibfk_1` FOREIGN KEY (`color_id`) REFERENCES `t_colors` (`id`),
-  CONSTRAINT `t_assets_ibfk_10` FOREIGN KEY (`location_box_id`) REFERENCES `t_location_boxs` (`id`),
   CONSTRAINT `t_assets_ibfk_3` FOREIGN KEY (`registred_by`) REFERENCES `t_users` (`id`),
   CONSTRAINT `t_assets_ibfk_4` FOREIGN KEY (`updated_by`) REFERENCES `t_users` (`id`),
   CONSTRAINT `t_assets_ibfk_5` FOREIGN KEY (`asset_model_id`) REFERENCES `t_asset_models` (`id`),
-  CONSTRAINT `t_assets_ibfk_6` FOREIGN KEY (`location_id`) REFERENCES `t_locations` (`id`),
-  CONSTRAINT `t_assets_ibfk_7` FOREIGN KEY (`location_detail_id`) REFERENCES `t_location_details` (`id`),
-  CONSTRAINT `t_assets_ibfk_8` FOREIGN KEY (`location_team_id`) REFERENCES `t_location_teams` (`id`),
-  CONSTRAINT `t_assets_ibfk_9` FOREIGN KEY (`location_rack_id`) REFERENCES `t_location_racks` (`id`)
+  CONSTRAINT `t_assets_ibfk_6` FOREIGN KEY (`location_id`) REFERENCES `t_locations` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -188,7 +177,7 @@ CREATE TABLE `t_assets` (
 
 LOCK TABLES `t_assets` WRITE;
 /*!40000 ALTER TABLE `t_assets` DISABLE KEYS */;
-INSERT INTO `t_assets` VALUES (1,'AST-CPU-2510090001','SN1','IN_USER','NEW',NULL,'2025-10-09 15:35:56',1,NULL,NULL,1,NULL,2,3,6,NULL,NULL,NULL),(2,'AST-MNT-2510090001','SN2','IN_USER','NEW',NULL,'2025-10-09 15:35:56',1,NULL,NULL,1,NULL,2,3,6,NULL,NULL,NULL);
+INSERT INTO `t_assets` VALUES (1,'AST-CPU-2510090001','SN1','IN_USER','NEW',NULL,'2025-10-09 15:35:56',1,NULL,NULL,1,NULL,NULL,1,2),(2,'AST-MNT-2510090001','SN2','IN_USER','NEW',NULL,'2025-10-09 15:35:56',1,NULL,NULL,1,NULL,NULL,1,3);
 /*!40000 ALTER TABLE `t_assets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,117 +207,6 @@ INSERT INTO `t_colors` VALUES (1,'BLACK','0XFF000000'),(2,'WHITE','0XFFFFFFFF');
 UNLOCK TABLES;
 
 --
--- Table structure for table `t_location_boxs`
---
-
-DROP TABLE IF EXISTS `t_location_boxs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `t_location_boxs` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `location_rack_id` int DEFAULT NULL,
-  `box_type` enum('CARDBOX','TOTEBOX') DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `location_rack_id` (`location_rack_id`),
-  CONSTRAINT `t_location_boxs_ibfk_1` FOREIGN KEY (`location_rack_id`) REFERENCES `t_location_racks` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_location_boxs`
---
-
-LOCK TABLES `t_location_boxs` WRITE;
-/*!40000 ALTER TABLE `t_location_boxs` DISABLE KEYS */;
-INSERT INTO `t_location_boxs` VALUES (1,'BOX-LD-001',1,NULL),(2,'BOX-LD-010',2,NULL);
-/*!40000 ALTER TABLE `t_location_boxs` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `t_location_details`
---
-
-DROP TABLE IF EXISTS `t_location_details`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `t_location_details` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `code` varchar(50) DEFAULT NULL,
-  `init` varchar(50) DEFAULT NULL,
-  `location_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `location_id` (`location_id`),
-  CONSTRAINT `t_location_details_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `t_locations` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_location_details`
---
-
-LOCK TABLES `t_location_details` WRITE;
-/*!40000 ALTER TABLE `t_location_details` DISABLE KEYS */;
-INSERT INTO `t_location_details` VALUES (1,'Ecommerce Distribution Center','905','EDC',2),(2,'Distribution Center','901','DC',2),(3,'IT','909','IT',2),(4,'STORE A','001','STA',3);
-/*!40000 ALTER TABLE `t_location_details` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `t_location_racks`
---
-
-DROP TABLE IF EXISTS `t_location_racks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `t_location_racks` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `location_team_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `location_team_id` (`location_team_id`),
-  CONSTRAINT `t_location_racks_ibfk_1` FOREIGN KEY (`location_team_id`) REFERENCES `t_location_teams` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_location_racks`
---
-
-LOCK TABLES `t_location_racks` WRITE;
-/*!40000 ALTER TABLE `t_location_racks` DISABLE KEYS */;
-INSERT INTO `t_location_racks` VALUES (1,'LD.01.01.01',5),(2,'LD.01.01.02',5);
-/*!40000 ALTER TABLE `t_location_racks` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `t_location_teams`
---
-
-DROP TABLE IF EXISTS `t_location_teams`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `t_location_teams` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `location_detail_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `location_detail_id` (`location_detail_id`),
-  CONSTRAINT `t_location_teams_ibfk_1` FOREIGN KEY (`location_detail_id`) REFERENCES `t_location_details` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_location_teams`
---
-
-LOCK TABLES `t_location_teams` WRITE;
-/*!40000 ALTER TABLE `t_location_teams` DISABLE KEYS */;
-INSERT INTO `t_location_teams` VALUES (1,'RTV',2),(2,'E-RTV',1),(3,'LOADING',2),(4,'E-LOADING',1),(5,'GUDANG I',3),(6,'RUANG SERVER',3);
-/*!40000 ALTER TABLE `t_location_teams` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_locations`
 --
 
@@ -337,9 +215,16 @@ DROP TABLE IF EXISTS `t_locations`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `t_locations` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(100) DEFAULT NULL,
+  `location_type` enum('OFFICE','STORE','WAREHOUSE','DIVISION','RACK','BOX','TABLE') DEFAULT NULL,
+  `box_type` enum('CARDBOX','TOTEBOX') DEFAULT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  `init` varchar(100) DEFAULT NULL,
+  `parent_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `parent_id` (`parent_id`),
+  CONSTRAINT `t_locations_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `t_locations` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +233,7 @@ CREATE TABLE `t_locations` (
 
 LOCK TABLES `t_locations` WRITE;
 /*!40000 ALTER TABLE `t_locations` DISABLE KEYS */;
-INSERT INTO `t_locations` VALUES (1,'HEAD OFFICE'),(2,'WAREHOUSE'),(3,'STORE');
+INSERT INTO `t_locations` VALUES (1,'Gudang I','WAREHOUSE',NULL,NULL,'WHI',NULL),(2,'LD.01.01.01','RACK',NULL,NULL,NULL,1),(3,'LD.01.01.02','RACK',NULL,NULL,NULL,1),(4,'BOX-LD-01','BOX','CARDBOX',NULL,NULL,2),(5,'BOX-LD-02','BOX','CARDBOX',NULL,NULL,2),(6,'BOX-LD-10','BOX','TOTEBOX',NULL,NULL,3),(7,'BOX-LD-11','BOX','TOTEBOX',NULL,NULL,3);
 /*!40000 ALTER TABLE `t_locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,10 +403,7 @@ CREATE TABLE `t_receives` (
   KEY `location_detail_id` (`location_detail_id`),
   KEY `location_team_id` (`location_team_id`),
   CONSTRAINT `t_receives_ibfk_1` FOREIGN KEY (`purchase_order_id`) REFERENCES `t_purchase_orders` (`id`),
-  CONSTRAINT `t_receives_ibfk_2` FOREIGN KEY (`received_by`) REFERENCES `t_users` (`id`),
-  CONSTRAINT `t_receives_ibfk_3` FOREIGN KEY (`location_id`) REFERENCES `t_locations` (`id`),
-  CONSTRAINT `t_receives_ibfk_4` FOREIGN KEY (`location_detail_id`) REFERENCES `t_location_details` (`id`),
-  CONSTRAINT `t_receives_ibfk_5` FOREIGN KEY (`location_team_id`) REFERENCES `t_location_teams` (`id`)
+  CONSTRAINT `t_receives_ibfk_2` FOREIGN KEY (`received_by`) REFERENCES `t_users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -627,4 +509,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-13  6:22:50
+-- Dump completed on 2025-10-13 18:20:19

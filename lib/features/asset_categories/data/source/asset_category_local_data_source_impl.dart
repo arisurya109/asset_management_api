@@ -34,7 +34,7 @@ class AssetCategoryLocalDataSourceImpl implements AssetCategoryLocalDataSource {
       } else {
         final newIdCategory = await txn.query(
           'INSERT INTO t_asset_categories(name, init) VALUES (?, ?)',
-          [params.name, params.init],
+          [params.name!.toUpperCase(), params.init!.toUpperCase()],
         );
 
         if (newIdCategory.insertId == null || newIdCategory.insertId == 0) {

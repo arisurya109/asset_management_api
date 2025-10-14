@@ -20,13 +20,15 @@ class AssetBrandLocalDataSourceImpl implements AssetBrandLocalDataSource {
         [params.name],
       );
 
-      if (checkName.first.fields['COUNT(id)'] == 0) {
+      print(checkName.firstOrNull);
+
+      if (checkName.first.fields['COUNT(id)'] as int > 0) {
         throw CreateException(
           message: 'Failed to create asset brand, name already exists',
         );
       } else {
         final createBrand = await txn.query(
-          'INSERT INTO t_asset_brand(name, init) VALUES (?, ?)',
+          'INSERT INTO t_asset_brands(name, init) VALUES (?, ?)',
           [params.name?.toUpperCase(), params.init?.toUpperCase()],
         );
 

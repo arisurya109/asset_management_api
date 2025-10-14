@@ -6,16 +6,19 @@ class AssetType extends Equatable {
   AssetType({
     this.id,
     this.name,
+    this.init,
   });
 
   int? id;
   String? name;
+  String? init;
 
   // ignore: sort_constructors_first
   factory AssetType.fromRequest(Map<String, dynamic> params) {
     return AssetType(
       id: params['id'] != null ? params['id'] as int : null,
       name: params['name'] != null ? params['name'] as String : null,
+      init: params['init'] != null ? params['init'] as String : null,
     );
   }
 
@@ -23,9 +26,10 @@ class AssetType extends Equatable {
     return {
       'id': id,
       'name': name,
+      'init': init,
     };
   }
 
   @override
-  List<Object?> get props => [id, name];
+  List<Object?> get props => [id, name, init];
 }

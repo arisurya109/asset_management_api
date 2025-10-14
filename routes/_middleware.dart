@@ -1,3 +1,4 @@
+import 'package:asset_management_api/injectors/asset_migration_injector.dart';
 import 'package:asset_management_api/injectors/asset_model_injector.dart';
 import 'package:asset_management_api/injectors/injector_export.dart';
 import 'package:asset_management_api/injectors/location_injector.dart';
@@ -13,5 +14,6 @@ Handler middleware(Handler handler) {
       .use(assetCategoryInjector)
       .use(assetBrandInjector)
       .use(assetModelInjector)
-      .use(locationInjector);
+      .use(locationInjector)
+      .use(assetMigrationInjector);
 }

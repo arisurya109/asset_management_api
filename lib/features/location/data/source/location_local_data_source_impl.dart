@@ -16,7 +16,7 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
 
     final response = await db.query(
       '''
-      INSERT INTO (name, code, init, location_type, box_type, parent_id)
+      INSERT INTO t_locations (name, code, init, location_type, box_type, parent_id)
       VALUES (?, ?, ?, ?, ?, ?)
       ''',
       [

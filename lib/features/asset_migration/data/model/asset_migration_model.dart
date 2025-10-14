@@ -1,12 +1,13 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:asset_management_api/features/asset_migration/domain/entities/asset_migration.dart';
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class AssetMigrationModel extends Equatable {
   int? id;
-  int? isMigration;
   String? assetCode;
+  String? assetIdOld;
   String? serialNumber;
   String? status;
   int? uom;
@@ -24,11 +25,13 @@ class AssetMigrationModel extends Equatable {
   int? locationDetailId;
   String? locationDetail;
   String? location;
+  int? isConsumable;
 
   AssetMigrationModel({
     this.id,
-    this.isMigration,
+    this.uom,
     this.assetCode,
+    this.assetIdOld,
     this.serialNumber,
     this.status,
     this.conditions,
@@ -45,13 +48,15 @@ class AssetMigrationModel extends Equatable {
     this.locationDetailId,
     this.locationDetail,
     this.location,
+    this.isConsumable,
   });
 
   factory AssetMigrationModel.fromMap(Map<String, dynamic> map) {
     return AssetMigrationModel(
       id: map['id'] != null ? map['id'] as int : null,
-      isMigration:
-          map['is_migration'] != null ? map['is_migration'] as int : null,
+      uom: map['uom'] != null ? map['uom'] as int : null,
+      assetIdOld:
+          map['asset_id_old'] != null ? map['asset_id_old'] as String : null,
       assetCode: map['asset_code'] != null ? map['asset_code'] as String : null,
       serialNumber:
           map['serial_number'] != null ? map['serial_number'] as String : null,
@@ -79,13 +84,16 @@ class AssetMigrationModel extends Equatable {
           ? map['location_detail'] as String
           : null,
       location: map['location'] != null ? map['location'] as String : null,
+      isConsumable:
+          map['is_consumable'] != null ? map['is_consumable'] as int : null,
     );
   }
 
   factory AssetMigrationModel.fromEntity(AssetMigration params) {
     return AssetMigrationModel(
       id: params.id,
-      isMigration: params.isMigration,
+      uom: params.uom,
+      assetIdOld: params.assetIdOld,
       assetCode: params.assetCode,
       serialNumber: params.serialNumber,
       status: params.status,
@@ -103,12 +111,15 @@ class AssetMigrationModel extends Equatable {
       locationDetailId: params.locationDetailId,
       locationDetail: params.locationDetail,
       location: params.location,
+      isConsumable: params.isConsumable,
     );
   }
 
   AssetMigration toEntity() {
     return AssetMigration(
       id: id,
+      uom: uom,
+      assetIdOld: assetIdOld,
       serialNumber: serialNumber,
       assetCode: assetCode,
       assetModelId: assetModelId,
@@ -116,7 +127,6 @@ class AssetMigrationModel extends Equatable {
       color: color,
       colorId: colorId,
       conditions: conditions,
-      isMigration: isMigration,
       location: location,
       locationDetail: locationDetail,
       locationDetailId: locationDetailId,
@@ -127,6 +137,7 @@ class AssetMigrationModel extends Equatable {
       remarks: remarks,
       status: status,
       type: type,
+      isConsumable: isConsumable,
     );
   }
 
@@ -135,7 +146,7 @@ class AssetMigrationModel extends Equatable {
     return [
       id,
       uom,
-      isMigration,
+      assetIdOld,
       assetCode,
       serialNumber,
       status,

@@ -4,6 +4,7 @@ import 'package:asset_management_api/features/asset_migration/data/model/asset_m
 
 abstract class AssetMigrationLocalDataSource {
   Future<List<AssetMigrationModel>> findAllAsset();
+  Future<AssetMigrationModel> createAssetConsumable(AssetMigrationModel params);
   Future<AssetMigrationModel> createNewAsset(AssetMigrationModel params);
-  Future<AssetMigrationModel> isMigrationAsset(AssetMigrationModel params);
+  Future<AssetMigrationModel> migrationAsset(AssetMigrationModel params);
 }

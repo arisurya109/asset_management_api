@@ -5,12 +5,12 @@ import 'package:asset_management_api/features/asset_migration/domain/entities/as
 import 'package:asset_management_api/features/asset_migration/domain/repositories/asset_migration_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class IsMigrationAssetUseCase {
-  IsMigrationAssetUseCase(this._repository);
+class MigrationAssetUseCase {
+  MigrationAssetUseCase(this._repository);
 
   final AssetMigrationRepository _repository;
 
   Future<Either<Failure, AssetMigration>> call(AssetMigration params) async {
-    return _repository.isMigrationAsset(params);
+    return _repository.migrationAsset(params);
   }
 }

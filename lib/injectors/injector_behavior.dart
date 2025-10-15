@@ -6,6 +6,7 @@ import 'package:asset_management_api/features/asset_brand/asset_brand_export.dar
 import 'package:asset_management_api/features/asset_categories/asset_category_export.dart';
 import 'package:asset_management_api/features/asset_migration/asset_migration_export.dart';
 import 'package:asset_management_api/features/asset_models/asset_model_export.dart';
+import 'package:asset_management_api/features/asset_transfer/asset_transfer_export.dart';
 
 import 'package:asset_management_api/features/asset_type/asset_type_export.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
@@ -127,3 +128,11 @@ final FindAllAssetMigrationUseCase findAllAssetMigrationUseCase =
     FindAllAssetMigrationUseCase(assetMigrationRepository);
 final MigrationAssetUseCase migrationAssetUseCase =
     MigrationAssetUseCase(assetMigrationRepository);
+
+// Asset Transfer
+final AssetTransferLocalDataSource assetTransferLocalDataSource =
+    AssetTransferLocalDataSourceImpl(database);
+final AssetTransferRepository assetTransferRepository =
+    AssetTransferRepositoryImpl(assetTransferLocalDataSource);
+final CreateAssetTransferUseCase createAssetTransferUseCase =
+    CreateAssetTransferUseCase(assetTransferRepository);

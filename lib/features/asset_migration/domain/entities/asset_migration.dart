@@ -67,6 +67,7 @@ class AssetMigration extends Equatable {
       'location': location,
       'purchase_order': purchaseOrder,
       'remarks': remarks,
+      'is_consumable': isConsumable,
     };
   }
 

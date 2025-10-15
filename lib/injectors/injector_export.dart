@@ -1,8 +1,12 @@
 export 'asset_brand_injector.dart';
 export 'asset_category_injector.dart';
+export 'asset_migration_injector.dart';
+export 'asset_model_injector.dart';
+export 'asset_transfer_injector.dart';
 export 'asset_type_injector.dart';
 export 'injector_behavior.dart';
 export 'jwt_injector.dart';
+export 'location_injector.dart';
 export 'logger_injector.dart';
 export 'module_permission_injector.dart';
 export 'user_injector.dart';

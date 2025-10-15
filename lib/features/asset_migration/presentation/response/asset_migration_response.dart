@@ -116,7 +116,7 @@ class AssetMigrationResponse {
       return response.fold(
         (l) => ResponseHelper.badRequest(description: l.message!),
         (r) => ResponseHelper.json(
-          code: HttpStatus.created,
+          code: HttpStatus.ok,
           status: 'Successfully get all asset',
           body: r.map((e) => e.toResponse()).toList(),
         ),

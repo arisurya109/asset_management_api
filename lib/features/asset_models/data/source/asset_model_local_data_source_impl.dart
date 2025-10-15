@@ -16,8 +16,8 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
 
     final response = await db.transaction((txn) async {
       final checkName = await txn.query(
-        'SELECT COUNT(id) FROM t_asset_models WHERE UPPER(name) = UPPER(?) OR UPPER(code) = UPPER(?)',
-        [params.name, params.code],
+        'SELECT COUNT(id) FROM t_asset_models WHERE UPPER(name) = UPPER(?)',
+        [params.name],
       );
 
       if (checkName.first.fields['COUNT(id)'] as int > 0) {
@@ -26,11 +26,10 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
         );
       } else {
         final response = await txn.query('''
-          INSERT INTO t_asset_models(name, code, has_serial, unit, created_by, type_id, category_id, brand_id, is_consumable)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          INSERT INTO t_asset_models(name, has_serial, unit, created_by, type_id, category_id, brand_id, is_consumable)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
           ''', [
           params.name,
-          params.code,
           params.hasSerial,
           params.unit,
           params.createdBy,
@@ -50,7 +49,6 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
             SELECT
               am.id AS id, 
               am.name AS name,
-              am.code AS code,
               am.has_serial AS has_serial,
               am.is_consumable AS is_consumable,
               am.unit AS unit,
@@ -85,7 +83,6 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
       SELECT
         am.id AS id, 
         am.name AS name,
-        am.code AS code,
         am.has_serial AS has_serial,
         am.is_consumable AS is_consumable,
         am.unit AS unit,
@@ -122,7 +119,6 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
       SELECT
         am.id AS id, 
         am.name AS name,
-        am.code AS code,
         am.has_serial AS has_serial,
         am.is_consumable AS is_consumable,
         am.unit AS unit,
@@ -183,7 +179,6 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
           SELECT
             am.id AS id, 
             am.name AS name,
-            am.code AS code,
             am.has_serial AS has_serial,
             am.is_consumable AS is_consumable,
             am.unit AS unit,

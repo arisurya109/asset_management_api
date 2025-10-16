@@ -17,11 +17,12 @@ class AssetTransferLocalDataSourceImpl implements AssetTransferLocalDataSource {
     final db = await _database.connection;
 
     final response = await db.transaction((txn) async {
+      print(params.toString());
       final checkAssetAndLocation = await txn.query(
         '''
-        SELECT id FROM t_assets WHERE asset_code = ? AND location_id = ?
+        SELECT id FROM t_assets WHERE id = ? AND location_id = ?
         ''',
-        [params.assetCode, params.fromLocationId],
+        [params.assetId, params.fromLocationId],
       );
 
       int idAsset;
@@ -51,7 +52,7 @@ class AssetTransferLocalDataSourceImpl implements AssetTransferLocalDataSource {
       final newLocationAsset = await txn.query(
         '''
         UPDATE t_assets
-        SET location_id = ?, updated_by = ?, updated_at = CURRENT_TIMESTAMP()
+        SET location_id = ?, updated_by = ?, updated_at = CURRENT_TIMESTAMP() 
         WHERE asset_code = ?
         ''',
         [params.toLocationId, params.movementById, params.assetCode],

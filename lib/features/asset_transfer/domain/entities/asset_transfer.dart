@@ -53,13 +53,11 @@ class AssetTransfer extends Equatable {
         'name': movementBy,
       },
       'quantity': quantity,
-      'notes': notes,
     };
   }
 
   factory AssetTransfer.fromRequest(Map<String, dynamic> map) {
     return AssetTransfer(
-      id: map['id'] != null ? map['id'] as int : null,
       assetId: map['asset_id'] != null ? map['asset_id'] as int : null,
       assetCode: map['asset_code'] != null ? map['asset_code'] as String : null,
       movementType:
@@ -67,18 +65,11 @@ class AssetTransfer extends Equatable {
       fromLocationId: map['from_location_id'] != null
           ? map['from_location_id'] as int
           : null,
-      fromLocation:
-          map['from_location'] != null ? map['from_location'] as String : null,
       toLocationId:
           map['to_location_id'] != null ? map['to_location_id'] as int : null,
-      toLocation:
-          map['to_location'] != null ? map['to_location'] as String : null,
       movementById:
           map['movement_by_id'] != null ? map['movement_by_id'] as int : null,
-      movementBy:
-          map['movement_by'] != null ? map['movement_by'] as String : null,
       quantity: map['quantity'] != null ? map['quantity'] as int : null,
-      notes: map['notes'] != null ? map['notes'] as String : null,
     );
   }
 

@@ -9,6 +9,7 @@ import 'package:asset_management_api/features/asset_models/asset_model_export.da
 import 'package:asset_management_api/features/asset_transfer/asset_transfer_export.dart';
 
 import 'package:asset_management_api/features/asset_type/asset_type_export.dart';
+import 'package:asset_management_api/features/assets/assets_export.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
 import 'package:asset_management_api/features/users/domain/usecases/auto_login_use_case.dart';
@@ -136,3 +137,11 @@ final AssetTransferRepository assetTransferRepository =
     AssetTransferRepositoryImpl(assetTransferLocalDataSource);
 final CreateAssetTransferUseCase createAssetTransferUseCase =
     CreateAssetTransferUseCase(assetTransferRepository);
+
+// Asstes
+final AssetsLocalDataSource assetsLocalDataSource =
+    AssetsLocalDataSourceImpl(database);
+final AssetsRepository assetsRepository =
+    AssetsRepositoryImpl(assetsLocalDataSource);
+final FindAllAssetsUseCase findAllAssetsUseCase =
+    FindAllAssetsUseCase(assetsRepository);

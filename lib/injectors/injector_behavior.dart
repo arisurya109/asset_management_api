@@ -145,3 +145,5 @@ final AssetsRepository assetsRepository =
     AssetsRepositoryImpl(assetsLocalDataSource);
 final FindAllAssetsUseCase findAllAssetsUseCase =
     FindAllAssetsUseCase(assetsRepository);
+final CreateAssetsUseCase createAssetsUseCase =
+    CreateAssetsUseCase(assetsRepository);

@@ -9,6 +9,8 @@ import 'package:dart_frog/dart_frog.dart';
 Future<Response> onRequest(RequestContext context) async {
   if (context.httpMethodGet) {
     return await AssetsResponseUser.findAllAssets(context);
+  } else if (context.httpMethodPost) {
+    return await AssetsResponseUser.createAssets(context);
   }
   return ResponseHelper.methodNotAllowed(description: ErrorMsg.methodAllowed);
 }

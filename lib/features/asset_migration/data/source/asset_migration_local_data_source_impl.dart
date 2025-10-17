@@ -246,7 +246,7 @@ class AssetMigrationLocalDataSourceImpl
           final categoryInit = initTypeCategory.first.fields['category_init'];
           final typeInit = initTypeCategory.first.fields['type_init'];
 
-          final assetCode = '$typeInit$categoryInit-$templateCode$lastCode';
+          final assetCode = '$typeInit-$categoryInit-$templateCode$lastCode';
 
           final registredAsset = await txn.query(
             '''

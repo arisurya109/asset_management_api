@@ -1,8 +1,11 @@
+export 'data/model/assets_request_model.dart';
 export 'data/model/assets_response_model.dart';
 export 'data/repositories/assets_repository_impl.dart';
 export 'data/source/assets_local_data_source.dart';
 export 'data/source/assets_local_data_source_impl.dart';
+export 'domain/entities/assets_request.dart';
 export 'domain/entities/assets_response.dart';
 export 'domain/repositories/asset_repository.dart';
+export 'domain/usecases/create_assets_use_case.dart';
 export 'domain/usecases/find_all_assets_use_case.dart';
 export 'presentation/response/assets_response_user.dart';

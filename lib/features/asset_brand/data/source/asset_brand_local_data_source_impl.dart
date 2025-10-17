@@ -20,8 +20,6 @@ class AssetBrandLocalDataSourceImpl implements AssetBrandLocalDataSource {
         [params.name],
       );
 
-      print(checkName.firstOrNull);
-
       if (checkName.first.fields['COUNT(id)'] as int > 0) {
         throw CreateException(
           message: 'Failed to create asset brand, name already exists',

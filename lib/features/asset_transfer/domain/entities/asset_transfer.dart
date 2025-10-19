@@ -70,6 +70,7 @@ class AssetTransfer extends Equatable {
       movementById:
           map['movement_by_id'] != null ? map['movement_by_id'] as int : null,
       quantity: map['quantity'] != null ? map['quantity'] as int : null,
+      notes: map['notes'] != null ? map['notes'] as String : null,
     );
   }
 

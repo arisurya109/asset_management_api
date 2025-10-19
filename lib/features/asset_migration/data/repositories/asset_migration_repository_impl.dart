@@ -14,50 +14,6 @@ class AssetMigrationRepositoryImpl implements AssetMigrationRepository {
   final AssetMigrationLocalDataSource _source;
 
   @override
-  Future<Either<Failure, AssetMigration>> createAssetConsumable(
-    AssetMigration params,
-  ) async {
-    try {
-      final response = await _source.createAssetConsumable(
-        AssetMigrationModel.fromEntity(params),
-      );
-      return Right(response.toEntity());
-    } on CreateException catch (e) {
-      return Left(CreateFailure(e.message));
-    } on NotFoundException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, AssetMigration>> createNewAsset(
-    AssetMigration params,
-  ) async {
-    try {
-      final response = await _source.createNewAsset(
-        AssetMigrationModel.fromEntity(params),
-      );
-      return Right(response.toEntity());
-    } on CreateException catch (e) {
-      return Left(CreateFailure(e.message));
-    } on NotFoundException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<AssetMigration>>> findAllAsset() async {
-    try {
-      final response = await _source.findAllAsset();
-      return Right(response.map((e) => e.toEntity()).toList());
-    } on CreateException catch (e) {
-      return Left(CreateFailure(e.message));
-    } on NotFoundException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    }
-  }
-
-  @override
   Future<Either<Failure, AssetMigration>> migrationAsset(
     AssetMigration params,
   ) async {

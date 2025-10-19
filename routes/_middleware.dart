@@ -14,5 +14,6 @@ Handler middleware(Handler handler) {
       .use(locationInjector)
       .use(assetMigrationInjector)
       .use(assetTransferInjector)
-      .use(assetsInjector);
+      .use(assetsInjector)
+      .use(assetHistoryInjector);
 }

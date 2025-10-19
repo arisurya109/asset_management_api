@@ -4,8 +4,5 @@ export 'data/source/asset_migration_local_data_source.dart';
 export 'data/source/asset_migration_local_data_source_impl.dart';
 export 'domain/entities/asset_migration.dart';
 export 'domain/repositories/asset_migration_repository.dart';
-export 'domain/usecases/create_asset_consumable_use_case.dart';
-export 'domain/usecases/create_new_asset_use_case.dart';
-export 'domain/usecases/find_all_asset_use_case.dart';
 export 'domain/usecases/migration_asset_use_case.dart';
 export 'presentation/response/asset_migration_response.dart';

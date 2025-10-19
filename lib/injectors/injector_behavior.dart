@@ -4,6 +4,7 @@ import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
 import 'package:asset_management_api/features/asset_brand/asset_brand_export.dart';
 import 'package:asset_management_api/features/asset_categories/asset_category_export.dart';
+import 'package:asset_management_api/features/asset_history/asset_history_export.dart';
 import 'package:asset_management_api/features/asset_migration/asset_migration_export.dart';
 import 'package:asset_management_api/features/asset_models/asset_model_export.dart';
 import 'package:asset_management_api/features/asset_transfer/asset_transfer_export.dart';
@@ -121,12 +122,6 @@ final AssetMigrationLocalDataSource assetMigrationLocalDataSource =
     AssetMigrationLocalDataSourceImpl(database, databaseErpOld);
 final AssetMigrationRepository assetMigrationRepository =
     AssetMigrationRepositoryImpl(assetMigrationLocalDataSource);
-final CreateAssetConsumableUseCase createAssetConsumableUseCase =
-    CreateAssetConsumableUseCase(assetMigrationRepository);
-final CreateNewAssetUseCase createNewAssetUseCase =
-    CreateNewAssetUseCase(assetMigrationRepository);
-final FindAllAssetMigrationUseCase findAllAssetMigrationUseCase =
-    FindAllAssetMigrationUseCase(assetMigrationRepository);
 final MigrationAssetUseCase migrationAssetUseCase =
     MigrationAssetUseCase(assetMigrationRepository);
 
@@ -147,3 +142,11 @@ final FindAllAssetsUseCase findAllAssetsUseCase =
     FindAllAssetsUseCase(assetsRepository);
 final CreateAssetsUseCase createAssetsUseCase =
     CreateAssetsUseCase(assetsRepository);
+
+// Asset History
+final AssetHistoryLocalDataSource assetHistoryLocalDataSource =
+    AssetHistoryLocalDataSourceImpl(database);
+final AssetHistoryRepository assetHistoryRepository =
+    AssetHistoryRepositoryImpl(assetHistoryLocalDataSource);
+final FindAllHistoryAssetByIdUseCase findAllHistoryAssetByIdUseCase =
+    FindAllHistoryAssetByIdUseCase(assetHistoryRepository);

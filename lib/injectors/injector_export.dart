@@ -1,5 +1,6 @@
 export 'asset_brand_injector.dart';
 export 'asset_category_injector.dart';
+export 'asset_history_injector.dart';
 export 'asset_migration_injector.dart';
 export 'asset_model_injector.dart';
 export 'asset_transfer_injector.dart';

@@ -14,6 +14,17 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
   Future<LocationModel> createLocation(LocationModel params) async {
     final db = await _database.connection;
 
+    final checkName = await db.query(
+      'SELECT id FROM t_locations WHERE name = ?',
+      [params.name],
+    );
+
+    if (checkName.firstOrNull != null) {
+      throw CreateException(
+        message: 'Failed create location, name already exists',
+      );
+    }
+
     final response = await db.query(
       '''
       INSERT INTO t_locations (name, code, init, location_type, box_type, parent_id)

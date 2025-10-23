@@ -13,8 +13,10 @@ import 'package:asset_management_api/features/asset_type/asset_type_export.dart'
 import 'package:asset_management_api/features/assets/assets_export.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
+import 'package:asset_management_api/features/purchase_order/purchase_order_export.dart';
 import 'package:asset_management_api/features/users/domain/usecases/auto_login_use_case.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
+import 'package:asset_management_api/features/vendor/vendor_export.dart';
 
 final Database database = Database();
 final DatabaseErpOld databaseErpOld = DatabaseErpOld();
@@ -150,3 +152,29 @@ final AssetHistoryRepository assetHistoryRepository =
     AssetHistoryRepositoryImpl(assetHistoryLocalDataSource);
 final FindAllHistoryAssetByIdUseCase findAllHistoryAssetByIdUseCase =
     FindAllHistoryAssetByIdUseCase(assetHistoryRepository);
+
+// Vendors
+final VendorLocalDataSource vendorLocalDataSource =
+    VendorLocalDataSourceImpl(database);
+final VendorRepository vendorRepository =
+    VendorRepositoryImpl(vendorLocalDataSource);
+final CreateVendorUseCase createVendorUseCase =
+    CreateVendorUseCase(vendorRepository);
+final UpdateVendorUseCase updateVendorUseCase =
+    UpdateVendorUseCase(vendorRepository);
+final FindAllVendorUseCase findAllVendorUseCase =
+    FindAllVendorUseCase(vendorRepository);
+
+// Purchase Order
+final PurchaseOrderLocalDataSource purchaseOrderLocalDataSource =
+    PurchaseOrderLocalDataSourceImpl(database);
+final PurchaseOrderRepository purchaseOrderRepository =
+    PurchaseOrderRepositoryImpl(purchaseOrderLocalDataSource);
+final CreatePurchaseOrderUseCase createPurchaseOrderUseCase =
+    CreatePurchaseOrderUseCase(purchaseOrderRepository);
+final FindAllPurchaseOrderUseCase findAllPurchaseOrderUseCase =
+    FindAllPurchaseOrderUseCase(purchaseOrderRepository);
+final FindPurchaseOrderDetailItemUseCase findPurchaseOrderDetailItemUseCase =
+    FindPurchaseOrderDetailItemUseCase(purchaseOrderRepository);
+final UpdatePurchaseOrderUseCase updatePurchaseOrderUseCase =
+    UpdatePurchaseOrderUseCase(purchaseOrderRepository);

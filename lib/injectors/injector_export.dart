@@ -12,3 +12,4 @@ export 'location_injector.dart';
 export 'logger_injector.dart';
 export 'module_permission_injector.dart';
 export 'user_injector.dart';
+export 'vendor_injector.dart';

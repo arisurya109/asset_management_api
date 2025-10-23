@@ -97,9 +97,8 @@ class AssetMigration extends Equatable {
           ? map['purchase_order'] as String
           : null,
       quantity: map['quantity'] != null ? map['quantity'] as int : null,
-      locationDetailId: map['location_detail_id'] != null
-          ? map['location_detail_id'] as int
-          : null,
+      locationDetailId:
+          map['location__id'] != null ? map['location_id'] as int : null,
       locationDetail: map['location_detail'] != null
           ? map['location_detail'] as String
           : null,

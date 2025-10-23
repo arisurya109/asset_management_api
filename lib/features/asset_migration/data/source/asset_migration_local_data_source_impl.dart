@@ -28,7 +28,8 @@ class AssetMigrationLocalDataSourceImpl
           [datasOld['serial_number'], datasOld['asset_id_old']],
         );
 
-        if (checkSerialNumberAndAssetIdOld.firstOrNull != null) {
+        if (checkSerialNumberAndAssetIdOld.first.fields['COUNT(id)'] as int >
+            0) {
           throw CreateException(message: 'Asset already exists');
         }
 

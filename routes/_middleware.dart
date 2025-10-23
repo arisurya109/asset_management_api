@@ -1,4 +1,5 @@
 import 'package:asset_management_api/injectors/injector_export.dart';
+import 'package:asset_management_api/injectors/purchase_order_injector.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 Handler middleware(Handler handler) {
@@ -15,5 +16,7 @@ Handler middleware(Handler handler) {
       .use(assetMigrationInjector)
       .use(assetTransferInjector)
       .use(assetsInjector)
-      .use(assetHistoryInjector);
+      .use(assetHistoryInjector)
+      .use(vendorInjector)
+      .use(purchaseOrderInjector);
 }

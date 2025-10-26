@@ -9,7 +9,6 @@ export 'domain/usecases/create_user_use_case.dart';
 export 'domain/usecases/find_all_user_use_case.dart';
 export 'domain/usecases/find_by_id_user_use_case.dart';
 export 'domain/usecases/login_use_case.dart';
-export 'domain/usecases/update_status_user_use_case.dart';
 export 'domain/usecases/update_user_use_case.dart';
 export 'presentation/response/change_password_response.dart';
 export 'presentation/response/login_response.dart';

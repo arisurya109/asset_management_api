@@ -4,17 +4,17 @@ import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
 import 'package:asset_management_api/features/asset_brand/asset_brand_export.dart';
 import 'package:asset_management_api/features/asset_categories/asset_category_export.dart';
-import 'package:asset_management_api/features/asset_history/asset_history_export.dart';
-import 'package:asset_management_api/features/asset_migration/asset_migration_export.dart';
 import 'package:asset_management_api/features/asset_models/asset_model_export.dart';
-import 'package:asset_management_api/features/asset_transfer/asset_transfer_export.dart';
 
 import 'package:asset_management_api/features/asset_type/asset_type_export.dart';
 import 'package:asset_management_api/features/assets/assets_export.dart';
+import 'package:asset_management_api/features/assets/domain/usecases/create_asset_transfer_use_case.dart';
+import 'package:asset_management_api/features/assets/domain/usecases/find_asset_detail_by_id_use_case.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
 import 'package:asset_management_api/features/purchase_order/purchase_order_export.dart';
 import 'package:asset_management_api/features/users/domain/usecases/auto_login_use_case.dart';
+import 'package:asset_management_api/features/users/domain/usecases/delete_user_use_case.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
 import 'package:asset_management_api/features/vendor/vendor_export.dart';
 
@@ -31,8 +31,7 @@ final FindAllUserUseCase findAllUserUseCase =
 final CreateUserUseCase createUserUseCase = CreateUserUseCase(userRepository);
 final FindByIdUserUseCase findByIdUserUseCase =
     FindByIdUserUseCase(userRepository);
-final UpdateStatusUserUseCase updateStatusUserUseCase =
-    UpdateStatusUserUseCase(userRepository);
+final DeleteUserUseCase deleteUserUseCase = DeleteUserUseCase(userRepository);
 final UpdateUserUseCase updateUserUseCase = UpdateUserUseCase(userRepository);
 final LoginUseCase loginUseCase = LoginUseCase(userRepository);
 final ChangePasswordUseCase changePasswordUseCase =
@@ -119,39 +118,19 @@ final FindByIdLocationUseCase findByIdocationUseCase =
 final UpdateLocationUseCase updateocationUseCase =
     UpdateLocationUseCase(locationRepository);
 
-// Asset Migration
-final AssetMigrationLocalDataSource assetMigrationLocalDataSource =
-    AssetMigrationLocalDataSourceImpl(database, databaseErpOld);
-final AssetMigrationRepository assetMigrationRepository =
-    AssetMigrationRepositoryImpl(assetMigrationLocalDataSource);
-final MigrationAssetUseCase migrationAssetUseCase =
-    MigrationAssetUseCase(assetMigrationRepository);
-
-// Asset Transfer
-final AssetTransferLocalDataSource assetTransferLocalDataSource =
-    AssetTransferLocalDataSourceImpl(database);
-final AssetTransferRepository assetTransferRepository =
-    AssetTransferRepositoryImpl(assetTransferLocalDataSource);
-final CreateAssetTransferUseCase createAssetTransferUseCase =
-    CreateAssetTransferUseCase(assetTransferRepository);
-
-// Asstes
+// Assets
 final AssetsLocalDataSource assetsLocalDataSource =
-    AssetsLocalDataSourceImpl(database);
+    AssetsLocalDataSourceImpl(database, databaseErpOld);
 final AssetsRepository assetsRepository =
     AssetsRepositoryImpl(assetsLocalDataSource);
 final FindAllAssetsUseCase findAllAssetsUseCase =
     FindAllAssetsUseCase(assetsRepository);
 final CreateAssetsUseCase createAssetsUseCase =
     CreateAssetsUseCase(assetsRepository);
-
-// Asset History
-final AssetHistoryLocalDataSource assetHistoryLocalDataSource =
-    AssetHistoryLocalDataSourceImpl(database);
-final AssetHistoryRepository assetHistoryRepository =
-    AssetHistoryRepositoryImpl(assetHistoryLocalDataSource);
-final FindAllHistoryAssetByIdUseCase findAllHistoryAssetByIdUseCase =
-    FindAllHistoryAssetByIdUseCase(assetHistoryRepository);
+final FindAssetDetailByIdUseCase findAssetDetailByIdUseCase =
+    FindAssetDetailByIdUseCase(assetsRepository);
+final CreateAssetTransferUseCase createAssetTransferUseCase =
+    CreateAssetTransferUseCase(assetsRepository);
 
 // Vendors
 final VendorLocalDataSource vendorLocalDataSource =

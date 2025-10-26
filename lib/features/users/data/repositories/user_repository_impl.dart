@@ -44,10 +44,10 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, User>> updateStatusUser(int id, int params) async {
+  Future<Either<Failure, String>> deleteUser(int params) async {
     try {
-      final response = await _source.updateStatusUser(id, params);
-      return Right(response.toEntity());
+      final response = await _source.deleteUser(params);
+      return Right(response);
     } on UpdateException catch (e) {
       return Left(UpdateFailure(e.message));
     }

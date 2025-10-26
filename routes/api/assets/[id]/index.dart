@@ -3,12 +3,16 @@
 import 'package:asset_management_api/core/extensions/request_method_ext.dart';
 import 'package:asset_management_api/core/helpers/constant.dart';
 import 'package:asset_management_api/core/helpers/response_helper.dart';
-import 'package:asset_management_api/features/asset_transfer/asset_transfer_export.dart';
+import 'package:asset_management_api/features/assets/assets_export.dart';
 import 'package:dart_frog/dart_frog.dart';
 
-Future<Response> onRequest(RequestContext context) async {
-  if (context.httpMethodPost) {
-    return await AssetTransferResponse.createAssetTransfer(context);
+Future<Response> onRequest(
+  RequestContext context,
+  String id,
+) async {
+  if (context.httpMethodGet) {
+    return await AssetsResponseUser.findAssetDetailById(context, id);
   }
+
   return ResponseHelper.methodNotAllowed(description: ErrorMsg.methodAllowed);
 }

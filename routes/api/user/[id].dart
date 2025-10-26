@@ -12,8 +12,8 @@ Future<Response> onRequest(
 ) async {
   if (context.httpMethodGet) {
     return await UserResponse.findByIdUser(context, id);
-  } else if (context.httpMethodPut) {
-    return await UserResponse.updateStatusUser(context, id);
+  } else if (context.httpMethodDelete) {
+    return await UserResponse.deleteUser(context, id);
   } else if (context.httpMethodPatch) {
     return await UserResponse.updateUser(context, id);
   }

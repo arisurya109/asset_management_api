@@ -7,6 +7,7 @@ import 'package:asset_management_api/core/helpers/constant.dart';
 import 'package:asset_management_api/core/helpers/hash_password.dart';
 import 'package:asset_management_api/core/helpers/response_helper.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
+import 'package:asset_management_api/features/users/domain/usecases/delete_user_use_case.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
 
 import 'package:dart_frog/dart_frog.dart';
@@ -41,7 +42,7 @@ class UserResponse {
 
         final createdBy = await jwt.getUsername(context);
 
-        params['password'] = hashPassword(params['password'] as String);
+        params['password'] = hashPassword('Watsons_1nd0#');
 
         params['created_by'] = createdBy;
 
@@ -129,7 +130,7 @@ class UserResponse {
   }
 
   // Permission Module - 3
-  static Future<Response> updateStatusUser(
+  static Future<Response> deleteUser(
     RequestContext context,
     String id,
   ) async {
@@ -147,21 +148,18 @@ class UserResponse {
           description: ErrorMsg.notAccessModul,
         );
       } else {
-        final updateStatusUser = context.read<UpdateStatusUserUseCase>();
+        final deleteUser = context.read<DeleteUserUseCase>();
         final paramsId = await context.parseUri(id);
-        final paramsBody = await context.requestJSON();
 
-        final response = await updateStatusUser(
+        final response = await deleteUser(
           paramsId,
-          paramsBody['is_active'] as int,
         );
 
         return response.fold(
           (l) => ResponseHelper.badRequest(description: l.message!),
           (r) => ResponseHelper.json(
             code: HttpStatus.ok,
-            status: 'Successfully update status user',
-            body: r.toResponse(),
+            status: r,
           ),
         );
       }
@@ -187,8 +185,13 @@ class UserResponse {
         final updateUser = context.read<UpdateUserUseCase>();
         final paramsId = await context.parseUri(id);
         final paramsBody = await context.requestJSON();
+        final password = hashPassword('Watsons_1nd0#');
 
-        paramsBody.addEntries({'id': paramsId}.entries);
+        print(paramsBody);
+
+        paramsBody.addAll({'id': paramsId, 'password': password});
+
+        print(paramsBody);
 
         final response = await updateUser(User.fromRequest(paramsBody));
 

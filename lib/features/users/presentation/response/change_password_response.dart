@@ -27,7 +27,7 @@ class ChangePasswordResponse {
 
       final response = await changePasswordUseCase(
         params['username'] as String,
-        hashPassword(params['old_password'] as String),
+        hashPassword(params['password'] as String),
         hashPassword(params['new_password'] as String),
       );
 

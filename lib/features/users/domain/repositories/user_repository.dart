@@ -9,7 +9,7 @@ abstract class UserRepository {
   Future<Either<Failure, User>> updateUser(User params);
   Future<Either<Failure, User>> findByIdUser(int params);
   Future<Either<Failure, List<User>>> findAllUser(int idRequest);
-  Future<Either<Failure, User>> updateStatusUser(int id, int params);
+  Future<Either<Failure, String>> deleteUser(int params);
 
   Future<Either<Failure, User>> login(String username, String password);
   Future<Either<Failure, String>> changePassword(

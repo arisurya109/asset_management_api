@@ -2,7 +2,6 @@
 
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
-import 'package:asset_management_api/core/helpers/hash_password.dart';
 import 'package:asset_management_api/features/users/data/model/user_model.dart';
 import 'package:asset_management_api/features/users/data/source/user_local_data_source.dart';
 
@@ -130,49 +129,25 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   }
 
   @override
-  Future<UserModel> updateStatusUser(int id, int params) async {
-    final db = await _database.connection;
-
-    final response = await db.query(
-      'UPDATE t_users SET is_active = ? WHERE id = ?',
-      [params, id],
-    );
-
-    if (response.affectedRows == 0) {
-      throw UpdateException(message: 'Failed to update status user');
-    }
-
-    final newUser = await db.query(
-      '''
-      SELECT id, username, name, is_active, created_at, created_by
-      FROM t_users WHERE id = ?
-      ''',
-      [id],
-    );
-
-    return UserModel.fromDatabase(newUser.first.fields);
-  }
-
-  @override
   Future<UserModel> updateUser(UserModel params) async {
     final db = await _database.connection;
 
-    final response = await db.query(
+    await db.query(
       'UPDATE t_users SET password = ? WHERE id = ?',
-      [hashPassword(params.password!), params.id],
+      [params.password, params.id],
     );
-
-    if (response.affectedRows == 0) {
-      throw UpdateException(message: 'Failed to update user');
-    }
 
     final newUser = await db.query(
       '''
       SELECT id, username, name, is_active, created_at, created_by
-      FROM t_users WHERE id = ?
+      FROM t_users WHERE id = ? AND password = ?
       ''',
-      [params.id],
+      [params.id, params.password],
     );
+
+    if (newUser.firstOrNull == null) {
+      throw UpdateException(message: 'Failed to reset password');
+    }
 
     return UserModel.fromDatabase(newUser.first.fields);
   }
@@ -294,5 +269,17 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     user.addEntries({'modules': module}.entries);
 
     return UserModel.fromDatabase(user);
+  }
+
+  @override
+  Future<String> deleteUser(int params) async {
+    final db = await _database.connection;
+
+    await db.query(
+      'UPDATE t_users SET is_active = ? WHERE id = ?',
+      [0, params],
+    );
+
+    return 'Successfully delete user';
   }
 }

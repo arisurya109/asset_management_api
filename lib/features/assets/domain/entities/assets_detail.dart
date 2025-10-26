@@ -3,7 +3,8 @@
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
-class AssetHistory extends Equatable {
+class AssetsDetail extends Equatable {
+  int? id;
   String? movementType;
   String? fromLocation;
   String? toLocation;
@@ -12,7 +13,8 @@ class AssetHistory extends Equatable {
   String? referencesNumber;
   String? notes;
 
-  AssetHistory({
+  AssetsDetail({
+    this.id,
     this.movementType,
     this.fromLocation,
     this.toLocation,
@@ -22,8 +24,9 @@ class AssetHistory extends Equatable {
     this.notes,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
+      'id': id,
       'movement_type': movementType,
       'from_location': fromLocation,
       'to_location': toLocation,
@@ -37,6 +40,7 @@ class AssetHistory extends Equatable {
   @override
   List<Object?> get props {
     return [
+      id,
       movementType,
       fromLocation,
       toLocation,

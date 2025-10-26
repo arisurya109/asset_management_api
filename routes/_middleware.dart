@@ -13,10 +13,7 @@ Handler middleware(Handler handler) {
       .use(assetBrandInjector)
       .use(assetModelInjector)
       .use(locationInjector)
-      .use(assetMigrationInjector)
-      .use(assetTransferInjector)
       .use(assetsInjector)
-      .use(assetHistoryInjector)
       .use(vendorInjector)
       .use(purchaseOrderInjector);
 }

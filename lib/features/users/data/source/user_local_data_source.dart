@@ -7,7 +7,7 @@ abstract class UserLocalDataSource {
   Future<UserModel> updateUser(UserModel params);
   Future<List<UserModel>> findAllUser(int idRequest);
   Future<UserModel> findByIdUser(int params);
-  Future<UserModel> updateStatusUser(int id, int params);
+  Future<String> deleteUser(int params);
 
   Future<UserModel> login(String username, String password);
   Future<String> changePassword(

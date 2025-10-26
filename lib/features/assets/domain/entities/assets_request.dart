@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
 class AssetsRequest extends Equatable {
+  int? isMigration;
+  String? assetIdOld;
   String? serialNumber;
   String? status;
   String? conditions;
@@ -16,6 +18,8 @@ class AssetsRequest extends Equatable {
   int? uom;
 
   AssetsRequest({
+    this.isMigration,
+    this.assetIdOld,
     this.serialNumber,
     this.status,
     this.conditions,
@@ -31,6 +35,11 @@ class AssetsRequest extends Equatable {
 
   factory AssetsRequest.fromJson(Map<String, dynamic> params) {
     return AssetsRequest(
+      isMigration:
+          params['is_migration'] != null ? params['is_migration'] as int : null,
+      assetIdOld: params['asset_id_old'] != null
+          ? params['asset_id_old'] as String
+          : null,
       serialNumber: params['serial_number'] != null
           ? params['serial_number'] as String
           : null,

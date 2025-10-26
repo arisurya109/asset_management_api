@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:asset_management_api/features/users/domain/usecases/auto_login_use_case.dart';
+import 'package:asset_management_api/features/users/domain/usecases/delete_user_use_case.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
 import 'package:asset_management_api/injectors/injector_behavior.dart';
 import 'package:dart_frog/dart_frog.dart';
@@ -10,7 +11,7 @@ Handler userInjector(Handler handler) {
       .use(provider<CreateUserUseCase>((_) => createUserUseCase))
       .use(provider<FindAllUserUseCase>((_) => findAllUserUseCase))
       .use(provider<FindByIdUserUseCase>((_) => findByIdUserUseCase))
-      .use(provider<UpdateStatusUserUseCase>((_) => updateStatusUserUseCase))
+      .use(provider<DeleteUserUseCase>((_) => deleteUserUseCase))
       .use(provider<UpdateUserUseCase>((_) => updateUserUseCase))
       .use(provider<ChangePasswordUseCase>((_) => changePasswordUseCase))
       .use(provider<LoginUseCase>((_) => loginUseCase))

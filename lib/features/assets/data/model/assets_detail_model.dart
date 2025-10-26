@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:asset_management_api/features/asset_history/domain/entities/asset_history.dart';
+import 'package:asset_management_api/features/assets/domain/entities/assets_detail.dart';
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
-class AssetHistoryModel extends Equatable {
+class AssetsDetailModel extends Equatable {
+  int? id;
   String? movementType;
   String? fromLocation;
   String? toLocation;
@@ -13,7 +14,8 @@ class AssetHistoryModel extends Equatable {
   String? referencesNumber;
   String? notes;
 
-  AssetHistoryModel({
+  AssetsDetailModel({
+    this.id,
     this.movementType,
     this.fromLocation,
     this.toLocation,
@@ -26,6 +28,7 @@ class AssetHistoryModel extends Equatable {
   @override
   List<Object?> get props {
     return [
+      id,
       movementType,
       fromLocation,
       toLocation,
@@ -36,8 +39,9 @@ class AssetHistoryModel extends Equatable {
     ];
   }
 
-  factory AssetHistoryModel.fromDatabase(Map<String, dynamic> map) {
-    return AssetHistoryModel(
+  factory AssetsDetailModel.fromDatabase(Map<String, dynamic> map) {
+    return AssetsDetailModel(
+      id: map['id'] != null ? map['id'] as int : null,
       movementType:
           map['movement_type'] != null ? map['movement_type'] as String : null,
       fromLocation:
@@ -56,8 +60,9 @@ class AssetHistoryModel extends Equatable {
     );
   }
 
-  AssetHistory toEntity() {
-    return AssetHistory(
+  AssetsDetail toEntity() {
+    return AssetsDetail(
+      id: id,
       movementType: movementType,
       fromLocation: fromLocation,
       toLocation: toLocation,

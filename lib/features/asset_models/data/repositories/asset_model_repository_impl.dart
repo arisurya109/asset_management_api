@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/asset_models/data/model/asset_model_models.dart';
@@ -22,6 +24,8 @@ class AssetModelRepositoryImpl implements AssetModelRepository {
       return Right(response.toEntity());
     } on CreateException catch (e) {
       return Left(CreateFailure(e.message));
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
     }
   }
 
@@ -32,6 +36,8 @@ class AssetModelRepositoryImpl implements AssetModelRepository {
       return Right(response.map((e) => e.toEntity()).toList());
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     }
   }
 
@@ -41,6 +47,8 @@ class AssetModelRepositoryImpl implements AssetModelRepository {
       final response = await _source.findByIdAssetModel(params);
       return Right(response.toEntity());
     } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on DatabaseException catch (e) {
       return Left(NotFoundFailure(e.message));
     }
   }
@@ -55,6 +63,8 @@ class AssetModelRepositoryImpl implements AssetModelRepository {
       );
       return Right(response.toEntity());
     } on UpdateException catch (e) {
+      return Left(UpdateFailure(e.message));
+    } on DatabaseException catch (e) {
       return Left(UpdateFailure(e.message));
     }
   }

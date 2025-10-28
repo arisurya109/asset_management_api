@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/location/data/model/location_model.dart';
@@ -18,6 +20,8 @@ class LocationRepositoryImpl implements LocationRepository {
         LocationModel.fromEntity(params),
       );
       return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
     } on CreateException catch (e) {
       return Left(CreateFailure(e.message));
     }
@@ -28,6 +32,8 @@ class LocationRepositoryImpl implements LocationRepository {
     try {
       final response = await _source.findAllLocation();
       return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
     }
@@ -38,6 +44,8 @@ class LocationRepositoryImpl implements LocationRepository {
     try {
       final response = await _source.findByIdLocation(params);
       return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
     }
@@ -50,6 +58,8 @@ class LocationRepositoryImpl implements LocationRepository {
         LocationModel.fromEntity(params),
       );
       return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      return Left(UpdateFailure(e.message));
     } on UpdateException catch (e) {
       return Left(UpdateFailure(e.message));
     }

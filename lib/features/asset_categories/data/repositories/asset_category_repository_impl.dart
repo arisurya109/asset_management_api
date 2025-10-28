@@ -24,6 +24,8 @@ class AssetCategoryRepositoryImpl implements AssetCategoryRepository {
       return Right(response.toEntity());
     } on CreateException catch (e) {
       return Left(CreateFailure(e.message));
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
     }
   }
 
@@ -33,6 +35,8 @@ class AssetCategoryRepositoryImpl implements AssetCategoryRepository {
       final response = await _source.findAllAssetCategory();
       return Right(response.map((e) => e.toEntity()).toList());
     } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on DatabaseException catch (e) {
       return Left(NotFoundFailure(e.message));
     }
   }
@@ -44,8 +48,10 @@ class AssetCategoryRepositoryImpl implements AssetCategoryRepository {
     try {
       final response = await _source.findByIdAssetCategory(params);
       return Right(response.toEntity());
-    } on UpdateException catch (e) {
-      return Left(UpdateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     }
   }
 
@@ -59,6 +65,8 @@ class AssetCategoryRepositoryImpl implements AssetCategoryRepository {
       );
       return Right(response.toEntity());
     } on UpdateException catch (e) {
+      return Left(UpdateFailure(e.message));
+    } on DatabaseException catch (e) {
       return Left(UpdateFailure(e.message));
     }
   }

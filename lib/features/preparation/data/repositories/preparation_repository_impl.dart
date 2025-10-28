@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_template_item_model.dart';
@@ -22,6 +24,8 @@ class PreparationRepositoryImpl implements PreparationRepository {
         PreparationTemplateModel.fromEntity(params),
       );
       return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
     } on CreateException catch (e) {
       return Left(CreateFailure(e.message));
     }
@@ -37,8 +41,10 @@ class PreparationRepositoryImpl implements PreparationRepository {
         templateId,
       );
       return Right(response.map((e) => e.toEntity()).toList());
-    } on NotFoundException catch (e) {
-      return Left(NotFoundFailure(e.message));
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
+    } on CreateException catch (e) {
+      return Left(CreateFailure(e.message));
     }
   }
 
@@ -47,6 +53,8 @@ class PreparationRepositoryImpl implements PreparationRepository {
     try {
       final response = await _source.deletePreparationTemplate(params);
       return Right(response);
+    } on DatabaseException catch (e) {
+      return Left(DeleteFailure(e.message));
     } on DeleteException catch (e) {
       return Left(DeleteFailure(e.message));
     }
@@ -58,6 +66,8 @@ class PreparationRepositoryImpl implements PreparationRepository {
     try {
       final response = await _source.findAllPreparationTemplate();
       return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
     }
@@ -71,6 +81,8 @@ class PreparationRepositoryImpl implements PreparationRepository {
         params,
       );
       return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
     }

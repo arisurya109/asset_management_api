@@ -30,3 +30,11 @@ class DeleteException implements Exception {
     this.message,
   });
 }
+
+class DatabaseException implements Exception {
+  String? message;
+
+  DatabaseException({
+    this.message,
+  });
+}

@@ -20,6 +20,8 @@ class AssetsRepositoryImpl implements AssetsRepository {
     try {
       final response = await _source.findAllAssets();
       return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
     }
@@ -34,6 +36,10 @@ class AssetsRepositoryImpl implements AssetsRepository {
         AssetsRequestModel.fromEntity(params),
       );
       return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
     } on CreateException catch (e) {
       return Left(CreateFailure(e.message));
     }
@@ -46,6 +52,8 @@ class AssetsRepositoryImpl implements AssetsRepository {
     try {
       final response = await _source.findAssetDetailById(params);
       return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
     }
@@ -72,8 +80,12 @@ class AssetsRepositoryImpl implements AssetsRepository {
         notes: notes,
       );
       return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
     } on CreateException catch (e) {
       return Left(CreateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
     }
   }
 }

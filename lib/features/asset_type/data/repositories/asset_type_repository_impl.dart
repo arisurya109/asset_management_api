@@ -22,6 +22,8 @@ class AssetTypeRepositoryImpl implements AssetTypeRepository {
       return Right(response.toEntity());
     } on CreateException catch (e) {
       return Left(CreateFailure(e.message));
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
     }
   }
 
@@ -32,6 +34,8 @@ class AssetTypeRepositoryImpl implements AssetTypeRepository {
       return Right(response.map((e) => e.toEntity()).toList());
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     }
   }
 
@@ -41,6 +45,8 @@ class AssetTypeRepositoryImpl implements AssetTypeRepository {
       final response = await _source.findByIdType(params);
       return Right(response.toEntity());
     } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on DatabaseException catch (e) {
       return Left(NotFoundFailure(e.message));
     }
   }
@@ -53,6 +59,8 @@ class AssetTypeRepositoryImpl implements AssetTypeRepository {
       );
       return Right(response.toEntity());
     } on UpdateException catch (e) {
+      return Left(UpdateFailure(e.message));
+    } on DatabaseException catch (e) {
       return Left(UpdateFailure(e.message));
     }
   }

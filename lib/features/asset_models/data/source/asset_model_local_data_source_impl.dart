@@ -1,9 +1,12 @@
 // ignore_for_file: public_member_api_docs
 
+import 'dart:async';
+
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/features/asset_models/data/model/asset_model_models.dart';
 import 'package:asset_management_api/features/asset_models/data/source/asset_model_local_data_source.dart';
+import 'package:mysql1/mysql1.dart';
 
 class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
   AssetModelLocalDataSourceImpl(this._database);
@@ -12,40 +15,41 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
 
   @override
   Future<AssetModelModels> createAssetModel(AssetModelModels params) async {
-    final db = await _database.connection;
+    try {
+      final db = await _database.connection;
 
-    final response = await db.transaction((txn) async {
-      final checkName = await txn.query(
-        'SELECT COUNT(id) FROM t_asset_models WHERE UPPER(name) = UPPER(?)',
-        [params.name],
-      );
-
-      if (checkName.first.fields['COUNT(id)'] as int > 0) {
-        throw CreateException(
-          message: 'Failed to create asset, name or code already exists',
+      final response = await db.transaction((txn) async {
+        final checkName = await txn.query(
+          'SELECT COUNT(id) FROM t_asset_models WHERE UPPER(name) = UPPER(?)',
+          [params.name],
         );
-      } else {
-        final response = await txn.query('''
+
+        if (checkName.first.fields['COUNT(id)'] as int > 0) {
+          throw CreateException(
+            message: 'Failed to create asset, name or code already exists',
+          );
+        } else {
+          final response = await txn.query('''
           INSERT INTO t_asset_models(name, has_serial, unit, created_by, type_id, category_id, brand_id, is_consumable)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?)
           ''', [
-          params.name,
-          params.hasSerial,
-          params.unit,
-          params.createdBy,
-          params.typeId,
-          params.categoryId,
-          params.brandId,
-          params.isConsumable,
-        ]);
+            params.name,
+            params.hasSerial,
+            params.unit,
+            params.createdBy,
+            params.typeId,
+            params.categoryId,
+            params.brandId,
+            params.isConsumable,
+          ]);
 
-        if (response.insertId == null || response.insertId == 0) {
-          throw CreateException(
-            message: 'Failed to create asset model, please try again',
-          );
-        } else {
-          final newAssetModel = await txn.query(
-            '''
+          if (response.insertId == null || response.insertId == 0) {
+            throw CreateException(
+              message: 'Failed to create asset model, please try again',
+            );
+          } else {
+            final newAssetModel = await txn.query(
+              '''
             SELECT
               am.id AS id, 
               am.name AS name,
@@ -64,22 +68,34 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
             LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
             WHERE am.id = ?
             ''',
-            [response.insertId],
-          );
+              [response.insertId],
+            );
 
-          return newAssetModel.first.fields;
+            return newAssetModel.first.fields;
+          }
         }
-      }
-    });
-    return AssetModelModels.fromDatabase(response!);
+      });
+      return AssetModelModels.fromDatabase(response!);
+    } on CreateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
   }
 
   @override
   Future<List<AssetModelModels>> findAllAssetModel() async {
-    final db = await _database.connection;
+    try {
+      final db = await _database.connection;
 
-    final response = await db.query(
-      '''
+      final response = await db.query(
+        '''
       SELECT
         am.id AS id, 
         am.name AS name,
@@ -97,25 +113,37 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
       LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
       LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
       ''',
-    );
-
-    if (response.firstOrNull == null) {
-      throw NotFoundException(
-        message: 'Asset model is empty, please create first',
       );
-    }
 
-    return response
-        .map((e) => AssetModelModels.fromDatabase(e.fields))
-        .toList();
+      if (response.firstOrNull == null) {
+        throw NotFoundException(
+          message: 'Asset model is empty, please create first',
+        );
+      }
+
+      return response
+          .map((e) => AssetModelModels.fromDatabase(e.fields))
+          .toList();
+    } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
   }
 
   @override
   Future<AssetModelModels> findByIdAssetModel(int params) async {
-    final db = await _database.connection;
+    try {
+      final db = await _database.connection;
 
-    final response = await db.query(
-      '''
+      final response = await db.query(
+        '''
       SELECT
         am.id AS id, 
         am.name AS name,
@@ -134,48 +162,60 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
       LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
       WHERE am.id = ? LIMIT 1
       ''',
-      [params],
-    );
+        [params],
+      );
 
-    if (response.firstOrNull == null) {
-      throw NotFoundException(message: 'Asset model not found');
+      if (response.firstOrNull == null) {
+        throw NotFoundException(message: 'Asset model not found');
+      }
+
+      return AssetModelModels.fromDatabase(response.first.fields);
+    } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
     }
-
-    return AssetModelModels.fromDatabase(response.first.fields);
   }
 
   @override
   Future<AssetModelModels> updateAssetModel(AssetModelModels params) async {
-    final db = await _database.connection;
+    try {
+      final db = await _database.connection;
 
-    final response = await db.transaction((txn) async {
-      final checkAssetModel = await txn.query(
-        'SELECT COUNT(id) FROM t_asset_models WHERE id = ?',
-        [params.id],
-      );
-
-      if (checkAssetModel.first.fields['COUNT(id)'] == 0) {
-        throw UpdateException(
-          message: 'Failed to update, asset model not found',
+      final response = await db.transaction((txn) async {
+        final checkAssetModel = await txn.query(
+          'SELECT COUNT(id) FROM t_asset_models WHERE id = ?',
+          [params.id],
         );
-      } else {
-        final updateName = await txn.query(
-          '''
+
+        if (checkAssetModel.first.fields['COUNT(id)'] == 0) {
+          throw UpdateException(
+            message: 'Failed to update, asset model not found',
+          );
+        } else {
+          final updateName = await txn.query(
+            '''
           UPDATE t_asset_models
           SET name = ?
           WHERE id = ?
           ''',
-          [params.name, params.id],
-        );
-
-        if (updateName.affectedRows == null) {
-          throw UpdateException(
-            message: 'Failed to update, please try again',
+            [params.name, params.id],
           );
-        }
 
-        final newAssetModel = await txn.query(
-          '''
+          if (updateName.affectedRows == null) {
+            throw UpdateException(
+              message: 'Failed to update, please try again',
+            );
+          }
+
+          final newAssetModel = await txn.query(
+            '''
           SELECT
             am.id AS id, 
             am.name AS name,
@@ -194,13 +234,24 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
           LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
           WHERE am.id = ? LIMIT 1
           ''',
-          [params.id],
-        );
+            [params.id],
+          );
 
-        return newAssetModel.first.fields;
-      }
-    });
+          return newAssetModel.first.fields;
+        }
+      });
 
-    return AssetModelModels.fromDatabase(response!);
+      return AssetModelModels.fromDatabase(response!);
+    } on UpdateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
   }
 }

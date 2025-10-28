@@ -1,9 +1,12 @@
 // ignore_for_file: public_member_api_docs
 
+import 'dart:async';
+
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/features/asset_categories/data/model/asset_category_model.dart';
 import 'package:asset_management_api/features/asset_categories/data/source/asset_category_local_data_source.dart';
+import 'package:mysql1/mysql1.dart';
 
 class AssetCategoryLocalDataSourceImpl implements AssetCategoryLocalDataSource {
   AssetCategoryLocalDataSourceImpl(this._database);
@@ -14,115 +17,163 @@ class AssetCategoryLocalDataSourceImpl implements AssetCategoryLocalDataSource {
   Future<AssetCategoryModel> createAssetCategory(
     AssetCategoryModel params,
   ) async {
-    final db = await _database.connection;
+    try {
+      final db = await _database.connection;
 
-    final response = await db.transaction((txn) async {
-      final checkNameAndInit = await txn.query(
-        '''
+      final response = await db.transaction((txn) async {
+        final checkNameAndInit = await txn.query(
+          '''
         SELECT COUNT(id) 
         FROM t_asset_categories 
         WHERE UPPER(name) = UPPER(?) OR UPPER(init) = UPPER(?)
         ''',
-        [params.name, params.init],
-      );
-
-      if (checkNameAndInit.first.fields['COUNT(id)'] as int > 0) {
-        throw CreateException(
-          message:
-              'Failed to create asset category, name or init already exists',
-        );
-      } else {
-        final newIdCategory = await txn.query(
-          'INSERT INTO t_asset_categories(name, init) VALUES (?, ?)',
-          [params.name!.toUpperCase(), params.init!.toUpperCase()],
+          [params.name, params.init],
         );
 
-        if (newIdCategory.insertId == null || newIdCategory.insertId == 0) {
+        if (checkNameAndInit.first.fields['COUNT(id)'] as int > 0) {
           throw CreateException(
-            message: 'Failed to create new asset category, please try again',
+            message:
+                'Failed to create asset category, name or init already exists',
           );
         } else {
-          params.id = newIdCategory.insertId;
+          final newIdCategory = await txn.query(
+            'INSERT INTO t_asset_categories(name, init) VALUES (?, ?)',
+            [params.name!.toUpperCase(), params.init!.toUpperCase()],
+          );
 
-          return params;
+          if (newIdCategory.insertId == null || newIdCategory.insertId == 0) {
+            throw CreateException(
+              message: 'Failed to create new asset category, please try again',
+            );
+          } else {
+            params.id = newIdCategory.insertId;
+
+            return params;
+          }
         }
-      }
-    });
-    return response!;
+      });
+      return response!;
+    } on CreateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
   }
 
   @override
   Future<List<AssetCategoryModel>> findAllAssetCategory() async {
-    final db = await _database.connection;
+    try {
+      final db = await _database.connection;
 
-    final response = await db.query(
-      'SELECT * FROM t_asset_categories',
-    );
-
-    if (response.firstOrNull == null) {
-      throw NotFoundException(
-        message: 'Failed to get all asset category, asset is empty',
+      final response = await db.query(
+        'SELECT * FROM t_asset_categories',
       );
-    } else {
-      return response
-          .map((e) => AssetCategoryModel.fromDatabase(e.fields))
-          .toList();
+
+      if (response.firstOrNull == null) {
+        throw NotFoundException(
+          message: 'Failed to get all asset category, asset is empty',
+        );
+      } else {
+        return response
+            .map((e) => AssetCategoryModel.fromDatabase(e.fields))
+            .toList();
+      }
+    } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
     }
   }
 
   @override
   Future<AssetCategoryModel> findByIdAssetCategory(int params) async {
-    final db = await _database.connection;
+    try {
+      final db = await _database.connection;
 
-    final response = await db.query(
-      'SELECT * FROM t_categories WHERE id = ? LIMIT 1',
-      [params],
-    );
+      final response = await db.query(
+        'SELECT * FROM t_categories WHERE id = ? LIMIT 1',
+        [params],
+      );
 
-    if (response.firstOrNull == null) {
-      throw NotFoundException(message: 'Asset category not found');
+      if (response.firstOrNull == null) {
+        throw NotFoundException(message: 'Asset category not found');
+      }
+
+      return AssetCategoryModel.fromDatabase(response.first.fields);
+    } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
     }
-
-    return AssetCategoryModel.fromDatabase(response.first.fields);
   }
 
   @override
   Future<AssetCategoryModel> updateAssetCategory(
     AssetCategoryModel params,
   ) async {
-    final db = await _database.connection;
+    try {
+      final db = await _database.connection;
 
-    final response = await db.transaction((txn) async {
-      final checkCategory = await txn.query(
-        'SELECT COUNT(id) FROM t_asset_categories WHERE id = ?',
-        [params.id],
-      );
-
-      if (checkCategory.first.fields['COUNT(id)'] == 0) {
-        throw UpdateException(
-          message: 'Failed to update asset category, asset not found',
-        );
-      }
-
-      final newCategory = await txn.query(
-        'UPDATE t_asset_categories SET name = ? WHERE id = ?',
-        [params.name, params.id],
-      );
-
-      if (newCategory.affectedRows == 0) {
-        throw UpdateException(
-          message: 'Failed to update asset category, please try again',
-        );
-      } else {
-        final category = await txn.query(
-          'SELECT * FROM t_categories WHERE id = ? LIMIT 1',
-          [params],
+      final response = await db.transaction((txn) async {
+        final checkCategory = await txn.query(
+          'SELECT COUNT(id) FROM t_asset_categories WHERE id = ?',
+          [params.id],
         );
 
-        return category.first.fields;
-      }
-    });
+        if (checkCategory.first.fields['COUNT(id)'] == 0) {
+          throw UpdateException(
+            message: 'Failed to update asset category, asset not found',
+          );
+        }
 
-    return AssetCategoryModel.fromDatabase(response!);
+        final newCategory = await txn.query(
+          'UPDATE t_asset_categories SET name = ? WHERE id = ?',
+          [params.name, params.id],
+        );
+
+        if (newCategory.affectedRows == 0) {
+          throw UpdateException(
+            message: 'Failed to update asset category, please try again',
+          );
+        } else {
+          final category = await txn.query(
+            'SELECT * FROM t_categories WHERE id = ? LIMIT 1',
+            [params],
+          );
+
+          return category.first.fields;
+        }
+      });
+
+      return AssetCategoryModel.fromDatabase(response!);
+    } on UpdateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
   }
 }

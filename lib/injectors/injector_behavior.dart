@@ -12,6 +12,15 @@ import 'package:asset_management_api/features/assets/domain/usecases/create_asse
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_detail_by_id_use_case.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
+import 'package:asset_management_api/features/preparation/data/repositories/preparation_repository_impl.dart';
+import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
+import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source_impl.dart';
+import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_template_item_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_template_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/delete_preparation_template_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_template_item_by_template_id_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_template_use_case.dart';
 import 'package:asset_management_api/features/purchase_order/purchase_order_export.dart';
 import 'package:asset_management_api/features/users/domain/usecases/auto_login_use_case.dart';
 import 'package:asset_management_api/features/users/domain/usecases/delete_user_use_case.dart';
@@ -157,3 +166,21 @@ final FindPurchaseOrderDetailItemUseCase findPurchaseOrderDetailItemUseCase =
     FindPurchaseOrderDetailItemUseCase(purchaseOrderRepository);
 final UpdatePurchaseOrderUseCase updatePurchaseOrderUseCase =
     UpdatePurchaseOrderUseCase(purchaseOrderRepository);
+
+// Preparation
+final PreparationLocalDataSource preparationLocalDataSource =
+    PreparationLocalDataSourceImpl(database);
+final PreparationRepository preparationRepository =
+    PreparationRepositoryImpl(preparationLocalDataSource);
+final CreatePreparationTemplateUseCase createPreparationTemplateUseCase =
+    CreatePreparationTemplateUseCase(preparationRepository);
+final CreatePreparationTemplateItemUseCase
+    createPreparationTemplateItemUseCase =
+    CreatePreparationTemplateItemUseCase(preparationRepository);
+final DeletePreparationTemplateUseCase deletePreparationTemplateUseCase =
+    DeletePreparationTemplateUseCase(preparationRepository);
+final FindAllPreparationTemplateUseCase findAllPreparationTemplateUseCase =
+    FindAllPreparationTemplateUseCase(preparationRepository);
+final FindAllPreparationTemplateItemByTemplateIdUseCase
+    findAllPreparationTemplateItemByTemplateIdUseCase =
+    FindAllPreparationTemplateItemByTemplateIdUseCase(preparationRepository);

@@ -13,7 +13,7 @@ class AssetsRequestModel extends Equatable {
   int? registredBy;
   int? assetModelId;
   int? colorId;
-  String? purchaseOrderNumber;
+  String? purchaseOrder;
   int? quantity;
   int? locationId;
   int? uom;
@@ -28,7 +28,7 @@ class AssetsRequestModel extends Equatable {
     this.registredBy,
     this.assetModelId,
     this.colorId,
-    this.purchaseOrderNumber,
+    this.purchaseOrder,
     this.quantity,
     this.locationId,
     this.uom,
@@ -45,7 +45,7 @@ class AssetsRequestModel extends Equatable {
       registredBy: params.registredBy,
       assetModelId: params.assetModelId,
       colorId: params.colorId,
-      purchaseOrderNumber: params.purchaseOrderNumber,
+      purchaseOrder: params.purchaseOrder,
       quantity: params.quantity,
       locationId: params.locationId,
       uom: params.uom,
@@ -62,7 +62,7 @@ class AssetsRequestModel extends Equatable {
       registredBy,
       assetModelId,
       colorId,
-      purchaseOrderNumber,
+      purchaseOrder,
       quantity,
       locationId,
       uom,

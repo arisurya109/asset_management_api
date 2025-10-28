@@ -12,7 +12,7 @@ class AssetsRequest extends Equatable {
   int? registredBy;
   int? assetModelId;
   int? colorId;
-  String? purchaseOrderNumber;
+  String? purchaseOrder;
   int? quantity;
   int? locationId;
   int? uom;
@@ -27,7 +27,7 @@ class AssetsRequest extends Equatable {
     this.registredBy,
     this.assetModelId,
     this.colorId,
-    this.purchaseOrderNumber,
+    this.purchaseOrder,
     this.quantity,
     this.locationId,
     this.uom,
@@ -53,8 +53,8 @@ class AssetsRequest extends Equatable {
           ? params['asset_model_id'] as int
           : null,
       colorId: params['color_id'] != null ? params['color_id'] as int : null,
-      purchaseOrderNumber: params['purchase_order_number'] != null
-          ? params['purchase_order_number'] as String
+      purchaseOrder: params['purchase_order'] != null
+          ? params['purchase_order'] as String
           : null,
       quantity: params['quantity'] != null ? params['quantity'] as int : null,
       locationId:
@@ -73,7 +73,7 @@ class AssetsRequest extends Equatable {
       registredBy,
       assetModelId,
       colorId,
-      purchaseOrderNumber,
+      purchaseOrder,
       quantity,
       locationId,
       uom,

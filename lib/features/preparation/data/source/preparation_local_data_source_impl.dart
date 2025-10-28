@@ -163,10 +163,6 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
       [1],
     );
 
-    if (response.firstOrNull == null) {
-      throw NotFoundException(message: 'Preparation Template is empty');
-    }
-
     return response
         .map((e) => PreparationTemplateModel.fromDatabase(e.fields))
         .toList();

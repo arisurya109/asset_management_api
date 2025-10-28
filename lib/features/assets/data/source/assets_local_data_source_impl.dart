@@ -38,7 +38,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	      ats.name AS types,
 	      c.name AS color,
 	      l1.name AS location,
-	      a.purchase_order_number AS purchase_order,
+	      a.purchase_order AS purchase_order,
 	      a.remarks AS remarks
       FROM
       	t_assets AS a
@@ -118,7 +118,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
               registred_by, 
               asset_model_id, 
               color_id, 
-              purchase_order_number, 
+              purchase_order, 
               quantity, 
               location_id)
             VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -132,7 +132,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
                 params.registredBy,
                 params.assetModelId,
                 params.colorId,
-                params.purchaseOrderNumber,
+                params.purchaseOrder,
                 1,
                 params.locationId,
               ],
@@ -158,7 +158,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	              ats.name AS types,
 	              c.name AS color,
 	              l1.name AS location,
-	              a.purchase_order_number AS purchase_order,
+	              a.purchase_order AS purchase_order,
 	              a.remarks AS remarks
               FROM
               	t_assets AS a
@@ -220,7 +220,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
               registred_by, 
               asset_model_id, 
               color_id, 
-              purchase_order_number, 
+              purchase_order, 
               quantity, 
               location_id)
             VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -234,7 +234,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
               params.registredBy,
               params.assetModelId,
               params.colorId,
-              params.purchaseOrderNumber,
+              params.purchaseOrder,
               1,
               params.locationId,
             ],
@@ -259,7 +259,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	            ats.name AS types,
 	            c.name AS color,
 	            l1.name AS location,
-	            a.purchase_order_number AS purchase_order,
+	            a.purchase_order AS purchase_order,
 	            a.remarks AS remarks
             FROM
               t_assets AS a
@@ -334,7 +334,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	              ats.name AS types,
 	              c.name AS color,
 	              l1.name AS location,
-	              a.purchase_order_number AS purchase_order,
+	              a.purchase_order AS purchase_order,
 	              a.remarks AS remarks
               FROM
               	t_assets AS a
@@ -409,7 +409,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
               asset_code, 
               asset_id_old,
               serial_number,
-              purchase_order_number, 
+              purchase_order, 
               status, 
               conditions, 
               remarks, 
@@ -456,20 +456,18 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	              ab.name AS brand,
 	              ats.name AS types,
 	              c.name AS color,
-	              l2.name AS location,
-	              l1.name AS location_detail,
-	              a.purchase_order_number AS purchase_order,
+	              l1.name AS location,
+	              a.purchase_order AS purchase_order,
 	              a.remarks AS remarks
-            FROM
-            	  t_assets AS a
-            LEFT JOIN t_asset_models AS am ON a.asset_model_id  = am.id
-            LEFT JOIN t_asset_brands AS ab ON am.brand_id  = ab.id
-            LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
-            LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
-            LEFT JOIN t_colors AS c ON a.color_id  = c.id
-            LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
-            LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
-            WHERE a.id = ?
+              FROM
+              	t_assets AS a
+              LEFT JOIN t_asset_models AS am ON a.asset_model_id  = am.id
+              LEFT JOIN t_asset_brands AS ab ON am.brand_id  = ab.id
+              LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+              LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
+              LEFT JOIN t_colors AS c ON a.color_id  = c.id
+              LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+              WHERE a.id = ?
             ''',
           [registredAsset.insertId],
         );
@@ -634,7 +632,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	            ats.name AS types,
 	            c.name AS color,
 	            l1.name AS location,
-	            a.purchase_order_number AS purchase_order,
+	            a.purchase_order AS purchase_order,
 	            a.remarks AS remarks
             FROM
             	t_assets AS a

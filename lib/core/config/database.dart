@@ -1,22 +1,16 @@
-// ignore_for_file: avoid_print, public_member_api_docs
-import 'package:dotenv/dotenv.dart';
+// ignore_for_file: avoid_print, public_member_api_docs, avoid_redundant_argument_values
+import 'package:asset_management_api/core/config/database_helper.dart';
+// import 'package:dotenv/dotenv.dart';
 import 'package:mysql1/mysql1.dart';
 
 class Database {
   factory Database() => _instance;
 
-  Database._internal() {
-    _loadEnv();
-  }
+  Database._internal();
 
   static final Database _instance = Database._internal();
 
-  late final DotEnv env;
   MySqlConnection? _connection;
-
-  void _loadEnv() {
-    env = DotEnv()..load();
-  }
 
   Future<MySqlConnection> get connection async {
     _connection ??= await _connect();
@@ -32,11 +26,11 @@ class Database {
     try {
       return await MySqlConnection.connect(
         ConnectionSettings(
-          host: env['DB_HOST']!,
-          user: env['DB_USER'],
-          password: env['DB_PASSWORD'],
-          db: env['DB_NAME'],
-          port: int.parse(env['DB_PORT']!),
+          host: DatabaseHelper.dbHOST,
+          user: DatabaseHelper.dbUSER,
+          password: DatabaseHelper.dbPASSWORD,
+          db: DatabaseHelper.dbNAME,
+          port: DatabaseHelper.dbPORT,
         ),
       );
     } catch (e) {
@@ -48,18 +42,11 @@ class Database {
 class DatabaseErpOld {
   factory DatabaseErpOld() => _instance;
 
-  DatabaseErpOld._internal() {
-    _loadEnv();
-  }
+  DatabaseErpOld._internal();
 
   static final DatabaseErpOld _instance = DatabaseErpOld._internal();
 
-  late final DotEnv env;
   MySqlConnection? _connection;
-
-  void _loadEnv() {
-    env = DotEnv()..load();
-  }
 
   Future<MySqlConnection> get connection async {
     _connection ??= await _connect();
@@ -75,11 +62,11 @@ class DatabaseErpOld {
     try {
       return await MySqlConnection.connect(
         ConnectionSettings(
-          host: env['DB_HOST']!,
-          user: env['DB_USER'],
-          password: env['DB_PASSWORD'],
-          db: env['DB_NAME_OLD'],
-          port: int.parse(env['DB_PORT']!),
+          host: DatabaseHelper.dbHOST,
+          user: DatabaseHelper.dbUSER,
+          password: DatabaseHelper.dbPASSWORD,
+          db: DatabaseHelper.dbNAMEOLD,
+          port: DatabaseHelper.dbPORT,
         ),
       );
     } catch (e) {

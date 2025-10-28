@@ -52,6 +52,8 @@ class AssetsResponseUser {
       final params = await context.requestJSON();
       final idUser = await jwt.getIdUser(context);
 
+      print(params);
+
       params
         ..remove('registred_by')
         ..addEntries({'registred_by': idUser}.entries);
@@ -62,11 +64,14 @@ class AssetsResponseUser {
 
       return response.fold(
         (l) => ResponseHelper.badRequest(description: l.message!),
-        (r) => ResponseHelper.json(
-          code: HttpStatus.created,
-          status: 'Successfully create asset',
-          body: r.toJson(),
-        ),
+        (r) {
+          print(r.toJson());
+          return ResponseHelper.json(
+            code: HttpStatus.created,
+            status: 'Successfully create asset',
+            body: r.toJson(),
+          );
+        },
       );
     }
   }

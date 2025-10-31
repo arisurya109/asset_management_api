@@ -1,0 +1,36 @@
+ERROR - 2025-10-30 09:52:09.577601
+POST /api/login
+Error thrown by handler.
+Bad state: Cannot write to socket, it is closed
+package:mysql1/src/buffered_socket.dart 133    BufferedSocket.writeBufferPart
+package:mysql1/src/buffered_socket.dart 127    BufferedSocket.writeBuffer
+package:mysql1/src/single_connection.dart 432  ReqRespConnection._sendBufferPart
+package:mysql1/src/single_connection.dart 420  ReqRespConnection.sendBuffer
+package:mysql1/src/single_connection.dart 467  ReqRespConnection._processHandler
+package:mysql1/src/single_connection.dart 492  ReqRespConnection.processHandlerWithResults.<fn>
+package:pool/pool.dart 127                     Pool.withResource
+
+ERROR - 2025-10-30 09:53:17.252194
+POST /api/login
+Error thrown by handler.
+Bad state: Cannot write to socket, it is closed
+package:mysql1/src/buffered_socket.dart 133    BufferedSocket.writeBufferPart
+package:mysql1/src/buffered_socket.dart 127    BufferedSocket.writeBuffer
+package:mysql1/src/single_connection.dart 432  ReqRespConnection._sendBufferPart
+package:mysql1/src/single_connection.dart 420  ReqRespConnection.sendBuffer
+package:mysql1/src/single_connection.dart 467  ReqRespConnection._processHandler
+package:mysql1/src/single_connection.dart 492  ReqRespConnection.processHandlerWithResults.<fn>
+package:pool/pool.dart 127                     Pool.withResource
+
+ERROR - 2025-10-30 09:53:23.660707
+POST /api/login
+Error thrown by handler.
+Bad state: Cannot write to socket, it is closed
+package:mysql1/src/buffered_socket.dart 133    BufferedSocket.writeBufferPart
+package:mysql1/src/buffered_socket.dart 127    BufferedSocket.writeBuffer
+package:mysql1/src/single_connection.dart 432  ReqRespConnection._sendBufferPart
+package:mysql1/src/single_connection.dart 420  ReqRespConnection.sendBuffer
+package:mysql1/src/single_connection.dart 467  ReqRespConnection._processHandler
+package:mysql1/src/single_connection.dart 492  ReqRespConnection.processHandlerWithResults.<fn>
+package:pool/pool.dart 127                     Pool.withResource
+

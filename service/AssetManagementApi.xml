@@ -1,0 +1,7 @@
+<service>
+  <id>AssetManagementApi</id>
+  <name>AssetManagementApi</name>
+  <description>AssetManagementApi application running as a Windows Service.</description>
+  <executable>server.exe</executable>
+  <log mode="roll"></log>
+</service>

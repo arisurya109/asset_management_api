@@ -16,6 +16,7 @@ dependencies:
   json_serializable: ^6.11.1
   mysql1: ^0.20.0
   path: ^1.9.1
+  shelf_cors_headers: ^0.1.5
 
 dev_dependencies:
   dart_frog_lint: ^0.1.0

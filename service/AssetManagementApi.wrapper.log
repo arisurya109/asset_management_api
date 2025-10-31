@@ -1,0 +1,21 @@
+2025-10-29 14:25:01,043 DEBUG - Starting WinSW in console mode
+2025-10-29 14:25:01,069 INFO  - Installing service 'AssetManagementApi (AssetManagementApi)'...
+2025-10-29 14:25:01,086 INFO  - Service 'AssetManagementApi (AssetManagementApi)' was installed successfully.
+2025-10-29 14:25:13,493 DEBUG - Starting WinSW in console mode
+2025-10-29 14:25:13,518 INFO  - Starting service 'AssetManagementApi (AssetManagementApi)'...
+2025-10-29 14:25:13,868 DEBUG - Starting WinSW in service mode
+2025-10-29 14:25:13,892 INFO  - Service 'AssetManagementApi (AssetManagementApi)' started successfully.
+2025-10-29 14:25:13,970 INFO  - Starting server.exe 
+2025-10-29 14:25:16,141 INFO  - Started process 29868
+2025-10-29 14:25:16,154 DEBUG - Forwarding logs of the process System.Diagnostics.Process (server) to WinSW.RollingLogAppender
+2025-10-30 09:53:05,799 DEBUG - Starting WinSW in console mode
+2025-10-30 09:53:05,829 INFO  - Starting service 'AssetManagementApi (AssetManagementApi)'...
+2025-10-30 09:53:05,842 INFO  - Service 'AssetManagementApi (AssetManagementApi)' has already started.
+2025-10-30 09:54:14,936 DEBUG - Starting WinSW in console mode
+2025-10-30 09:54:14,963 INFO  - Stopping service 'AssetManagementApi (AssetManagementApi)'...
+2025-10-30 09:54:14,990 INFO  - Service 'AssetManagementApi (AssetManagementApi)' stopped successfully.
+2025-10-30 09:54:15,017 INFO  - Stopping AssetManagementApi
+2025-10-30 09:54:15,022 DEBUG - ProcessKill 29868
+2025-10-30 09:54:15,032 DEBUG - Stopping process 29868...
+2025-10-30 09:54:15,051 DEBUG - Process 29868 canceled with code -1073741510.
+2025-10-30 09:54:15,061 INFO  - Finished AssetManagementApi

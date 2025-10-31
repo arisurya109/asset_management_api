@@ -1,0 +1,183 @@
+[14:41:09] POST /api/assets
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[14:53:49] POST /api/assets
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[14:57:00] GET /api/vendor
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[14:57:12] GET /api/vendor
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[14:57:24] GET /api/assets/1045
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[14:57:36] GET /api/assets/1045
+→ Status: 400 (1ms)
+--------------------------------------------------------------------------------
+[14:57:40] GET /api/assets/1045
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[15:43:01] POST /api/location
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[15:49:42] GET /api/assets/183
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[16:25:18] GET /api/vendor
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[17:27:18] GET /api/auto_login
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[17:29:25] GET /api/auto_login
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[17:29:34] GET /api/vendor
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[09:50:58] GET /api/auto_login
+→ Status: 401 (11ms)
+--------------------------------------------------------------------------------
+[09:52:09] ERROR HttpMethod.post /api/login
+Bad state: Cannot write to socket, it is closed
+#0      BufferedSocket.writeBufferPart (package:mysql1/src/buffered_socket.dart:133)
+#1      BufferedSocket.writeBuffer (package:mysql1/src/buffered_socket.dart:127)
+#2      ReqRespConnection._sendBufferPart (package:mysql1/src/single_connection.dart:432)
+#3      ReqRespConnection.sendBuffer (package:mysql1/src/single_connection.dart:420)
+#4      ReqRespConnection._processHandler (package:mysql1/src/single_connection.dart:467)
+#5      ReqRespConnection.processHandlerWithResults.<anonymous closure> (package:mysql1/src/single_connection.dart:492)
+#6      Pool.withResource (package:pool/pool.dart:127)
+<asynchronous suspension>
+#7      MySqlConnection.transaction (package:mysql1/src/single_connection.dart:213)
+<asynchronous suspension>
+#8      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:196)
+<asynchronous suspension>
+#9      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87)
+<asynchronous suspension>
+#10     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20)
+<asynchronous suspension>
+#11     onRequest (file:///c:/development/asset_management_api/build/routes/api/login/index.dart:11)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189)
+<asynchronous suspension>
+#15     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166)
+<asynchronous suspension>
+#16     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418)
+<asynchronous suspension>
+#17     RouterEntry.invoke (package:dart_frog/src/router.dart:413)
+<asynchronous suspension>
+#18     Router.call (package:dart_frog/src/router.dart:189)
+<asynchronous suspension>
+#19     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[09:53:08] GET /api/auto_login
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[09:53:17] ERROR HttpMethod.post /api/login
+Bad state: Cannot write to socket, it is closed
+#0      BufferedSocket.writeBufferPart (package:mysql1/src/buffered_socket.dart:133)
+#1      BufferedSocket.writeBuffer (package:mysql1/src/buffered_socket.dart:127)
+#2      ReqRespConnection._sendBufferPart (package:mysql1/src/single_connection.dart:432)
+#3      ReqRespConnection.sendBuffer (package:mysql1/src/single_connection.dart:420)
+#4      ReqRespConnection._processHandler (package:mysql1/src/single_connection.dart:467)
+#5      ReqRespConnection.processHandlerWithResults.<anonymous closure> (package:mysql1/src/single_connection.dart:492)
+#6      Pool.withResource (package:pool/pool.dart:127)
+<asynchronous suspension>
+#7      MySqlConnection.transaction (package:mysql1/src/single_connection.dart:213)
+<asynchronous suspension>
+#8      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:196)
+<asynchronous suspension>
+#9      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87)
+<asynchronous suspension>
+#10     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20)
+<asynchronous suspension>
+#11     onRequest (file:///c:/development/asset_management_api/build/routes/api/login/index.dart:11)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189)
+<asynchronous suspension>
+#15     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166)
+<asynchronous suspension>
+#16     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418)
+<asynchronous suspension>
+#17     RouterEntry.invoke (package:dart_frog/src/router.dart:413)
+<asynchronous suspension>
+#18     Router.call (package:dart_frog/src/router.dart:189)
+<asynchronous suspension>
+#19     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[09:53:23] ERROR HttpMethod.post /api/login
+Bad state: Cannot write to socket, it is closed
+#0      BufferedSocket.writeBufferPart (package:mysql1/src/buffered_socket.dart:133)
+#1      BufferedSocket.writeBuffer (package:mysql1/src/buffered_socket.dart:127)
+#2      ReqRespConnection._sendBufferPart (package:mysql1/src/single_connection.dart:432)
+#3      ReqRespConnection.sendBuffer (package:mysql1/src/single_connection.dart:420)
+#4      ReqRespConnection._processHandler (package:mysql1/src/single_connection.dart:467)
+#5      ReqRespConnection.processHandlerWithResults.<anonymous closure> (package:mysql1/src/single_connection.dart:492)
+#6      Pool.withResource (package:pool/pool.dart:127)
+<asynchronous suspension>
+#7      MySqlConnection.transaction (package:mysql1/src/single_connection.dart:213)
+<asynchronous suspension>
+#8      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:196)
+<asynchronous suspension>
+#9      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87)
+<asynchronous suspension>
+#10     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20)
+<asynchronous suspension>
+#11     onRequest (file:///c:/development/asset_management_api/build/routes/api/login/index.dart:11)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189)
+<asynchronous suspension>
+#15     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166)
+<asynchronous suspension>
+#16     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418)
+<asynchronous suspension>
+#17     RouterEntry.invoke (package:dart_frog/src/router.dart:413)
+<asynchronous suspension>
+#18     Router.call (package:dart_frog/src/router.dart:189)
+<asynchronous suspension>
+#19     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------

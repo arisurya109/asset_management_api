@@ -16,11 +16,22 @@ import 'package:asset_management_api/features/preparation/data/repositories/prep
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source_impl.dart';
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_detail_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_item_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_template_item_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_template_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/delete_preparation_template_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_detail_by_preparation_id_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_item_by_preparation_detail_id_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_item_by_preparation_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_template_item_by_template_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_template_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_id_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_detail_by_id_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/update_preparation_detail_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/update_preparation_use_case.dart';
 import 'package:asset_management_api/features/purchase_order/purchase_order_export.dart';
 import 'package:asset_management_api/features/users/domain/usecases/auto_login_use_case.dart';
 import 'package:asset_management_api/features/users/domain/usecases/delete_user_use_case.dart';
@@ -184,3 +195,28 @@ final FindAllPreparationTemplateUseCase findAllPreparationTemplateUseCase =
 final FindAllPreparationTemplateItemByTemplateIdUseCase
     findAllPreparationTemplateItemByTemplateIdUseCase =
     FindAllPreparationTemplateItemByTemplateIdUseCase(preparationRepository);
+final FindAllPreparationUseCase findAllPreparationUseCase =
+    FindAllPreparationUseCase(preparationRepository);
+final FindPreparationByIdUseCase findPreparationByIdUseCase =
+    FindPreparationByIdUseCase(preparationRepository);
+final CreatePreparationUseCase createPreparationUseCase =
+    CreatePreparationUseCase(preparationRepository);
+final UpdatePreparationUseCase updatePreparationUseCase =
+    UpdatePreparationUseCase(preparationRepository);
+final CreatePreparationDetailUseCase createPreparationDetailUseCase =
+    CreatePreparationDetailUseCase(preparationRepository);
+final FindAllPreparationDetailByPreparationIdUseCase
+    findAllPreparationDetailByPreparationIdUseCase =
+    FindAllPreparationDetailByPreparationIdUseCase(preparationRepository);
+final FindPreparationDetailByIdUseCase findPreparationDetailByIdUseCase =
+    FindPreparationDetailByIdUseCase(preparationRepository);
+final UpdatePreparationDetailUseCase updatePreparationDetailUseCase =
+    UpdatePreparationDetailUseCase(preparationRepository);
+final CreatePreparationItemUseCase createPreparationItemUseCase =
+    CreatePreparationItemUseCase(preparationRepository);
+final FindAllPreparationItemByPreparationDetailId
+    findAllPreparationItemByPreparationDetailId =
+    FindAllPreparationItemByPreparationDetailId(preparationRepository);
+final FindAllPreparationItemByPreparationId
+    findAllPreparationItemByPreparationId =
+    FindAllPreparationItemByPreparationId(preparationRepository);

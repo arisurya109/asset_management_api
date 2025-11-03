@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs
 
+import 'package:asset_management_api/features/preparation/data/model/preparation_detail_model.dart';
+import 'package:asset_management_api/features/preparation/data/model/preparation_item_model.dart';
+import 'package:asset_management_api/features/preparation/data/model/preparation_model.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_template_item_model.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_template_model.dart';
 
@@ -18,6 +21,41 @@ abstract class PreparationLocalDataSource {
   );
   Future<List<PreparationTemplateItemModel>>
       findAllPreparationTemplateItemByTemplateId(
+    int params,
+  );
+
+  // Preparation
+  Future<List<PreparationModel>> findAllPreparation();
+  Future<PreparationModel> findPreparationById(int params);
+  Future<PreparationModel> createPreparation(PreparationModel params);
+  Future<PreparationModel> updatePreparation(PreparationModel params);
+  Future<PreparationModel> completePreparationPicking(PreparationModel params);
+  Future<PreparationModel> dispatchPreparation(PreparationModel params);
+
+  // PreparationDetail
+  Future<List<PreparationDetailModel>> findAllPreparationDetailByPreparationId(
+    int params,
+  );
+  Future<PreparationDetailModel> findPreparationDetailById(
+    int params,
+    int preparationId,
+  );
+  Future<PreparationDetailModel> createPreparationDetail(
+    PreparationDetailModel params,
+  );
+  Future<PreparationDetailModel> updatePreparationDetail(
+    PreparationDetailModel params,
+  );
+
+  // Preparation Item
+  Future<PreparationItemModel> createPreparationItem(
+    PreparationItemModel params,
+  );
+  Future<List<PreparationItemModel>>
+      findAllPreparationItemByPreparationDetailId(
+    int params,
+  );
+  Future<List<PreparationItemModel>> findAllPreparationItemByPreparationId(
     int params,
   );
 }

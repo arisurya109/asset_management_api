@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:asset_management_api/core/error/failure.dart';
+import 'package:asset_management_api/features/preparation/domain/entities/preparation.dart';
+import 'package:asset_management_api/features/preparation/domain/entities/preparation_detail.dart';
+import 'package:asset_management_api/features/preparation/domain/entities/preparation_item.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation_template.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation_template_item.dart';
 import 'package:dartz/dartz.dart';
@@ -27,6 +30,51 @@ abstract class PreparationRepository {
 
   Future<Either<Failure, List<PreparationTemplateItem>>>
       findAllPreparationTemplateItemByTemplateId(
+    int params,
+  );
+
+  // Preparation
+  Future<Either<Failure, List<Preparation>>> findAllPreparation();
+  Future<Either<Failure, Preparation>> findPreparationById(int params);
+  Future<Either<Failure, Preparation>> createPreparation(
+    Preparation params,
+  );
+  Future<Either<Failure, Preparation>> updatePreparation(
+    Preparation params,
+  );
+  Future<Either<Failure, Preparation>> completePreparationPicking(
+    Preparation params,
+  );
+  Future<Either<Failure, Preparation>> dispatchPreparation(
+    Preparation params,
+  );
+
+  // Preparation Detail
+  Future<Either<Failure, List<PreparationDetail>>>
+      findAllPreparationDetailByPreparationId(
+    int params,
+  );
+  Future<Either<Failure, PreparationDetail>> createPreparationDetail(
+    PreparationDetail params,
+  );
+  Future<Either<Failure, PreparationDetail>> updatePreparationDetail(
+    PreparationDetail params,
+  );
+  Future<Either<Failure, PreparationDetail>> findPreparationDetailById(
+    int params,
+    int preparationId,
+  );
+
+  // Preparation Detail Item
+  Future<Either<Failure, PreparationItem>> createPreparationItem(
+    PreparationItem params,
+  );
+  Future<Either<Failure, List<PreparationItem>>>
+      findAllPreparationItemByPreparationDetailId(
+    int params,
+  );
+  Future<Either<Failure, List<PreparationItem>>>
+      findAllPreparationItemByPreparationId(
     int params,
   );
 }

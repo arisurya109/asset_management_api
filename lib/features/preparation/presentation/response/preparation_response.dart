@@ -172,7 +172,7 @@ class PreparationResponse {
       return failureOrResponse.fold(
         (failure) => ResponseHelper.badRequest(description: failure.message!),
         (response) => ResponseHelper.json(
-          code: HttpStatus.created,
+          code: HttpStatus.ok,
           status: 'Successfully Get All template items',
           body: response.map((e) => e.toJson()).toList(),
         ),

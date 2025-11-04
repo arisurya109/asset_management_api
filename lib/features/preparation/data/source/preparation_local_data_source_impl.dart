@@ -255,6 +255,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
         SELECT
         	pti.id AS id,
         	pti.template_id AS template_id,
+          pti.model_id AS model_id,
         	pti.quantity AS quantity,
         	pti.notes AS notes,
         	m.name AS asset_model,

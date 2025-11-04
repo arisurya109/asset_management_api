@@ -29,6 +29,7 @@ class PreparationTemplateItem extends Equatable {
     return <String, dynamic>{
       'id': id,
       'template_id': templateId,
+      'model_id': modelId,
       'asset': {
         'type': assetType,
         'brand': assetBrand,

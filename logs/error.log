@@ -742,3 +742,260 @@ item
 [07:13:17] POST /api/preparation_template
 → Status: 400 (18ms)
 --------------------------------------------------------------------------------
+[14:16:01] GET /api/vendor
+→ Status: 400 (66ms)
+--------------------------------------------------------------------------------
+[14:16:01] GET /api/assets/
+→ Status: 400 (82ms)
+--------------------------------------------------------------------------------
+[14:16:01] GET /api/preparation_template
+→ Status: 400 (106ms)
+--------------------------------------------------------------------------------
+[14:17:00] GET /api/vendor
+→ Status: 400 (19ms)
+--------------------------------------------------------------------------------
+[14:17:00] GET /api/preparation_template
+→ Status: 400 (21ms)
+--------------------------------------------------------------------------------
+[14:18:13] GET /api/vendor
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[14:18:13] GET /api/preparation_template
+→ Status: 400 (24ms)
+--------------------------------------------------------------------------------
+[14:19:01] GET /api/vendor
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[14:19:01] GET /api/preparation_template
+→ Status: 400 (79ms)
+--------------------------------------------------------------------------------
+[14:19:14] GET /api/preparation
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[14:20:47] GET /api/vendor
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[14:20:47] GET /api/preparation_template
+→ Status: 400 (39ms)
+--------------------------------------------------------------------------------
+[14:27:03] GET /api/vendor
+→ Status: 400 (32ms)
+--------------------------------------------------------------------------------
+[14:30:33] GET /api/vendor
+→ Status: 400 (112ms)
+--------------------------------------------------------------------------------
+[14:33:50] GET /api/vendor
+→ Status: 400 (63ms)
+--------------------------------------------------------------------------------
+[14:36:01] GET /api/vendor
+→ Status: 400 (70ms)
+--------------------------------------------------------------------------------
+[14:42:20] GET /api/vendor
+→ Status: 400 (20ms)
+--------------------------------------------------------------------------------
+[14:45:50] GET /api/vendor
+→ Status: 400 (51ms)
+--------------------------------------------------------------------------------
+[14:48:52] GET /api/vendor
+→ Status: 400 (36ms)
+--------------------------------------------------------------------------------
+[14:54:51] GET /api/preparation
+→ Status: 400 (29ms)
+--------------------------------------------------------------------------------
+[17:16:23] GET /api/vendor
+→ Status: 400 (220ms)
+--------------------------------------------------------------------------------
+[17:16:32] GET /api/preparation
+→ Status: 400 (30ms)
+--------------------------------------------------------------------------------
+[17:59:37] POST /api/location
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[18:11:11] POST /api/assets/1100/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:11:18] POST /api/assets/1101/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:11:28] POST /api/assets/1099/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:11:39] POST /api/assets/1107/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:11:44] POST /api/assets/1105/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:12:10] POST /api/assets/1097/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:12:15] POST /api/assets/1096/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:12:23] POST /api/assets/1098/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:13:16] POST /api/assets/1116/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:13:20] POST /api/assets/1114/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:13:23] POST /api/assets/1115/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:15:05] POST /api/assets/1113/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:15:08] POST /api/assets/1111/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:15:13] POST /api/assets/1112/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:15:25] POST /api/assets/1108/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:15:29] POST /api/assets/1110/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:15:33] POST /api/assets/1109/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:15:39] POST /api/assets/1109/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:15:46] POST /api/assets/1109/transfer
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:15:53] GET /api/auto_login
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:16:06] GET /api/auto_login
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[18:16:15] GET /api/vendor
+→ Status: 400 (17ms)
+--------------------------------------------------------------------------------
+[09:21:08] GET /api/auto_login
+→ Status: 401 (28ms)
+--------------------------------------------------------------------------------
+[09:21:16] ERROR HttpMethod.post /api/login
+Bad state: Cannot write to socket, it is closed
+#0      BufferedSocket.writeBufferPart (package:mysql1/src/buffered_socket.dart:133:7)
+#1      BufferedSocket.writeBuffer (package:mysql1/src/buffered_socket.dart:127:12)
+#2      ReqRespConnection._sendBufferPart (package:mysql1/src/single_connection.dart:432:19)
+#3      ReqRespConnection.sendBuffer (package:mysql1/src/single_connection.dart:420:14)
+#4      ReqRespConnection._processHandler (package:mysql1/src/single_connection.dart:467:11)
+#5      ReqRespConnection.processHandlerWithResults.<anonymous closure> (package:mysql1/src/single_connection.dart:492:19)
+#6      Pool.withResource (package:pool/pool.dart:127:28)
+<asynchronous suspension>
+#7      MySqlConnection.transaction (package:mysql1/src/single_connection.dart:213:5)
+<asynchronous suspension>
+#8      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:196:22)
+<asynchronous suspension>
+#9      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87:24)
+<asynchronous suspension>
+#10     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20:24)
+<asynchronous suspension>
+#11     onRequest (file:///C:/Development/asset_management_api/build/routes/api/login/index.dart:11:12)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#15     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#16     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#17     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#18     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#19     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[09:22:13] GET /api/auto_login
+→ Status: 401 (71ms)
+--------------------------------------------------------------------------------
+[09:22:21] ERROR HttpMethod.get /api/preparation/template
+FormatException: Invalid radix-10 number (at character 1)
+template
+^
+
+#0      int._handleFormatError (dart:core-patch/integers_patch.dart:137:5)
+#1      int._parseRadix (dart:core-patch/integers_patch.dart:155:16)
+#2      int._parse (dart:core-patch/integers_patch.dart:104:12)
+#3      int.parse (dart:core-patch/integers_patch.dart:63:12)
+#4      RequestMethodExt.parseUri (package:asset_management_api/core/extensions/request_method_ext.dart:12:16)
+#5      PreparationResponse.findPreparationById (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:256:36)
+<asynchronous suspension>
+#6      onRequest (file:///C:/Development/asset_management_api/build/routes/api/preparation/%5Bid%5D/index.dart:14:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#11     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#12     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#13     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#14     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#15     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#16     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#17     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#18     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[09:22:21] GET /api/vendor
+→ Status: 400 (117ms)
+--------------------------------------------------------------------------------
+[09:27:41] GET /api/auto_login
+→ Status: 401 (7ms)
+--------------------------------------------------------------------------------
+[09:28:19] GET /api/vendor
+→ Status: 400 (38ms)
+--------------------------------------------------------------------------------
+[09:28:30] GET /api/purchase_order
+→ Status: 400 (16ms)
+--------------------------------------------------------------------------------
+[09:38:56] GET /api/vendor
+→ Status: 400 (93ms)
+--------------------------------------------------------------------------------
+[09:39:23] GET /api/vendor
+→ Status: 400 (52ms)
+--------------------------------------------------------------------------------
+[09:40:18] GET /api/purchase_order
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[10:07:32] GET /api/vendor
+→ Status: 400 (42ms)
+--------------------------------------------------------------------------------
+[13:37:10] GET /api/vendor
+→ Status: 400 (38ms)
+--------------------------------------------------------------------------------
+[14:20:01] GET /api/vendor
+→ Status: 400 (23ms)
+--------------------------------------------------------------------------------

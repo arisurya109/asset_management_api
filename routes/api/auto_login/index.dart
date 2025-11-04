@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_await_in_return
+
 import 'package:asset_management_api/core/extensions/request_method_ext.dart';
 import 'package:asset_management_api/core/helpers/constant.dart';
 import 'package:asset_management_api/core/helpers/response_helper.dart';

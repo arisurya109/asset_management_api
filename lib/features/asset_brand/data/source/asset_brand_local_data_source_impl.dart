@@ -151,7 +151,8 @@ class AssetBrandLocalDataSourceImpl implements AssetBrandLocalDataSource {
 
           if (updateBrand.affectedRows == null) {
             throw UpdateException(
-                message: 'Failed to update, please try again');
+              message: 'Failed to update, please try again',
+            );
           } else {
             final newBrand = await txn.query(
               'SELECT * FROM t_asset_brands WHERE id = ?',

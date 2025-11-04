@@ -1,3 +1,4 @@
+import 'package:asset_management_api/injectors/cors_injector.dart';
 import 'package:asset_management_api/injectors/injector_export.dart';
 import 'package:asset_management_api/injectors/preparation_injector.dart';
 import 'package:asset_management_api/injectors/purchase_order_injector.dart';
@@ -6,6 +7,7 @@ import 'package:dart_frog/dart_frog.dart';
 Handler middleware(Handler handler) {
   return handler
       .use(logger)
+      .use(corsInjector)
       .use(jwtInjector)
       .use(userInjector)
       .use(moduleInjector)

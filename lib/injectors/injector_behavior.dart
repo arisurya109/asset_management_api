@@ -16,18 +16,21 @@ import 'package:asset_management_api/features/preparation/data/repositories/prep
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source_impl.dart';
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/completed_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_detail_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_item_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_template_item_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_template_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/delete_preparation_template_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/dispatch_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_detail_by_preparation_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_item_by_preparation_detail_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_item_by_preparation_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_template_item_by_template_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_template_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_document_preparation_by_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_detail_by_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/update_preparation_detail_use_case.dart';
@@ -197,6 +200,12 @@ final FindAllPreparationTemplateItemByTemplateIdUseCase
     FindAllPreparationTemplateItemByTemplateIdUseCase(preparationRepository);
 final FindAllPreparationUseCase findAllPreparationUseCase =
     FindAllPreparationUseCase(preparationRepository);
+final DispatchPreparationUseCase dispatchPreparationUseCase =
+    DispatchPreparationUseCase(preparationRepository);
+final CompletedPreparationUseCase completedPreparationUseCase =
+    CompletedPreparationUseCase(preparationRepository);
+final FindDocumentPreparationByIdUseCase findDocumentPreparationByIdUseCase =
+    FindDocumentPreparationByIdUseCase(preparationRepository);
 final FindPreparationByIdUseCase findPreparationByIdUseCase =
     FindPreparationByIdUseCase(preparationRepository);
 final CreatePreparationUseCase createPreparationUseCase =

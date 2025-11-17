@@ -20,6 +20,7 @@ class PreparationItemModel extends Equatable {
   String? assetType;
   String? pickedBy;
   String? location;
+  String? purchaseOrder;
 
   PreparationItemModel({
     this.id,
@@ -37,6 +38,7 @@ class PreparationItemModel extends Equatable {
     this.assetType,
     this.pickedBy,
     this.location,
+    this.purchaseOrder,
   });
 
   factory PreparationItemModel.fromDatabase(Map<String, dynamic> map) {
@@ -65,6 +67,9 @@ class PreparationItemModel extends Equatable {
       assetType: map['asset_type'] != null ? map['asset_type'] as String : null,
       location: map['location'] != null ? map['location'] as String : null,
       pickedBy: map['picked_by'] != null ? map['picked_by'] as String : null,
+      purchaseOrder: map['purchase_order'] != null
+          ? map['purchase_order'] as String
+          : null,
     );
   }
 
@@ -85,6 +90,7 @@ class PreparationItemModel extends Equatable {
       preparationDetailId: params.preparationDetailId,
       preparationId: params.preparationId,
       quantity: params.quantity,
+      purchaseOrder: params.purchaseOrder,
     );
   }
 
@@ -105,6 +111,7 @@ class PreparationItemModel extends Equatable {
       preparationDetailId: preparationDetailId,
       preparationId: preparationId,
       quantity: quantity,
+      purchaseOrder: purchaseOrder,
     );
   }
 
@@ -124,6 +131,7 @@ class PreparationItemModel extends Equatable {
       assetCategory,
       assetBrand,
       assetType,
+      purchaseOrder,
     ];
   }
 }

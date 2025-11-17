@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
+import 'dart:io';
+
 import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation_detail.dart';
@@ -48,6 +50,12 @@ abstract class PreparationRepository {
   Future<Either<Failure, Preparation>> dispatchPreparation(
     Preparation params,
   );
+  Future<Either<Failure, Preparation>> completedPreparation(
+    Preparation params,
+    List<int> fileBytes,
+    String originalName,
+  );
+  Future<Either<Failure, File>> findDocumentPreparationById(int params);
 
   // Preparation Detail
   Future<Either<Failure, List<PreparationDetail>>>

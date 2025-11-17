@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
+import 'dart:io';
+
 import 'package:asset_management_api/features/preparation/data/model/preparation_detail_model.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_item_model.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_model.dart';
@@ -31,6 +33,12 @@ abstract class PreparationLocalDataSource {
   Future<PreparationModel> updatePreparation(PreparationModel params);
   Future<PreparationModel> completePreparationPicking(PreparationModel params);
   Future<PreparationModel> dispatchPreparation(PreparationModel params);
+  Future<PreparationModel> completedPreparation(
+    PreparationModel params,
+    List<int> fileBytes,
+    String originalName,
+  );
+  Future<File> findDocumentPreparationById(int params);
 
   // PreparationDetail
   Future<List<PreparationDetailModel>> findAllPreparationDetailByPreparationId(

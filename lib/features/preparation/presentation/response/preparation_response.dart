@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:asset_management_api/core/extensions/request_method_ext.dart';
@@ -11,22 +12,27 @@ import 'package:asset_management_api/features/preparation/domain/entities/prepar
 import 'package:asset_management_api/features/preparation/domain/entities/preparation_item.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation_template.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation_template_item.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/completed_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_detail_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_item_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_template_item_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_template_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/delete_preparation_template_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/dispatch_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_detail_by_preparation_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_item_by_preparation_detail_id_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_item_by_preparation_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_template_item_by_template_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_template_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_document_preparation_by_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_detail_by_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/update_preparation_detail_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/update_preparation_use_case.dart';
 import 'package:dart_frog/dart_frog.dart';
+import 'package:path/path.dart' as p;
 
 class PreparationResponse {
   PreparationResponse._();
@@ -519,8 +525,7 @@ class PreparationResponse {
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
     } else {
-      final usecase =
-          context.read<FindAllPreparationItemByPreparationDetailId>();
+      final usecase = context.read<FindAllPreparationItemByPreparationId>();
 
       final params = await context.parseUri(id);
 
@@ -535,6 +540,137 @@ class PreparationResponse {
           status: 'Successfully get all preparation items',
           body: response.map((e) => e.toJson()).toList(),
         ),
+      );
+    }
+  }
+
+  static Future<Response> dispatchPreparation(
+    RequestContext context,
+    String id,
+  ) async {
+    final jwt = context.read<JwtService>();
+
+    final validateToken = await jwt.verifyToken(context);
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else {
+      final usecase = context.read<DispatchPreparationUseCase>();
+
+      final params = await context.requestJSON();
+
+      final paramsId = await context.parseUri(id);
+
+      params.addEntries({'id': paramsId}.entries);
+
+      final failureOrResponse = await usecase(
+        Preparation.fromJson(params),
+      );
+
+      return failureOrResponse.fold(
+        (failure) => ResponseHelper.badRequest(description: failure.message!),
+        (response) => ResponseHelper.json(
+          code: HttpStatus.ok,
+          status: 'Successfully dispatched preparations',
+          body: response.toJson(),
+        ),
+      );
+    }
+  }
+
+  static Future<Response> completedPreparation(
+    RequestContext context,
+    String id,
+  ) async {
+    final jwt = context.read<JwtService>();
+    final validateToken = await jwt.verifyToken(context);
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(
+        description: ErrorMsg.unAuthorized,
+      );
+    }
+
+    final usecase = context.read<CompletedPreparationUseCase>();
+
+    Map<String, dynamic> body;
+    try {
+      body = await context.request.json() as Map<String, dynamic>;
+    } catch (e) {
+      return ResponseHelper.badRequest(description: 'Invalid JSON body');
+    }
+
+    if (!body.containsKey('data') ||
+        !body.containsKey('file_name') ||
+        !body.containsKey('file_base64')) {
+      return ResponseHelper.badRequest(
+        description: 'Missing data, file_name or file_base64',
+      );
+    }
+
+    final jsonMap = body['data'] as Map<String, dynamic>;
+    final fileName = body['file_name'] as String;
+    final fileBase64 = body['file_base64'] as String;
+
+    List<int> fileBytes;
+
+    try {
+      fileBytes = base64Decode(fileBase64);
+    } catch (e) {
+      return ResponseHelper.badRequest(
+        description: 'Invalid Base64 format',
+      );
+    }
+
+    final paramsId = await context.parseUri(id);
+
+    jsonMap.addEntries({'id': paramsId}.entries);
+
+    final preparation = Preparation.fromJson(jsonMap);
+
+    final result = await usecase(preparation, fileBytes, fileName);
+
+    return result.fold(
+      (failure) => ResponseHelper.badRequest(description: failure.message!),
+      (data) => ResponseHelper.json(
+        code: HttpStatus.ok,
+        status: 'Successfully preparation completed',
+        body: data.toJson(),
+      ),
+    );
+  }
+
+  static Future<Response> findDocumentPreparationById(
+    RequestContext context,
+    String id,
+  ) async {
+    final jwt = context.read<JwtService>();
+
+    final validateToken = await jwt.verifyToken(context);
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else {
+      final usecase = context.read<FindDocumentPreparationByIdUseCase>();
+
+      final paramsId = await context.parseUri(id);
+
+      final failureOrResponse = await usecase(paramsId);
+
+      return failureOrResponse.fold(
+        (failure) => ResponseHelper.badRequest(description: failure.message!),
+        (response) {
+          // file = File object dari data source
+          final fileName = p.basename(response.path);
+
+          return Response.stream(
+            body: response.openRead(),
+            headers: {
+              'Content-Type': 'application/pdf',
+              'Content-Disposition': 'attachment; filename="$fileName"',
+            },
+          );
+        },
       );
     }
   }

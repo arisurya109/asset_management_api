@@ -19,6 +19,7 @@ class PreparationItem extends Equatable {
   String? assetType;
   String? pickedBy;
   String? location;
+  String? purchaseOrder;
 
   PreparationItem({
     this.id,
@@ -36,6 +37,7 @@ class PreparationItem extends Equatable {
     this.assetType,
     this.pickedBy,
     this.location,
+    this.purchaseOrder,
   });
 
   Map<String, dynamic> toJson() {
@@ -53,6 +55,7 @@ class PreparationItem extends Equatable {
         'category': assetCategory,
         'brand': assetBrand,
         'type': assetType,
+        'purchase_order': purchaseOrder,
       },
       'picked': {
         'id': pickedById,
@@ -100,6 +103,7 @@ class PreparationItem extends Equatable {
       assetCategory,
       assetBrand,
       assetType,
+      purchaseOrder,
     ];
   }
 }

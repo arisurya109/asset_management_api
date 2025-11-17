@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
@@ -12,6 +13,7 @@ import 'package:asset_management_api/features/preparation/data/model/preparation
 import 'package:asset_management_api/features/preparation/data/model/preparation_template_model.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
 import 'package:mysql1/mysql1.dart';
+import 'package:path/path.dart' as p;
 
 class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
   PreparationLocalDataSourceImpl(this._database);
@@ -819,7 +821,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
         if (responseQuantityStorage.firstOrNull == null) {
           throw NotFoundException(
-            message: 'Failed, The selected asset is invalid.',
+            message: 'Failed, asset is invalid.',
           );
         }
         final stockInStorage =
@@ -836,9 +838,9 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
         final responsePreparationDetail = await txn.query(
           '''
           SELECT * FROM t_preparation_details 
-          WHERE asset_model_id = ? AND preparation_id = ?
+          WHERE asset_model_id = ? AND preparation_id = ? AND id = ?
           ''',
-          [assetModelId, params.preparationDetailId],
+          [assetModelId, params.preparationId, params.preparationDetailId],
         );
 
         if (responsePreparationDetail.firstOrNull == null) {
@@ -866,7 +868,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
         );
 
         if (dupCheck.firstOrNull != null) {
-          throw CreateException(message: 'Asset already picked');
+          throw CreateException(message: 'Asset already pick list item');
         }
 
         // Insert Preparation Detail Item
@@ -892,21 +894,12 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           await txn.query(
             '''
             UPDATE t_preparation_details
-            SET quantity_picked = quantity_picked + 1, status = 'IN_PROGRESS'
+            SET quantity_picked = quantity_picked + 1, status = 'PROGRESS'
             WHERE id = ?
             ''',
             [params.preparationDetailId],
           );
           // Jika Quantity Target sudah terpenuhi maka update status READY
-        } else if (qtyTarget == (qtyPicked + 1)) {
-          await txn.query(
-            '''
-            UPDATE t_preparation_details
-            SET quantity_picked = quantity_picked + 1, status = 'READY'
-            WHERE id = ?
-            ''',
-            [params.preparationDetailId],
-          );
         } else {
           // Increment Quantity Picked
           await txn.query(
@@ -936,7 +929,8 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             u.name AS picked_by,
             pi.quantity AS quantity,
             pi.location_id AS location_id,
-            l.name AS location
+            l.name AS location,
+            a.purchase_order AS purchase_order
           FROM
             t_preparation_detail_items AS pi
           LEFT JOIN t_preparation_details AS pd ON pi.preparation_detail_id = pd.id
@@ -996,7 +990,8 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             u.name AS picked_by,
             pi.quantity AS quantity,
             pi.location_id AS location_id,
-            l.name AS location
+            l.name AS location,
+            a.purchase_order AS purchase_order
           FROM
             t_preparation_detail_items AS pi
           LEFT JOIN t_preparation_details AS pd ON pi.preparation_detail_id = pd.id
@@ -1056,7 +1051,8 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             u.name AS picked_by,
             pi.quantity AS quantity,
             pi.location_id AS location_id,
-            l.name AS location
+            l.name AS location,
+            a.purchase_order AS purchase_order
           FROM
             t_preparation_detail_items AS pi
           LEFT JOIN t_preparation_details AS pd ON pi.preparation_detail_id = pd.id
@@ -1099,8 +1095,317 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
   }
 
   @override
-  Future<PreparationModel> dispatchPreparation(PreparationModel params) {
-    // TODO: implement dispatchPreparation
-    throw UnimplementedError();
+  Future<PreparationModel> dispatchPreparation(PreparationModel params) async {
+    try {
+      final db = await _database.connection;
+
+      final response = await db.transaction((txn) async {
+        final responsePreparationItems = await txn.query(
+          '''
+          SELECT
+          	pi.id AS id,
+          	pi.preparation_detail_id AS preparation_detail_id,
+          	pd.preparation_id AS preparation_id,
+          	p.preparation_code AS code,
+          	p.created_by AS created_by,
+          	pi.asset_id AS asset_id,
+          	pi.quantity AS quantity,
+          	pi.location_id AS location_id,
+          	asm.unit AS unit
+          FROM
+          	t_preparation_detail_items AS pi
+          LEFT JOIN t_preparation_details AS pd ON pi.preparation_detail_id = pd.id
+          LEFT JOIN t_preparations AS p ON pd.preparation_id = p.id
+          LEFT JOIN t_assets AS ast ON pi.asset_id = ast.id
+          LEFT JOIN t_asset_models AS asm ON ast.asset_model_id = asm.id
+          WHERE pd.preparation_id = ?
+          ''',
+          [params.id],
+        );
+
+        if (responsePreparationItems.firstOrNull == null) {
+          throw NotFoundException(message: 'Preparations is not found');
+        }
+
+        final preparationItems =
+            responsePreparationItems.map((e) => e.fields).toList();
+
+        for (var i = 0; i < preparationItems.length; i++) {
+          if (preparationItems[i]['unit'] == 1) {
+            await txn.query(
+              '''
+              INSERT INTO t_asset_movements
+                (asset_id, movement_type, from_location_id, to_location_id, movement_by, quantity, references_number)
+              VALUES
+                (?, ?, ?, ?, ?, ?, ?)
+              ''',
+              [
+                preparationItems[i]['asset_id'],
+                'PREPARATION',
+                preparationItems[i]['location_id'],
+                params.destinationId,
+                preparationItems[i]['created_by'],
+                preparationItems[i]['quantity'],
+                preparationItems[i]['code'],
+              ],
+            );
+
+            await txn.query(
+              '''
+              UPDATE t_assets
+              SET location_id = ?, status = ?, conditions = ?, updated_at = NOW(), updated_by = ?
+              WHERE id = ?
+              ''',
+              [
+                params.destinationId,
+                'USE',
+                'OLD',
+                preparationItems[i]['created_by'],
+                preparationItems[i]['asset_id'],
+              ],
+            );
+          } else {
+            await txn.query(
+              '''
+              INSERT INTO t_asset_movements
+                (asset_id, movement_type, from_location_id, to_location_id, movement_by, quantity, references_number)
+              VALUES
+                (?, ?, ?, ?, ?, ?, ?)
+              ''',
+              [
+                preparationItems[i]['asset_id'],
+                'PREPARATION',
+                preparationItems[i]['location_id'],
+                params.destinationId,
+                preparationItems[i]['created_by'],
+                preparationItems[i]['quantity'],
+                preparationItems[i]['code'],
+              ],
+            );
+
+            await txn.query(
+              '''
+              UPDATE t_assets
+              SET quantity = quantity - ?, updated_at = NOW(), updated_by = ?
+              WHERE id = ?
+              ''',
+              [
+                preparationItems[i]['quantity'],
+                preparationItems[i]['created_by'],
+                preparationItems[i]['asset_id'],
+              ],
+            );
+          }
+        }
+        await txn.query(
+          '''
+            UPDATE t_preparations
+            SET status = ?, updated_at = NOW(), updated_by = ?
+            WHERE id = ?
+            ''',
+          ['DISPATCHED', preparationItems[0]['created_by'], params.id],
+        );
+
+        final response = await txn.query(
+          '''
+            SELECT
+              p.id AS id,
+              p.preparation_code AS preparation_code,
+              p.destination_id AS destination_id,
+              l.name AS destination,
+              p.assigned_id AS assigned_id,
+              a.name AS assigned,
+              p.temporary_location_id AS temporary_location_id,
+              t.name AS temporary_location,
+              p.total_box AS total_box,
+              p.status AS status,
+              p.notes AS notes,
+              p.created_by AS created_by_id,
+              c.name AS created_by,
+              p.updated_by AS updated_by_id,
+              u.name AS updated_by
+            FROM
+              t_preparations AS p
+            LEFT JOIN t_locations AS l ON p.destination_id = l.id
+            LEFT JOIN t_users AS a ON p.assigned_id = a.id
+            LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
+            LEFT JOIN t_users AS c ON p.created_by = c.id
+            LEFT JOIN t_users AS u ON p.updated_by = u.id
+            WHERE p.id = ?
+            ''',
+          [params.id],
+        );
+
+        return response.first.fields;
+      });
+
+      return PreparationModel.fromDatabase(response!);
+    } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
+
+  Future<bool> _updatePreparationStatus(
+    int preparationId,
+    String status,
+  ) async {
+    final db = await _database.connection;
+
+    const query = 'UPDATE t_preparations SET status = ? WHERE id = ?';
+
+    final result = await db.query(
+      query,
+      [status, preparationId],
+    );
+
+    if (result.affectedRows == null || result.affectedRows == 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  Future<bool> _updatePreparationDetailStatus(
+    int preparationDetailId,
+    String status,
+  ) async {
+    final db = await _database.connection;
+
+    const query = 'UPDATE t_preparation_details SET status = ? WHERE id =?';
+
+    final result = await db.query(
+      query,
+      [status, preparationDetailId],
+    );
+
+    if (result.affectedRows == null || result.affectedRows == 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  @override
+  Future<PreparationModel> completedPreparation(
+    PreparationModel params,
+    List<int> fileBytes,
+    String originalName,
+  ) async {
+    if (!originalName.toLowerCase().endsWith('.pdf')) {
+      throw UpdateException(message: 'File not valid, only pdf');
+    }
+
+    final basePath = Directory.current.path;
+
+    final uploadDir = p.join(basePath, 'uploads', 'preparation');
+
+    final dir = Directory(uploadDir);
+
+    if (!dir.existsSync()) {
+      dir.createSync(recursive: true);
+    }
+
+    final fileName = '${params.preparationCode}.pdf';
+
+    final savePath = p.join(uploadDir, fileName);
+
+    final file = File(savePath);
+
+    await file.writeAsBytes(fileBytes, flush: true);
+
+    final db = await _database.connection;
+
+    await db.query(
+      'UPDATE t_preparations SET status = ? WHERE id = ?',
+      [params.status, params.id],
+    );
+
+    final response = await db.query(
+      '''
+        SELECT
+          p.id AS id,
+          p.preparation_code AS preparation_code,
+          p.destination_id AS destination_id,
+          l.name AS destination,
+          p.assigned_id AS assigned_id,
+          a.name AS assigned,
+          p.temporary_location_id AS temporary_location_id,
+          t.name AS temporary_location,
+          p.total_box AS total_box,
+          p.status AS status,
+          p.notes AS notes,
+          p.created_by AS created_by_id,
+          c.name AS created_by,
+          p.updated_by AS updated_by_id,
+          u.name AS updated_by
+        FROM
+          t_preparations AS p
+        LEFT JOIN t_locations AS l ON p.destination_id = l.id
+        LEFT JOIN t_users AS a ON p.assigned_id = a.id
+        LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
+        LEFT JOIN t_users AS c ON p.created_by = c.id
+        LEFT JOIN t_users AS u ON p.updated_by = u.id
+        WHERE p.id = ?
+        ''',
+      [params.id],
+    );
+
+    if (response.firstOrNull == null) {
+      throw UpdateException(message: 'Gaada bos, masuk sini');
+    }
+
+    return PreparationModel.fromDatabase(response.first.fields);
+  }
+
+  @override
+  Future<File> findDocumentPreparationById(int params) async {
+    try {
+      final db = await _database.connection;
+
+      final responsePreparationCode = await db.query(
+        'SELECT preparation_code FROM t_preparations WHERE id = ?',
+        [params],
+      );
+
+      if (responsePreparationCode.firstOrNull == null) {
+        throw NotFoundException(message: 'Preparation not found');
+      }
+
+      final preparationCode =
+          responsePreparationCode.first.fields['preparation_code'];
+
+      final basePath = Directory.current.path;
+      final filePath = p.join(
+        basePath,
+        'uploads',
+        'preparation',
+        '$preparationCode.pdf',
+      );
+
+      final file = File(filePath);
+
+      if (!file.existsSync()) {
+        throw NotFoundException(message: 'File not found');
+      }
+      return file;
+    } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
   }
 }

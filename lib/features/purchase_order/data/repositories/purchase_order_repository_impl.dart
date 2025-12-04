@@ -53,7 +53,8 @@ class PurchaseOrderRepositoryImpl implements PurchaseOrderRepository {
 
   @override
   Future<Either<Failure, PurchaseOrder>> updatePurchaseOrder(
-      PurchaseOrder params) {
+    PurchaseOrder params,
+  ) {
     // TODO: implement updatePurchaseOrder
     throw UnimplementedError();
   }

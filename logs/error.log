@@ -2268,3 +2268,1157 @@ Bad state: No element
 <asynchronous suspension>
 
 --------------------------------------------------------------------------------
+[21:43:56] POST /api/preparation
+→ Status: 400 (71ms)
+--------------------------------------------------------------------------------
+[21:46:20] POST /api/preparation
+→ Status: 400 (19ms)
+--------------------------------------------------------------------------------
+[21:50:00] POST /api/preparation
+→ Status: 400 (13ms)
+--------------------------------------------------------------------------------
+[21:55:40] POST /api/preparation
+→ Status: 401 (7ms)
+--------------------------------------------------------------------------------
+[21:57:22] GET /api/auto_login
+→ Status: 401 (63ms)
+--------------------------------------------------------------------------------
+[21:57:33] POST /api/login
+→ Status: 400 (346ms)
+--------------------------------------------------------------------------------
+[22:22:05] GET /api/preparation/8/item
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[22:22:08] GET /api/preparation/8/item
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[22:25:19] GET /api/preparation/8/item
+→ Status: 400 (8ms)
+--------------------------------------------------------------------------------
+[22:25:27] GET /api/preparation/27/item
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[22:33:11] GET /api/preparation/26/item
+→ Status: 400 (2ms)
+--------------------------------------------------------------------------------
+[22:34:56] PATCH /api/preparation/26
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[22:39:46] GET /api/preparation/26/item
+→ Status: 400 (24ms)
+--------------------------------------------------------------------------------
+[22:40:39] GET /api/preparation/26/item
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[22:40:48] GET /api/preparation/27/item
+→ Status: 400 (8ms)
+--------------------------------------------------------------------------------
+[22:40:57] GET /api/preparation/27/item
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[22:48:26] GET /api/preparation_detail/44/item
+→ Status: 400 (19ms)
+--------------------------------------------------------------------------------
+[22:48:55] GET /api/preparation_detail/44/item
+→ Status: 400 (13ms)
+--------------------------------------------------------------------------------
+[22:48:59] GET /api/preparation_detail/44/item
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[22:49:01] GET /api/preparation_detail/45/item
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[22:49:41] GET /api/preparation_detail/44/item
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[22:50:12] GET /api/preparation_detail/46/item
+→ Status: 400 (26ms)
+--------------------------------------------------------------------------------
+[22:51:40] GET /api/preparation_detail/46/item
+→ Status: 400 (33ms)
+--------------------------------------------------------------------------------
+[22:52:25] GET /api/preparation_detail/46/item
+→ Status: 400 (2ms)
+--------------------------------------------------------------------------------
+[22:52:39] GET /api/preparation_detail/45/item
+→ Status: 400 (29ms)
+--------------------------------------------------------------------------------
+[22:53:29] GET /api/preparation_detail/45/item
+→ Status: 400 (19ms)
+--------------------------------------------------------------------------------
+[22:56:32] GET /api/preparation_detail/44/item
+→ Status: 400 (14ms)
+--------------------------------------------------------------------------------
+[22:56:35] GET /api/preparation_detail/45/item
+→ Status: 400 (20ms)
+--------------------------------------------------------------------------------
+[22:56:38] GET /api/preparation_detail/44/item
+→ Status: 400 (8ms)
+--------------------------------------------------------------------------------
+[22:56:41] GET /api/preparation_detail/45/item
+→ Status: 400 (12ms)
+--------------------------------------------------------------------------------
+[22:57:25] GET /api/preparation_detail/44/item
+→ Status: 400 (1ms)
+--------------------------------------------------------------------------------
+[22:57:28] GET /api/preparation_detail/45/item
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[22:57:42] GET /api/preparation_detail/44/item
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[22:57:46] GET /api/preparation_detail/45/item
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[22:57:48] GET /api/preparation_detail/46/item
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[22:59:53] GET /api/preparation_detail/44/item
+→ Status: 400 (19ms)
+--------------------------------------------------------------------------------
+[02:38:38] POST /api/login
+→ Status: 400 (205ms)
+--------------------------------------------------------------------------------
+[02:38:40] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[03:14:44] PATCH /api/preparation/28
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[10:30:45] POST /api/login
+→ Status: 400 (29ms)
+--------------------------------------------------------------------------------
+[10:36:42] GET /api/preparation/4/item
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[10:45:25] GET /api/preparation/4/item
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[10:45:34] GET /api/preparation_detail/6/item
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[10:46:09] GET /api/preparation_detail/6/item
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[10:46:11] GET /api/preparation_detail/6/item
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[10:46:50] GET /api/preparation_detail/6/item
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[10:47:58] GET /api/preparation_detail/6/item
+→ Status: 400 (1ms)
+--------------------------------------------------------------------------------
+[10:48:39] GET /api/preparation_detail/6/item
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[10:49:16] GET /api/preparation_detail/6/item
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[10:49:54] GET /api/preparation_detail/9/item
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[10:50:01] GET /api/preparation_detail/9/item
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[10:51:09] GET /api/preparation_detail/6/item
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[10:51:13] GET /api/preparation_detail/9/item
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[10:59:02] GET /api/preparation_detail/6/item
+→ Status: 400 (1ms)
+--------------------------------------------------------------------------------
+[11:00:17] GET /api/preparation_detail/6/item
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[11:02:09] GET /api/preparation_detail/6/item
+→ Status: 400 (2ms)
+--------------------------------------------------------------------------------
+[11:02:25] GET /api/preparation_detail/9/item
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[11:04:58] GET /api/preparation_detail/6/item
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[11:17:03] GET /api/preparation_detail/6/item
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[11:17:35] GET /api/preparation/3/item
+→ Status: 400 (13ms)
+--------------------------------------------------------------------------------
+[11:17:59] GET /api/preparation/3/item
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[11:18:16] GET /api/preparation_detail/6/item
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[11:20:11] GET /api/preparation_detail/6/item
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[15:22:51] GET /api/preparation_detail/6/item
+→ Status: 400 (1ms)
+--------------------------------------------------------------------------------
+[15:23:37] GET /api/preparation_detail/6/item
+→ Status: 400 (84ms)
+--------------------------------------------------------------------------------
+[16:20:30] GET /api/preparation/4/item
+→ Status: 400 (23ms)
+--------------------------------------------------------------------------------
+[16:23:23] GET /api/preparation/3/item
+→ Status: 400 (12ms)
+--------------------------------------------------------------------------------
+[16:23:31] GET /api/preparation/4/item
+→ Status: 400 (13ms)
+--------------------------------------------------------------------------------
+[16:25:04] GET /api/preparation/3/item
+→ Status: 400 (12ms)
+--------------------------------------------------------------------------------
+[16:25:19] GET /api/preparation_detail/9/item
+→ Status: 400 (18ms)
+--------------------------------------------------------------------------------
+[16:25:34] ERROR HttpMethod.get /api/assets/search
+FormatException: Invalid radix-10 number (at character 1)
+search
+^
+
+#0      int._handleFormatError (dart:core-patch/integers_patch.dart:137:5)
+#1      int._parseRadix (dart:core-patch/integers_patch.dart:155:16)
+#2      int._parse (dart:core-patch/integers_patch.dart:104:12)
+#3      int.parse (dart:core-patch/integers_patch.dart:63:12)
+#4      RequestMethodExt.parseUri (package:asset_management_api/core/extensions/request_method_ext.dart:12:16)
+#5      AssetsResponseUser.findAssetDetailById (package:asset_management_api/features/assets/presentation/response/assets_response_user.dart:90:36)
+<asynchronous suspension>
+#6      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/assets/%5Bid%5D/index.dart:14:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#11     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#12     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#13     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#14     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#15     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#16     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#17     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#18     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#19     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#20     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[16:44:48] GET /api/preparation_detail/6/item
+→ Status: 400 (24ms)
+--------------------------------------------------------------------------------
+[16:45:03] ERROR HttpMethod.get /api/assets/search
+FormatException: Invalid radix-10 number (at character 1)
+search
+^
+
+#0      int._handleFormatError (dart:core-patch/integers_patch.dart:137:5)
+#1      int._parseRadix (dart:core-patch/integers_patch.dart:155:16)
+#2      int._parse (dart:core-patch/integers_patch.dart:104:12)
+#3      int.parse (dart:core-patch/integers_patch.dart:63:12)
+#4      RequestMethodExt.parseUri (package:asset_management_api/core/extensions/request_method_ext.dart:12:16)
+#5      AssetsResponseUser.findAssetDetailById (package:asset_management_api/features/assets/presentation/response/assets_response_user.dart:90:36)
+<asynchronous suspension>
+#6      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/assets/%5Bid%5D/index.dart:14:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#11     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#12     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#13     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#14     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#15     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#16     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#17     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#18     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#19     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#20     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[16:48:20] ERROR HttpMethod.get /api/assets/query
+FormatException: Invalid radix-10 number (at character 1)
+query
+^
+
+#0      int._handleFormatError (dart:core-patch/integers_patch.dart:137:5)
+#1      int._parseRadix (dart:core-patch/integers_patch.dart:155:16)
+#2      int._parse (dart:core-patch/integers_patch.dart:104:12)
+#3      int.parse (dart:core-patch/integers_patch.dart:63:12)
+#4      RequestMethodExt.parseUri (package:asset_management_api/core/extensions/request_method_ext.dart:12:16)
+#5      AssetsResponseUser.findAssetDetailById (package:asset_management_api/features/assets/presentation/response/assets_response_user.dart:90:36)
+<asynchronous suspension>
+#6      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/assets/%5Bid%5D/index.dart:14:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#11     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#12     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#13     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#14     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#15     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#16     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#17     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#18     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#19     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#20     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[20:50:45] GET /api/auto_login
+→ Status: 401 (149ms)
+--------------------------------------------------------------------------------
+[20:50:57] POST /api/login
+→ Status: 400 (438ms)
+--------------------------------------------------------------------------------
+[20:51:04] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[21:16:59] GET /api/preparation_detail/3/item
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[21:18:44] GET /api/preparation_detail/3/item
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[21:18:52] GET /api/preparation_detail/3/item
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[21:56:58] GET /api/preparation_detail/6/item
+→ Status: 400 (29ms)
+--------------------------------------------------------------------------------
+[21:57:47] GET /api/preparation_detail/6/item
+→ Status: 400 (21ms)
+--------------------------------------------------------------------------------
+[22:46:47] POST /api/preparation_item
+→ Status: 400 (22ms)
+--------------------------------------------------------------------------------
+[22:48:12] POST /api/preparation_item
+→ Status: 400 (17ms)
+--------------------------------------------------------------------------------
+[22:54:42] POST /api/preparation_item
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[23:21:23] POST /api/preparation_item
+→ Status: 400 (25ms)
+--------------------------------------------------------------------------------
+[23:22:38] POST /api/preparation_item
+→ Status: 400 (33ms)
+--------------------------------------------------------------------------------
+[23:23:05] POST /api/preparation_item
+→ Status: 400 (17ms)
+--------------------------------------------------------------------------------
+[23:23:43] POST /api/preparation_item
+→ Status: 400 (50ms)
+--------------------------------------------------------------------------------
+[23:25:45] POST /api/preparation_item
+→ Status: 400 (39ms)
+--------------------------------------------------------------------------------
+[00:48:11] ERROR HttpMethod.put /api/preparation_detail/5
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationDetailResponse.updatePreparationDetail (package:asset_management_api/features/preparation_detail/presentation/response/preparation_detail_response.dart:125:22)
+<asynchronous suspension>
+#9      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#11     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#12     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#13     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#14     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#15     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#16     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#17     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#19     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#20     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#21     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#22     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[00:49:49] ERROR HttpMethod.put /api/preparation_detail/5
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationDetailResponse.updatePreparationDetail (package:asset_management_api/features/preparation_detail/presentation/response/preparation_detail_response.dart:125:22)
+<asynchronous suspension>
+#9      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#11     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#12     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#13     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#14     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#15     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#16     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#17     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#19     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#20     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#21     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#22     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[00:54:24] PATCH /api/preparation_detail/5
+→ Status: 400 (18ms)
+--------------------------------------------------------------------------------
+[00:55:11] PATCH /api/preparation_detail/5
+→ Status: 400 (0ms)
+--------------------------------------------------------------------------------
+[00:55:22] PATCH /api/preparation_detail/5
+→ Status: 400 (8ms)
+--------------------------------------------------------------------------------
+[00:58:48] PATCH /api/preparation_detail/5
+→ Status: 400 (16ms)
+--------------------------------------------------------------------------------
+[00:59:25] PATCH /api/preparation_detail/5
+→ Status: 400 (25ms)
+--------------------------------------------------------------------------------
+[21:49:34] GET /api/auto_login
+→ Status: 401 (71ms)
+--------------------------------------------------------------------------------
+[22:05:21] GET /api/auto_login
+→ Status: 401 (15ms)
+--------------------------------------------------------------------------------
+[22:35:51] GET /api/auto_login
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[22:36:04] POST /api/login
+→ Status: 400 (527ms)
+--------------------------------------------------------------------------------
+[22:37:02] GET /api/preparation_detail/6/item
+→ Status: 400 (16ms)
+--------------------------------------------------------------------------------
+[22:39:22] GET /api/preparation_detail/9/item
+→ Status: 400 (18ms)
+--------------------------------------------------------------------------------
+[23:07:04] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:36:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:08:56] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:36:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:12:12] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:36:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:14:45] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:36:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:16:51] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:36:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:19:37] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:27:11)
+<asynchronous suspension>
+#9      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#11     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#12     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#13     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#14     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#15     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#16     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#17     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#19     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#20     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#21     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#22     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:26:38] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:36:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:31:55] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:38:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:33:43] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:26:11)
+<asynchronous suspension>
+#8      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#9      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#10     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#11     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#15     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#16     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#17     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#18     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#19     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#20     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#21     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:35:11] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:38:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:38:37] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:38:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:40:20] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:36:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:45:08] ERROR HttpMethod.patch /api/preparation/2
+FormatException: Unexpected end of input (at character 1)
+
+^
+
+#0      _ChunkedJsonParser.fail (dart:convert-patch/convert_patch.dart:1463:5)
+#1      _ChunkedJsonParser.close (dart:convert-patch/convert_patch.dart:497:7)
+#2      _parseJson (dart:convert-patch/convert_patch.dart:36:10)
+#3      JsonDecoder.convert (dart:convert/json.dart:641:36)
+#4      JsonCodec.decode (dart:convert/json.dart:223:41)
+#5      jsonDecode (dart:convert/json.dart:160:12)
+#6      Request.json (package:dart_frog/src/request.dart:171:35)
+<asynchronous suspension>
+#7      RequestMethodExt.requestJSON (package:asset_management_api/core/extensions/request_method_ext.dart:7:18)
+<asynchronous suspension>
+#8      PreparationResponse.updateStatusReady (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:320:20)
+<asynchronous suspension>
+#9      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D/index.dart:35:14)
+<asynchronous suspension>
+#10     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#11     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#12     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#13     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#18     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#19     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#20     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#21     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#22     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#23     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[00:03:49] GET /api/preparation/3/item
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------

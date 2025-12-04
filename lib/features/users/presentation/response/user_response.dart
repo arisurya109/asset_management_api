@@ -187,11 +187,7 @@ class UserResponse {
         final paramsBody = await context.requestJSON();
         final password = hashPassword('Watsons_1nd0#');
 
-        print(paramsBody);
-
         paramsBody.addAll({'id': paramsId, 'password': password});
-
-        print(paramsBody);
 
         final response = await updateUser(User.fromRequest(paramsBody));
 

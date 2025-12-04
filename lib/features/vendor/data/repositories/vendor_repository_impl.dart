@@ -38,9 +38,11 @@ class VendorRepositoryImpl implements VendorRepository {
   @override
   Future<Either<Failure, Vendor>> updateVendor(Vendor params) async {
     try {
-      final response = await _source.updateVendor(VendorModel.fromEntity(
-        params,
-      ));
+      final response = await _source.updateVendor(
+        VendorModel.fromEntity(
+          params,
+        ),
+      );
       return Right(response.toEntity());
     } on UpdateException catch (e) {
       return Left(UpdateFailure(e.message));

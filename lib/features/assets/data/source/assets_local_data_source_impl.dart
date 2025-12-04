@@ -737,4 +737,64 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
       throw DatabaseException(message: e.toString());
     }
   }
+
+  @override
+  Future<AssetsResponseModel> findAssetByAssetCodeAndLocation({
+    required String assetCode,
+    required String location,
+  }) async {
+    try {
+      final db = await _database.connection;
+
+      final response = await db.query(
+        '''
+        SELECT
+	        a.id AS id,
+	        a.serial_number AS serial_number,
+	        a.asset_code AS asset_code,
+	        a.status AS status,
+	        a.conditions AS conditions,
+	        a.quantity AS quantity,
+	        am.unit AS uom,
+	        am.name AS model,
+	        ac.name AS category,
+	        ab.name AS brand,
+	        ats.name AS types,
+	        c.name AS color,
+	        l1.name AS location,
+	        a.purchase_order AS purchase_order,
+	        a.remarks AS remarks
+        FROM
+        	t_assets AS a
+        LEFT JOIN t_asset_models AS am ON a.asset_model_id  = am.id
+        LEFT JOIN t_asset_brands AS ab ON am.brand_id  = ab.id
+        LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+        LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
+        LEFT JOIN t_colors AS c ON a.color_id  = c.id
+        LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+        WHERE a.asset_code = UPPER(?) AND l1.name = UPPER(?)
+        LIMIT 1
+        ''',
+        [assetCode.toUpperCase(), location.toUpperCase()],
+      );
+
+      if (response.firstOrNull == null || response.first.isEmpty) {
+        throw NotFoundException(message: 'Asset is not found');
+      } else {
+        return AssetsResponseModel.fromMap(response.first.fields);
+      }
+    } on NotFoundException {
+      rethrow;
+    } on CreateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
 }

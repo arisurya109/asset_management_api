@@ -8,6 +8,19 @@ import 'package:dart_frog/dart_frog.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.httpMethodGet) {
+    final queryParams = context.request.uri.queryParameters;
+
+    final assetCode = queryParams['assetCode'];
+    final location = queryParams['location'];
+
+    if (assetCode != null && location != null) {
+      return await AssetsResponseUser.findAssetByAssetCodeAndLocation(
+        context,
+        assetCode,
+        location,
+      );
+    }
+
     return await AssetsResponseUser.findAllAssets(context);
   } else if (context.httpMethodPost) {
     return await AssetsResponseUser.createAssets(context);

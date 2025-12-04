@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/features/vendor/data/model/vendor_model.dart';

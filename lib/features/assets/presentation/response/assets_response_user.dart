@@ -10,6 +10,7 @@ import 'package:asset_management_api/features/assets/domain/entities/assets_requ
 import 'package:asset_management_api/features/assets/domain/usecases/create_asset_transfer_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/create_assets_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_all_assets_use_case.dart';
+import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_asset_code_and_location_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_detail_by_id_use_case.dart';
 import 'package:dart_frog/dart_frog.dart';
 
@@ -133,6 +134,36 @@ class AssetsResponseUser {
           code: HttpStatus.created,
           status: 'Successfully transfer asset',
           body: assets.toJson(),
+        ),
+      );
+    }
+  }
+
+  static Future<Response> findAssetByAssetCodeAndLocation(
+    RequestContext context,
+    String assetCode,
+    String location,
+  ) async {
+    final jwt = context.read<JwtService>();
+
+    final validateToken = await jwt.verifyToken(context);
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else {
+      final usecase = context.read<FindAssetByAssetCodeAndLocationUseCase>();
+
+      final response = await usecase(
+        assetCode: assetCode,
+        location: location,
+      );
+
+      return response.fold(
+        (l) => ResponseHelper.badRequest(description: l.message!),
+        (r) => ResponseHelper.json(
+          code: HttpStatus.ok,
+          status: 'Successfully get asset by asset code and location',
+          body: r.toJson(),
         ),
       );
     }

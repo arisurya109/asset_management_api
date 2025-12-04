@@ -10,7 +10,7 @@ class FindPreparationByIdUseCase {
 
   final PreparationRepository _repository;
 
-  Future<Either<Failure, Preparation>> call(int params) async {
-    return _repository.findPreparationById(params);
+  Future<Either<Failure, Preparation>> call({required int params}) async {
+    return _repository.findPreparationById(params: params);
   }
 }

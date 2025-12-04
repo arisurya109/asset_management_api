@@ -7,10 +7,10 @@ import 'package:asset_management_api/features/preparation/presentation/response/
 import 'package:dart_frog/dart_frog.dart';
 
 Future<Response> onRequest(RequestContext context) async {
-  if (context.httpMethodPost) {
-    return await PreparationResponse.createPreparation(context);
-  } else if (context.httpMethodGet) {
+  if (context.httpMethodGet) {
     return await PreparationResponse.findAllPreparation(context);
+  } else if (context.httpMethodPost) {
+    return await PreparationResponse.createPreparation(context);
   }
   return ResponseHelper.methodNotAllowed(description: ErrorMsg.methodAllowed);
 }

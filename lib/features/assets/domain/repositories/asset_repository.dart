@@ -19,4 +19,8 @@ abstract class AssetsRepository {
     int quantity = 1,
     String? notes,
   });
+  Future<Either<Failure, AssetsResponse>> findAssetByAssetCodeAndLocation({
+    required String assetCode,
+    required String location,
+  });
 }

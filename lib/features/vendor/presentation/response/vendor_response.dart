@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'dart:io';
 
 import 'package:asset_management_api/core/extensions/request_method_ext.dart';

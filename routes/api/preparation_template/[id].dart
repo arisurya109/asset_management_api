@@ -3,19 +3,21 @@
 import 'package:asset_management_api/core/extensions/request_method_ext.dart';
 import 'package:asset_management_api/core/helpers/constant.dart';
 import 'package:asset_management_api/core/helpers/response_helper.dart';
-import 'package:asset_management_api/features/preparation/presentation/response/preparation_response.dart';
+import 'package:asset_management_api/features/preparation_template/presentation/response/preparation_template_response.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 Future<Response> onRequest(
   RequestContext context,
   String id,
 ) async {
-  if (context.httpMethodDelete) {
-    return await PreparationResponse.deletePreparationTemplate(context, id);
-  } else if (context.httpMethodPost) {
-    return await PreparationResponse.createPreparationTemplateItem(context, id);
+  if (context.httpMethodPost) {
+    return await PreparationTemplateResponse.createPreparationTemplateItem(
+      context,
+      id,
+    );
   } else if (context.httpMethodGet) {
-    return await PreparationResponse.findAllPreparationTemplateItemByTemplateId(
+    return await PreparationTemplateResponse
+        .findAllPreparationTemplateItemByTemplateId(
       context,
       id,
     );

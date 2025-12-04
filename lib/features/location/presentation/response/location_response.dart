@@ -11,9 +11,11 @@ import 'package:asset_management_api/features/location/domain/usecases/find_by_i
 import 'package:asset_management_api/features/location/domain/usecases/update_location_use_case.dart';
 import 'package:dart_frog/dart_frog.dart';
 
+// ignore: public_member_api_docs
 class LocationResponse {
   LocationResponse._();
 
+  // ignore: public_member_api_docs
   static Future<Response> createLocation(RequestContext context) async {
     final jwt = context.read<JwtService>();
 
@@ -38,6 +40,7 @@ class LocationResponse {
     }
   }
 
+  // ignore: public_member_api_docs
   static Future<Response> findAllLocation(RequestContext context) async {
     final jwt = context.read<JwtService>();
 
@@ -61,6 +64,7 @@ class LocationResponse {
     }
   }
 
+  // ignore: public_member_api_docs
   static Future<Response> findByIdLocation(
     RequestContext context,
     String id,
@@ -88,6 +92,7 @@ class LocationResponse {
     }
   }
 
+  // ignore: public_member_api_docs
   static Future<Response> updateLocation(
     RequestContext context,
     String id,

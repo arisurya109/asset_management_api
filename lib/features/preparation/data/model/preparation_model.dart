@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynamic_calls
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynam
 
 import 'package:asset_management_api/features/preparation/domain/entities/preparation.dart';
 import 'package:equatable/equatable.dart';
@@ -22,6 +22,11 @@ class PreparationModel extends Equatable {
   int? updatedById;
   String? updatedBy;
   DateTime? updatedAt;
+  int? approvedById;
+  String? approvedBy;
+  DateTime? approvedAt;
+  String? assetStatusAfter;
+  String? assetConditionAfter;
 
   PreparationModel({
     this.id,
@@ -41,6 +46,11 @@ class PreparationModel extends Equatable {
     this.updatedById,
     this.updatedBy,
     this.updatedAt,
+    this.approvedById,
+    this.approvedBy,
+    this.approvedAt,
+    this.assetStatusAfter,
+    this.assetConditionAfter,
   });
 
   Map<String, dynamic> toDatabase() {
@@ -55,25 +65,10 @@ class PreparationModel extends Equatable {
       'temporary_location_id': temporaryLocationId,
       'created_by': createdById,
       'updated_by': updatedById,
+      'approved_by': approvedById,
+      'asset_status_after': assetStatusAfter,
+      'asset_condition_after': assetConditionAfter,
     };
-  }
-
-  Map<String, dynamic> toDatabasePartial() {
-    final data = <String, dynamic>{};
-
-    if (preparationCode != null) data['preparation_code'] = preparationCode;
-    if (totalBox != null) data['total_box'] = totalBox;
-    if (status != null) data['status'] = status;
-    if (notes != null) data['notes'] = notes;
-    if (destinationId != null) data['destination_id'] = destinationId;
-    if (assignedId != null) data['assigned_id'] = assignedId;
-    if (temporaryLocationId != null) {
-      data['temporary_location_id'] = temporaryLocationId;
-    }
-
-    if (updatedById != null) data['updated_by'] = updatedById;
-
-    return data;
   }
 
   factory PreparationModel.fromDatabase(Map<String, dynamic> map) {
@@ -107,6 +102,18 @@ class PreparationModel extends Equatable {
       updatedBy: map['updated_by'] != null ? map['updated_by'] as String : null,
       updatedAt:
           map['updated_at'] != null ? map['updated_at'] as DateTime : null,
+      approvedById:
+          map['approved_by_id'] != null ? map['approved_by_id'] as int : null,
+      approvedBy:
+          map['approved_by'] != null ? map['approved_by'] as String : null,
+      approvedAt:
+          map['approved_at'] != null ? map['approved_at'] as DateTime : null,
+      assetStatusAfter: map['asset_status_after'] != null
+          ? map['asset_status_after'] as String
+          : null,
+      assetConditionAfter: map['asset_condition_after'] != null
+          ? map['asset_condition_after'] as String
+          : null,
     );
   }
 
@@ -129,6 +136,11 @@ class PreparationModel extends Equatable {
       updatedAt: params.updatedAt,
       updatedBy: params.updatedBy,
       updatedById: params.updatedById,
+      approvedAt: params.approvedAt,
+      approvedBy: params.approvedBy,
+      approvedById: params.approvedById,
+      assetConditionAfter: params.assetConditionAfter,
+      assetStatusAfter: params.assetStatusAfter,
     );
   }
 
@@ -151,6 +163,11 @@ class PreparationModel extends Equatable {
       updatedAt: updatedAt,
       updatedBy: updatedBy,
       updatedById: updatedById,
+      approvedAt: approvedAt,
+      approvedBy: approvedBy,
+      approvedById: approvedById,
+      assetConditionAfter: assetConditionAfter,
+      assetStatusAfter: assetStatusAfter,
     );
   }
 
@@ -174,6 +191,11 @@ class PreparationModel extends Equatable {
       updatedById,
       updatedBy,
       updatedAt,
+      approvedAt,
+      approvedBy,
+      approvedById,
+      assetConditionAfter,
+      assetStatusAfter,
     ];
   }
 }

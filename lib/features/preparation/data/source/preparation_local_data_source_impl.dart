@@ -33,6 +33,14 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
         const width = 4;
 
+        String afterShippedCondition;
+
+        if (params.afterShipped == 'USE') {
+          afterShippedCondition = 'OLD';
+        } else {
+          afterShippedCondition = 'BAD';
+        }
+
         final count = response.first.fields['COUNT(id)'] as int;
         final lastCode = (count + 1).toString().padLeft(width, '0');
 
@@ -43,8 +51,8 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           INSERT INTO t_preparations
             (preparation_code, destination_id, 
             assigned_id, notes, created_by, 
-            approved_by, asset_status_after, 
-            asset_condition_after)
+            approved_by, after_shipped_status, 
+            after_shipped_condition)
           VALUES
             (?, ?, ?, ?, ?, ?, ?, ?)
           ''',
@@ -55,8 +63,9 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             params.notes,
             params.createdById,
             params.approvedById,
-            params.assetStatusAfter,
-            params.assetConditionAfter,
+            params.afterShipped,
+            params.afterShipped,
+            afterShippedCondition,
           ],
         );
 
@@ -85,8 +94,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
                 u.name AS updated_by,
                 p.approved_by AS approved_by_id,
                 ap.name AS approved_by,
-                p.asset_status_after AS asset_status_after,
-                p.asset_condition_after AS asset_condition_after
+                p.after_shipped_status AS after_shipped_status
               FROM
                 t_preparations AS p
               LEFT JOIN t_locations AS l ON p.destination_id = l.id
@@ -142,8 +150,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           u.name AS updated_by,
           p.approved_by AS approved_by_id,
           ap.name AS approved_by,
-          p.asset_status_after AS asset_status_after,
-          p.asset_condition_after AS asset_condition_after
+          p.after_shipped_status AS after_shipped_status
         FROM
           t_preparations AS p
         LEFT JOIN t_locations AS l ON p.destination_id = l.id
@@ -201,8 +208,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           u.name AS updated_by,
           p.approved_by AS approved_by_id,
           ap.name AS approved_by,
-          p.asset_status_after AS asset_status_after,
-          p.asset_condition_after AS asset_condition_after
+          p.after_shipped_status AS after_shipped_status
         FROM
           t_preparations AS p
         LEFT JOIN t_locations AS l ON p.destination_id = l.id
@@ -298,8 +304,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           u.name AS updated_by,
           p.approved_by AS approved_by_id,
           ap.name AS approved_by,
-          p.asset_status_after AS asset_status_after,
-          p.asset_condition_after AS asset_condition_after
+          p.after_shipped_status AS after_shipped_status
         FROM
           t_preparations AS p
         LEFT JOIN t_locations AS l ON p.destination_id = l.id
@@ -393,8 +398,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           u.name AS updated_by,
           p.approved_by AS approved_by_id,
           ap.name AS approved_by,
-          p.asset_status_after AS asset_status_after,
-          p.asset_condition_after AS asset_condition_after
+          p.after_shipped_status AS after_shipped_status
         FROM
           t_preparations AS p
         LEFT JOIN t_locations AS l ON p.destination_id = l.id
@@ -488,8 +492,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           u.name AS updated_by,
           p.approved_by AS approved_by_id,
           ap.name AS approved_by,
-          p.asset_status_after AS asset_status_after,
-          p.asset_condition_after AS asset_condition_after
+          p.after_shipped_status AS after_shipped_status
         FROM
           t_preparations AS p
         LEFT JOIN t_locations AS l ON p.destination_id = l.id
@@ -607,8 +610,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           u.name AS updated_by,
           p.approved_by AS approved_by_id,
           ap.name AS approved_by,
-          p.asset_status_after AS asset_status_after,
-          p.asset_condition_after AS asset_condition_after
+          p.after_shipped_status AS after_shipped_status
         FROM
           t_preparations AS p
         LEFT JOIN t_locations AS l ON p.destination_id = l.id
@@ -702,8 +704,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           u.name AS updated_by,
           p.approved_by AS approved_by_id,
           ap.name AS approved_by,
-          p.asset_status_after AS asset_status_after,
-          p.asset_condition_after AS asset_condition_after
+          p.after_shipped_status AS after_shipped_status
         FROM
           t_preparations AS p
         LEFT JOIN t_locations AS l ON p.destination_id = l.id
@@ -799,8 +800,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           u.name AS updated_by,
           p.approved_by AS approved_by_id,
           ap.name AS approved_by,
-          p.asset_status_after AS asset_status_after,
-          p.asset_condition_after AS asset_condition_after
+          p.after_shipped_status AS after_shipped_status
         FROM
           t_preparations AS p
         LEFT JOIN t_locations AS l ON p.destination_id = l.id

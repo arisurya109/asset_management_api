@@ -24,8 +24,7 @@ class Preparation extends Equatable {
   int? approvedById;
   String? approvedBy;
   DateTime? approvedAt;
-  String? assetStatusAfter;
-  String? assetConditionAfter;
+  String? afterShipped;
 
   Preparation({
     this.id,
@@ -48,8 +47,7 @@ class Preparation extends Equatable {
     this.approvedById,
     this.approvedBy,
     this.approvedAt,
-    this.assetStatusAfter,
-    this.assetConditionAfter,
+    this.afterShipped,
   });
 
   Map<String, dynamic> toJson() {
@@ -83,10 +81,7 @@ class Preparation extends Equatable {
         'id': approvedById,
         'name': approvedBy,
       },
-      'asset_after': {
-        'status': assetStatusAfter,
-        'condition': assetConditionAfter,
-      },
+      'after_shipped': afterShipped,
     };
   }
 
@@ -112,12 +107,8 @@ class Preparation extends Equatable {
           map['updated_by_id'] != null ? map['updated_by_id'] as int? : null,
       approvedById:
           map['approved_by_id'] != null ? map['approved_by_id'] as int? : null,
-      assetConditionAfter: map['asset_condition_after'] != null
-          ? map['asset_condition_after'] as String?
-          : null,
-      assetStatusAfter: map['asset_status_after'] != null
-          ? map['asset_status_after'] as String?
-          : null,
+      afterShipped:
+          map['after_shipped'] != null ? map['after_shipped'] as String? : null,
     );
   }
 
@@ -143,8 +134,7 @@ class Preparation extends Equatable {
       updatedAt,
       approvedBy,
       approvedById,
-      assetConditionAfter,
-      assetStatusAfter,
+      afterShipped,
       approvedAt,
     ];
   }

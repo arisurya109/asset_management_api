@@ -25,8 +25,7 @@ class PreparationModel extends Equatable {
   int? approvedById;
   String? approvedBy;
   DateTime? approvedAt;
-  String? assetStatusAfter;
-  String? assetConditionAfter;
+  String? afterShipped;
 
   PreparationModel({
     this.id,
@@ -49,8 +48,7 @@ class PreparationModel extends Equatable {
     this.approvedById,
     this.approvedBy,
     this.approvedAt,
-    this.assetStatusAfter,
-    this.assetConditionAfter,
+    this.afterShipped,
   });
 
   Map<String, dynamic> toDatabase() {
@@ -66,8 +64,7 @@ class PreparationModel extends Equatable {
       'created_by': createdById,
       'updated_by': updatedById,
       'approved_by': approvedById,
-      'asset_status_after': assetStatusAfter,
-      'asset_condition_after': assetConditionAfter,
+      'after_shipped': afterShipped,
     };
   }
 
@@ -108,12 +105,8 @@ class PreparationModel extends Equatable {
           map['approved_by'] != null ? map['approved_by'] as String : null,
       approvedAt:
           map['approved_at'] != null ? map['approved_at'] as DateTime : null,
-      assetStatusAfter: map['asset_status_after'] != null
-          ? map['asset_status_after'] as String
-          : null,
-      assetConditionAfter: map['asset_condition_after'] != null
-          ? map['asset_condition_after'] as String
-          : null,
+      afterShipped:
+          map['after_shipped'] != null ? map['after_shipped'] as String : null,
     );
   }
 
@@ -139,8 +132,7 @@ class PreparationModel extends Equatable {
       approvedAt: params.approvedAt,
       approvedBy: params.approvedBy,
       approvedById: params.approvedById,
-      assetConditionAfter: params.assetConditionAfter,
-      assetStatusAfter: params.assetStatusAfter,
+      afterShipped: params.afterShipped,
     );
   }
 
@@ -166,8 +158,7 @@ class PreparationModel extends Equatable {
       approvedAt: approvedAt,
       approvedBy: approvedBy,
       approvedById: approvedById,
-      assetConditionAfter: assetConditionAfter,
-      assetStatusAfter: assetStatusAfter,
+      afterShipped: afterShipped,
     );
   }
 
@@ -194,8 +185,7 @@ class PreparationModel extends Equatable {
       approvedAt,
       approvedBy,
       approvedById,
-      assetConditionAfter,
-      assetStatusAfter,
+      afterShipped,
     ];
   }
 }

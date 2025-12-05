@@ -104,6 +104,7 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
         t_locations AS c
       LEFT JOIN
         t_locations AS P ON c.parent_id = p.id
+      WHERE c.is_active = 1
       ''',
       );
 

@@ -64,7 +64,6 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             params.createdById,
             params.approvedById,
             params.afterShipped,
-            params.afterShipped,
             afterShippedCondition,
           ],
         );

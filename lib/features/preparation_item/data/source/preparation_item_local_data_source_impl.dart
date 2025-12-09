@@ -26,11 +26,15 @@ class PreparationItemLocalDataSourceImpl
         final responseQuantityStorage = await txn.query(
           '''
           SELECT
-            quantity,
-            asset_model_id
+	          a.id AS id,
+	          a.asset_model_id AS asset_model_id,
+          	am.unit AS unit,
+          	a.quantity AS quantity,
+          	a.is_picked AS is_picked
           FROM
-            t_assets
-          WHERE id = ? AND location_id = ?
+          	t_assets AS a
+          LEFT JOIN t_asset_models AS am ON a.asset_model_id = am.id
+          WHERE a.id = ? AND a.location_id = ?
           ''',
           [params.assetId, params.locationId],
         );
@@ -40,11 +44,22 @@ class PreparationItemLocalDataSourceImpl
             message: 'Failed, asset is invalid.',
           );
         }
+
         final stockInStorage =
             responseQuantityStorage.first.fields['quantity'] as int;
 
         final assetModelId =
             responseQuantityStorage.first.fields['asset_model_id'] as int;
+
+        final unit = responseQuantityStorage.first.fields['unit'] as int;
+        final isPicked =
+            responseQuantityStorage.first.fields['is_picked'] as int;
+
+        final assetId = responseQuantityStorage.first.fields['id'] as int;
+
+        if (unit == 1 && isPicked == 1) {
+          throw CreateException(message: 'Asset already pick');
+        }
 
         if (params.quantity! > stockInStorage) {
           throw CreateException(message: 'Quantity exceeds stock on the rack');
@@ -74,19 +89,6 @@ class PreparationItemLocalDataSourceImpl
           throw Exception('Quantity already completed');
         }
 
-        // Check duplicate Asset di Preparation Detail Items
-        final dupCheck = await txn.query(
-          '''
-          SELECT id FROM t_preparation_detail_items
-          WHERE preparation_detail_id = ? AND asset_id = ?
-          ''',
-          [params.preparationDetailId, params.assetId],
-        );
-
-        if (dupCheck.firstOrNull != null) {
-          throw CreateException(message: 'Asset already pick list item');
-        }
-
         // Insert Preparation Detail Item
         final prepItem = await txn.query('''
           INSERT INTO t_preparation_detail_items
@@ -105,6 +107,17 @@ class PreparationItemLocalDataSourceImpl
           throw CreateException(message: 'Failed to insert assets');
         }
 
+        if (unit == 1) {
+          await txn.query(
+            '''
+            UPDATE t_assets
+            SET is_picked = 1
+            WHERE id = ?
+            ''',
+            [assetId],
+          );
+        }
+
         // Jika quantity Picked 0, update status IN_PROGRESS
         if (qtyPicked == 0) {
           await txn.query(
@@ -116,6 +129,15 @@ class PreparationItemLocalDataSourceImpl
             [params.preparationDetailId],
           );
           // Jika Quantity Target sudah terpenuhi maka update status READY
+        } else if ((qtyPicked + params.quantity!) == qtyTarget) {
+          await txn.query(
+            '''
+            UPDATE t_preparation_details
+            SET quantity_picked = quantity_picked + 1, status = 'COMPLETED'
+            WHERE id = ?
+            ''',
+            [params.preparationDetailId],
+          );
         } else {
           // Increment Quantity Picked
           await txn.query(
@@ -200,6 +222,32 @@ class PreparationItemLocalDataSourceImpl
         if (checkPreparationItem.firstOrNull == null ||
             checkPreparationItem.isEmpty) {
           throw DeleteException(message: 'Failed, assets not found');
+        }
+
+        final responseAsset = await txn.query(
+          '''
+          SELECT 
+          	a.asset_model_id AS asset_model_id,
+          	am.unit AS unit,
+          	a.is_picked AS is_picked
+          FROM
+          	t_assets AS a
+          LEFT JOIN t_asset_models AS am ON a.asset_model_id = am.id
+          WHERE a.id = ?
+          ''',
+          [checkPreparationItem.first.fields['asset_id']],
+        );
+
+        if (responseAsset.first.fields['unit'] as int == 1 &&
+            responseAsset.first.fields['is_picked'] as int == 1) {
+          await txn.query(
+            '''
+            UPDATE t_assets
+            SET is_picked = 0
+            WHERE id = ?
+            ''',
+            [checkPreparationItem.first.fields['asset_id']],
+          );
         }
 
         final result = await txn.query(

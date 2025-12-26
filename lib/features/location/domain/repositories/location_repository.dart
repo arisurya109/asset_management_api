@@ -9,4 +9,13 @@ abstract class LocationRepository {
   Future<Either<Failure, Location>> createLocation(Location params);
   Future<Either<Failure, Location>> updateLocation(Location params);
   Future<Either<Failure, Location>> findByIdLocation(int params);
+
+  Future<Either<Failure, List<Location>>> findAllLocationStorage();
+  Future<Either<Failure, List<Location>>> findLocationByQuery({
+    required String params,
+  });
+  Future<Either<Failure, List<Location>>> findAllLocationNonStorage();
+  Future<Either<Failure, void>> deleteLocationById(
+    int params,
+  );
 }

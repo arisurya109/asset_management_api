@@ -1,5 +1,9 @@
 // ignore_for_file: public_member_api_docs
 
+import 'package:asset_management_api/features/location/domain/usecases/delete_location_by_id_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_all_location_non_storage_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_all_location_storage_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_location_by_query_use_case.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:asset_management_api/injectors/injector_behavior.dart';
 import 'package:dart_frog/dart_frog.dart';
@@ -24,6 +28,26 @@ Handler locationInjector(Handler handler) {
       .use(
         provider<FindByIdLocationUseCase>(
           (_) => findByIdocationUseCase,
+        ),
+      )
+      .use(
+        provider<FindLocationByQueryUseCase>(
+          (_) => findLocationByQueryUseCase,
+        ),
+      )
+      .use(
+        provider<FindAllLocationStorageUseCase>(
+          (_) => findAllLocationStorageUseCase,
+        ),
+      )
+      .use(
+        provider<FindAllLocationNonStorageUseCase>(
+          (_) => findAllLocationNonStorageUseCase,
+        ),
+      )
+      .use(
+        provider<DeleteLocationByIdUseCase>(
+          (_) => deleteLocationByIdUseCase,
         ),
       );
 }

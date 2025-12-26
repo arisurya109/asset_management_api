@@ -9,7 +9,7 @@ class LocationModel extends Equatable {
   String? name;
   String? locationType;
   String? boxType;
-  String? code;
+  int? code;
   String? init;
   int? parentId;
   String? parentName;
@@ -32,7 +32,7 @@ class LocationModel extends Equatable {
       locationType:
           map['location_type'] != null ? map['location_type'] as String : null,
       boxType: map['box_type'] != null ? map['box_type'] as String : null,
-      code: map['code'] != null ? map['code'] as String : null,
+      code: map['code'] != null ? map['code'] as int : null,
       init: map['init'] != null ? map['init'] as String : null,
       parentId: map['parent_id'] != null ? map['parent_id'] as int : null,
       parentName:

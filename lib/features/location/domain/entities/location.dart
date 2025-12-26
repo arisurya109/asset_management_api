@@ -8,7 +8,7 @@ class Location extends Equatable {
   String? name;
   String? locationType;
   String? boxType;
-  String? code;
+  int? code;
   String? init;
   int? parentId;
   String? parentName;
@@ -28,7 +28,7 @@ class Location extends Equatable {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'code': code,
+      'code': code.toString(),
       'init': init,
       'location_type': locationType,
       'box_type': boxType,
@@ -46,7 +46,7 @@ class Location extends Equatable {
       locationType:
           map['location_type'] != null ? map['location_type'] as String : null,
       boxType: map['box_type'] != null ? map['box_type'] as String : null,
-      code: map['code'] != null ? map['code'] as String : null,
+      code: map['code'] != null ? int.tryParse(map['code'] as String) : null,
       init: map['init'] != null ? map['init'] as String : null,
       parentId: map['parent_id'] != null ? map['parent_id'] as int : null,
       parentName:

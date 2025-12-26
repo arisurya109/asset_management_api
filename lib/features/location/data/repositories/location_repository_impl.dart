@@ -64,4 +64,54 @@ class LocationRepositoryImpl implements LocationRepository {
       return Left(UpdateFailure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Location>>> findAllLocationNonStorage() async {
+    try {
+      final response = await _source.findAllLocationNonStorage();
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(UpdateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Location>>> findAllLocationStorage() async {
+    try {
+      final response = await _source.findAllLocationStorage();
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(UpdateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Location>>> findLocationByQuery({
+    required String params,
+  }) async {
+    try {
+      final response = await _source.findLocationByQuery(params: params);
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(UpdateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteLocationById(int params) async {
+    try {
+      final response = await _source.deleteLocationById(params);
+      return Right(response);
+    } on DatabaseException catch (e) {
+      return Left(UpdateFailure(e.message));
+    } on DeleteException catch (e) {
+      return Left(DeleteFailure(e.message));
+    }
+  }
 }

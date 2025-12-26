@@ -56,119 +56,43 @@ class PreparationRepositoryImpl implements PreparationRepository {
   }
 
   @override
-  Future<Either<Failure, Preparation>> updateStatusApprovedPreparation({
-    required int id,
-    required int userId,
+  Future<Either<Failure, List<Preparation>>>
+      findPreparationByCodeOrDestination({
+    required String params,
   }) async {
     try {
-      final response = await _source.updateStatusApprovedPreparation(
-        id: id,
-        userId: userId,
-      );
-      return Right(response.toEntity());
+      final response =
+          await _source.findPreparationByCodeOrDestination(params: params);
+      return Right(response.map((e) => e.toEntity()).toList());
     } on DatabaseException catch (e) {
       return Left(NotFoundFailure(e.message));
-    } on UpdateException catch (e) {
-      return Left(UpdateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
     }
   }
 
   @override
-  Future<Either<Failure, Preparation>> updateStatusAssignedPreparation({
+  Future<Either<Failure, Preparation>> updateStatusPreparation({
     required int id,
+    required String status,
     required int userId,
+    int? totalBox,
+    int? locationId,
+    String? remarks,
   }) async {
     try {
-      final response = await _source.updateStatusAssignedPreparation(
+      final response = await _source.updateStatusPreparation(
         id: id,
-        userId: userId,
-      );
-      return Right(response.toEntity());
-    } on DatabaseException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    } on UpdateException catch (e) {
-      return Left(UpdateFailure(e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Preparation>> updateStatusCancelledPreparation({
-    required int id,
-    required int userId,
-  }) async {
-    try {
-      final response = await _source.updateStatusCancelledPreparation(
-        id: id,
-        userId: userId,
-      );
-      return Right(response.toEntity());
-    } on DatabaseException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    } on UpdateException catch (e) {
-      return Left(UpdateFailure(e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Preparation>> updateStatusCompletedPreparation({
-    required int id,
-    required int userId,
-    required List<int> fileBytes,
-    required String originalName,
-  }) async {
-    try {
-      final response = await _source.updateStatusCompletedPreparation(
-        id: id,
-        userId: userId,
-        fileBytes: fileBytes,
-        originalName: originalName,
-      );
-      return Right(response.toEntity());
-    } on DatabaseException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    } on UpdateException catch (e) {
-      return Left(UpdateFailure(e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Preparation>> updateStatusPickingPreparation({
-    required int id,
-    required int userId,
-  }) async {
-    try {
-      final response = await _source.updateStatusPickingPreparation(
-        id: id,
-        userId: userId,
-      );
-      return Right(response.toEntity());
-    } on DatabaseException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    } on UpdateException catch (e) {
-      return Left(UpdateFailure(e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Preparation>> updateStatusReadyPreparation({
-    required int id,
-    required int userId,
-    required int locationId,
-    required int totalBox,
-  }) async {
-    try {
-      final response = await _source.updateStatusReadyPreparation(
-        id: id,
+        status: status,
         userId: userId,
         locationId: locationId,
+        remarks: remarks,
         totalBox: totalBox,
       );
       return Right(response.toEntity());
     } on DatabaseException catch (e) {
-      print(e.message);
-      return Left(NotFoundFailure(e.message));
+      return Left(UpdateFailure(e.message));
     } on UpdateException catch (e) {
-      print(e.message);
       return Left(UpdateFailure(e.message));
     }
   }

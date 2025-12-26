@@ -5,6 +5,7 @@ import 'package:asset_management_api/injectors/preparation_injector.dart';
 import 'package:asset_management_api/injectors/preparation_item_injector.dart';
 import 'package:asset_management_api/injectors/preparation_template_injector.dart';
 import 'package:asset_management_api/injectors/purchase_order_injector.dart';
+import 'package:asset_management_api/injectors/reprint_injector.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 Handler middleware(Handler handler) {
@@ -25,5 +26,6 @@ Handler middleware(Handler handler) {
       .use(preparationInjector)
       .use(preparationDetailInjector)
       .use(preparationItemInjector)
-      .use(preparationTemplateInjector);
+      .use(preparationTemplateInjector)
+      .use(reprintInjector);
 }

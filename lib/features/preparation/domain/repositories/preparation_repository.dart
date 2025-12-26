@@ -12,32 +12,16 @@ abstract class PreparationRepository {
   Future<Either<Failure, Preparation>> createPreparation({
     required Preparation params,
   });
-  Future<Either<Failure, Preparation>> updateStatusAssignedPreparation({
+  Future<Either<Failure, Preparation>> updateStatusPreparation({
     required int id,
+    required String status,
     required int userId,
+    int? totalBox,
+    int? locationId,
+    String? remarks,
   });
-  Future<Either<Failure, Preparation>> updateStatusPickingPreparation({
-    required int id,
-    required int userId,
-  });
-  Future<Either<Failure, Preparation>> updateStatusReadyPreparation({
-    required int id,
-    required int userId,
-    required int locationId,
-    required int totalBox,
-  });
-  Future<Either<Failure, Preparation>> updateStatusApprovedPreparation({
-    required int id,
-    required int userId,
-  });
-  Future<Either<Failure, Preparation>> updateStatusCompletedPreparation({
-    required int id,
-    required int userId,
-    required List<int> fileBytes,
-    required String originalName,
-  });
-  Future<Either<Failure, Preparation>> updateStatusCancelledPreparation({
-    required int id,
-    required int userId,
+  Future<Either<Failure, List<Preparation>>>
+      findPreparationByCodeOrDestination({
+    required String params,
   });
 }

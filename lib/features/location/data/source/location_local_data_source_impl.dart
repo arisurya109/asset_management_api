@@ -31,8 +31,8 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
 
       final response = await db.query(
         '''
-      INSERT INTO t_locations (name, code, init, location_type, box_type, parent_id)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO t_locations (name, code, init, location_type, box_type, parent_id, is_storage)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
       ''',
         [
           params.name?.toUpperCase(),
@@ -41,6 +41,7 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
           params.locationType?.toUpperCase(),
           params.boxType?.toUpperCase(),
           params.parentId,
+          params.isStorage,
         ],
       );
 
@@ -60,7 +61,8 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
         c.location_type AS location_type,
         c.box_type AS box_type,
         c.parent_id AS parent_id,
-        p.name AS parent_name
+        p.name AS parent_name,
+        c.is_storage AS is_storage
       FROM
         t_locations AS c
       LEFT JOIN
@@ -99,7 +101,8 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
         c.location_type AS location_type,
         c.box_type AS box_type,
         c.parent_id AS parent_id,
-        p.name AS parent_name
+        p.name AS parent_name,
+        c.is_storage AS is_storage
       FROM
         t_locations AS c
       LEFT JOIN
@@ -143,7 +146,8 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
         c.location_type AS location_type,
         c.box_type AS box_type,
         c.parent_id AS parent_id,
-        p.name AS parent_name
+        p.name AS parent_name,
+        c.is_storage AS is_storage
       FROM
         t_locations AS c
       LEFT JOIN
@@ -195,7 +199,8 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
         c.location_type AS location_type,
         c.box_type AS box_type,
         c.parent_id AS parent_id,
-        p.name AS parent_name
+        p.name AS parent_name,
+        c.is_storage AS is_storage
       FROM
         t_locations AS c
       LEFT JOIN

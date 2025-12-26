@@ -33,8 +33,10 @@ class LocationRepositoryImpl implements LocationRepository {
       final response = await _source.findAllLocation();
       return Right(response.map((e) => e.toEntity()).toList());
     } on DatabaseException catch (e) {
+      print(e.message);
       return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
+      print(e.message);
       return Left(NotFoundFailure(e.message));
     }
   }

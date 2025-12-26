@@ -16,6 +16,7 @@ class AssetsResponse extends Equatable {
   String? types;
   String? color;
   String? location;
+  String? locationDetail;
   String? purchaseOrder;
   String? remarks;
 
@@ -33,6 +34,7 @@ class AssetsResponse extends Equatable {
     this.types,
     this.color,
     this.location,
+    this.locationDetail,
     this.purchaseOrder,
     this.remarks,
   });
@@ -53,6 +55,7 @@ class AssetsResponse extends Equatable {
       types,
       color,
       location,
+      locationDetail,
       purchaseOrder,
       remarks,
     ];
@@ -73,6 +76,7 @@ class AssetsResponse extends Equatable {
       'types': types,
       'color': color,
       'location': location,
+      'location_detail': locationDetail,
       'purchase_order': purchaseOrder,
       'remarks': remarks,
     };

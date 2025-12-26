@@ -46,6 +46,16 @@ class UserResponse {
 
         params['created_by'] = createdBy;
 
+        params['modules'] = (params['modules'] as List)
+            .map(
+              (e) => {
+                'id': e['id'],
+                'name': e['name'],
+                'module': e['module'],
+              },
+            )
+            .toList();
+
         final response = await createUser(User.fromRequest(params));
 
         return response.fold(

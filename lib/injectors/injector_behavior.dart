@@ -10,6 +10,7 @@ import 'package:asset_management_api/features/asset_type/asset_type_export.dart'
 import 'package:asset_management_api/features/assets/assets_export.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/create_asset_transfer_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_asset_code_and_location_use_case.dart';
+import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_query_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_detail_by_id_use_case.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
@@ -19,13 +20,9 @@ import 'package:asset_management_api/features/preparation/data/source/preparatio
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_code_or_destination_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_id_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/update_status_assigned_preparation_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/update_status_cancelled_preparation_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/update_status_completed_preparation_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/update_status_picking_preparation_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/update_status_preparation_approved_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/update_status_ready_preparation_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/update_status_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation_detail/data/repositories/preparation_detail_repository_impl.dart';
 import 'package:asset_management_api/features/preparation_detail/data/source/preparation_detail_local_data_source.dart';
 import 'package:asset_management_api/features/preparation_detail/data/source/preparation_detail_local_data_source_impl.dart';
@@ -53,6 +50,12 @@ import 'package:asset_management_api/features/preparation_template/domain/usecas
 import 'package:asset_management_api/features/preparation_template/domain/usecases/find_all_preparation_template_item_by_template_id_use_case.dart';
 import 'package:asset_management_api/features/preparation_template/domain/usecases/find_all_preparation_template_use_case.dart';
 import 'package:asset_management_api/features/purchase_order/purchase_order_export.dart';
+import 'package:asset_management_api/features/reprint/data/repositories/reprint_repository_impl.dart';
+import 'package:asset_management_api/features/reprint/data/source/reprint_local_data_source.dart';
+import 'package:asset_management_api/features/reprint/data/source/reprint_local_data_source_impl.dart';
+import 'package:asset_management_api/features/reprint/domain/repositories/reprint_repository.dart';
+import 'package:asset_management_api/features/reprint/domain/usecases/reprint_asset_use_case.dart';
+import 'package:asset_management_api/features/reprint/domain/usecases/reprint_location_use_case.dart';
 import 'package:asset_management_api/features/users/domain/usecases/auto_login_use_case.dart';
 import 'package:asset_management_api/features/users/domain/usecases/delete_user_use_case.dart';
 import 'package:asset_management_api/features/users/user_export.dart';
@@ -174,6 +177,8 @@ final CreateAssetTransferUseCase createAssetTransferUseCase =
 final FindAssetByAssetCodeAndLocationUseCase
     findAssetByAssetCodeAndLocationUseCase =
     FindAssetByAssetCodeAndLocationUseCase(assetsRepository);
+final FindAssetByQueryUseCase findAssetByQueryUseCase =
+    FindAssetByQueryUseCase(assetsRepository);
 
 // Vendors
 final VendorLocalDataSource vendorLocalDataSource =
@@ -212,23 +217,11 @@ final FindAllPreparationUseCase findAllPreparationUseCase =
     FindAllPreparationUseCase(preparationRepository);
 final FindPreparationByIdUseCase findPreparationByIdUseCase =
     FindPreparationByIdUseCase(preparationRepository);
-final UpdateStatusAssignedPreparationUseCase
-    updateStatusAssignedPreparationUseCase =
-    UpdateStatusAssignedPreparationUseCase(preparationRepository);
-final UpdateStatusCompletedPreparationUseCase
-    updateStatusCompletedPreparationUseCase =
-    UpdateStatusCompletedPreparationUseCase(preparationRepository);
-final UpdateStatusPickingPreparationUseCase
-    updateStatusPickingPreparationUseCase =
-    UpdateStatusPickingPreparationUseCase(preparationRepository);
-final UpdateStatusPreparationApprovedUseCase
-    updateStatusPreparationApprovedUseCase =
-    UpdateStatusPreparationApprovedUseCase(preparationRepository);
-final UpdateStatusReadyPreparationUseCase updateStatusReadyPreparationUseCase =
-    UpdateStatusReadyPreparationUseCase(preparationRepository);
-final UpdateStatusCancelledPreparationUseCase
-    updateStatusCancelledPreparationUseCase =
-    UpdateStatusCancelledPreparationUseCase(preparationRepository);
+final FindPreparationByCodeOrDestinationUseCase
+    findPreparationByCodeOrDestinationUseCase =
+    FindPreparationByCodeOrDestinationUseCase(preparationRepository);
+final UpdateStatusPreparationUseCase updateStatusPreparationUseCase =
+    UpdateStatusPreparationUseCase(preparationRepository);
 
 // Preparation Detail
 final PreparationDetailLocalDataSource preparationDetailLocalDataSource =
@@ -286,3 +279,13 @@ final FindAllPreparationTemplateItemByTemplateIdUseCase
     FindAllPreparationTemplateItemByTemplateIdUseCase(
   preparationTemplateRepository,
 );
+
+// Reprint
+final ReprintLocalDataSource reprintLocalDataSource =
+    ReprintLocalDataSourceImpl(database);
+final ReprintRepository reprintRepository =
+    ReprintRepositoryImpl(reprintLocalDataSource);
+final ReprintAssetUseCase reprintAssetUseCase =
+    ReprintAssetUseCase(reprintRepository);
+final ReprintLocationUseCase reprintLocationUseCase =
+    ReprintLocationUseCase(reprintRepository);

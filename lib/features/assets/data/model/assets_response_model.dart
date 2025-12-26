@@ -17,6 +17,7 @@ class AssetsResponseModel extends Equatable {
   String? types;
   String? color;
   String? location;
+  String? locationDetail;
   String? purchaseOrder;
   String? remarks;
 
@@ -34,6 +35,7 @@ class AssetsResponseModel extends Equatable {
     this.types,
     this.color,
     this.location,
+    this.locationDetail,
     this.purchaseOrder,
     this.remarks,
   });
@@ -54,6 +56,7 @@ class AssetsResponseModel extends Equatable {
       types,
       color,
       location,
+      locationDetail,
       purchaseOrder,
       remarks,
     ];
@@ -74,6 +77,7 @@ class AssetsResponseModel extends Equatable {
       'types': types,
       'color': color,
       'location': location,
+      'location_detail': locationDetail,
       'purchase_order': purchaseOrder,
       'remarks': remarks,
     };
@@ -96,6 +100,9 @@ class AssetsResponseModel extends Equatable {
       types: map['types'] != null ? map['types'] as String : null,
       color: map['color'] != null ? map['color'] as String : null,
       location: map['location'] != null ? map['location'] as String : null,
+      locationDetail: map['location_detail'] != null
+          ? map['location_detail'] as String
+          : null,
       purchaseOrder: map['purchase_order'] != null
           ? map['purchase_order'] as String
           : null,
@@ -117,6 +124,7 @@ class AssetsResponseModel extends Equatable {
       category: category,
       color: color,
       location: location,
+      locationDetail: locationDetail,
       purchaseOrder: purchaseOrder,
       remarks: remarks,
       types: types,

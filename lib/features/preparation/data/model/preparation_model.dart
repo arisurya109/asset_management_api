@@ -6,159 +6,128 @@ import 'package:equatable/equatable.dart';
 // ignore: must_be_immutable
 class PreparationModel extends Equatable {
   int? id;
-  String? preparationCode;
+  String? code;
+  String? type;
+  String? status;
   int? destinationId;
   String? destination;
-  int? assignedId;
-  String? assigned;
-  int? temporaryLocationId;
-  String? temporaryLocation;
-  int? totalBox;
-  String? status;
-  String? notes;
-  int? createdById;
+  int? createdId;
   String? createdBy;
-  DateTime? createdAt;
-  int? updatedById;
-  String? updatedBy;
-  DateTime? updatedAt;
-  int? approvedById;
+  int? workerId;
+  String? workerBy;
+  int? approvedId;
   String? approvedBy;
-  DateTime? approvedAt;
-  String? afterShipped;
+  int? locationId;
+  String? location;
+  int? totalBox;
+  String? notes;
+  String? createdAt;
 
   PreparationModel({
     this.id,
-    this.preparationCode,
+    this.code,
+    this.type,
+    this.status,
     this.destinationId,
     this.destination,
-    this.assignedId,
-    this.assigned,
-    this.temporaryLocationId,
-    this.temporaryLocation,
-    this.totalBox,
-    this.status,
-    this.notes,
-    this.createdById,
+    this.createdId,
     this.createdBy,
-    this.createdAt,
-    this.updatedById,
-    this.updatedBy,
-    this.updatedAt,
-    this.approvedById,
+    this.workerId,
+    this.workerBy,
+    this.approvedId,
     this.approvedBy,
-    this.approvedAt,
-    this.afterShipped,
+    this.locationId,
+    this.location,
+    this.totalBox,
+    this.notes,
+    this.createdAt,
   });
 
-  Map<String, dynamic> toDatabase() {
-    return <String, dynamic>{
-      'id': id,
-      'preparation_code': preparationCode,
-      'total_box': totalBox,
-      'status': status,
-      'notes': notes,
-      'destination_id': destinationId,
-      'assigned_id': assignedId,
-      'temporary_location_id': temporaryLocationId,
-      'created_by': createdById,
-      'updated_by': updatedById,
-      'approved_by': approvedById,
-      'after_shipped': afterShipped,
-    };
-  }
+  // Map<String, dynamic> toDatabase() {
+  //   return <String, dynamic>{
+  //     'id': id,
+  //     'preparation_code': preparationCode,
+  //     'total_box': totalBox,
+  //     'status': status,
+  //     'notes': notes,
+  //     'destination_id': destinationId,
+  //     'assigned_id': assignedId,
+  //     'temporary_location_id': temporaryLocationId,
+  //     'created_by': createdById,
+  //     'updated_by': updatedById,
+  //     'approved_by': approvedById,
+  //     'after_shipped': afterShipped,
+  //   };
+  // }
 
   factory PreparationModel.fromDatabase(Map<String, dynamic> map) {
     return PreparationModel(
       id: map['id'] != null ? map['id'] as int : null,
-      preparationCode: map['preparation_code'] != null
-          ? map['preparation_code'] as String
-          : null,
+      code: map['code'] != null ? map['code'] as String : null,
+      status: map['status'] != null ? map['status'] as String : null,
+      type: map['type'] != null ? map['type'] as String : null,
       destinationId:
           map['destination_id'] != null ? map['destination_id'] as int : null,
       destination:
           map['destination'] != null ? map['destination'] as String : null,
-      assignedId: map['assigned_id'] != null ? map['assigned_id'] as int : null,
-      assigned: map['assigned'] != null ? map['assigned'] as String : null,
-      temporaryLocationId: map['temporary_location_id'] != null
-          ? map['temporary_location_id'] as int
-          : null,
-      temporaryLocation: map['temporary_location'] != null
-          ? map['temporary_location'] as String
-          : null,
-      totalBox: map['total_box'] != null ? map['total_box'] as int : null,
-      status: map['status'] != null ? map['status'] as String : null,
-      notes: map['notes'] != null ? map['notes'] as String : null,
-      createdById:
-          map['created_by_id'] != null ? map['created_by_id'] as int : null,
+      createdId: map['created_id'] != null ? map['created_id'] as int : null,
       createdBy: map['created_by'] != null ? map['created_by'] as String : null,
-      createdAt:
-          map['created_at'] != null ? map['created_at'] as DateTime : null,
-      updatedById:
-          map['updated_by_id'] != null ? map['updated_by_id'] as int : null,
-      updatedBy: map['updated_by'] != null ? map['updated_by'] as String : null,
-      updatedAt:
-          map['updated_at'] != null ? map['updated_at'] as DateTime : null,
-      approvedById:
-          map['approved_by_id'] != null ? map['approved_by_id'] as int : null,
+      workerId: map['worker_id'] != null ? map['worker_id'] as int : null,
+      workerBy: map['worker_by'] != null ? map['worker_by'] as String : null,
+      approvedId: map['approved_id'] != null ? map['approved_id'] as int : null,
       approvedBy:
           map['approved_by'] != null ? map['approved_by'] as String : null,
-      approvedAt:
-          map['approved_at'] != null ? map['approved_at'] as DateTime : null,
-      afterShipped:
-          map['after_shipped'] != null ? map['after_shipped'] as String : null,
+      locationId: map['location_id'] != null ? map['location_id'] as int : null,
+      location: map['location'] != null ? map['location'] as String : null,
+      totalBox: map['total_box'] != null ? map['total_box'] as int : null,
+      notes: map['notes'] != null ? map['notes'] as String : null,
+      createdAt: map['created_at'] != null
+          ? (map['created_at'] as DateTime).toIso8601String()
+          : null,
     );
   }
 
   factory PreparationModel.fromEntity(Preparation params) {
     return PreparationModel(
       id: params.id,
-      assigned: params.assigned,
-      assignedId: params.assignedId,
-      createdAt: params.createdAt,
-      createdBy: params.createdBy,
-      createdById: params.createdById,
-      destination: params.destination,
-      destinationId: params.destinationId,
-      notes: params.notes,
-      preparationCode: params.preparationCode,
+      code: params.code,
       status: params.status,
-      temporaryLocation: params.temporaryLocation,
-      temporaryLocationId: params.temporaryLocationId,
-      totalBox: params.totalBox,
-      updatedAt: params.updatedAt,
-      updatedBy: params.updatedBy,
-      updatedById: params.updatedById,
-      approvedAt: params.approvedAt,
+      type: params.type,
+      createdId: params.createdId,
+      createdBy: params.createdBy,
+      workerId: params.workerId,
+      workerBy: params.workerBy,
+      approvedId: params.approvedId,
       approvedBy: params.approvedBy,
-      approvedById: params.approvedById,
-      afterShipped: params.afterShipped,
+      destinationId: params.destinationId,
+      destination: params.destination,
+      locationId: params.locationId,
+      location: params.location,
+      notes: params.notes,
+      totalBox: params.totalBox,
+      createdAt: params.createdAt,
     );
   }
 
   Preparation toEntity() {
     return Preparation(
       id: id,
-      assigned: assigned,
-      assignedId: assignedId,
-      createdAt: createdAt,
-      createdBy: createdBy,
-      createdById: createdById,
+      code: code,
+      status: status,
+      type: type,
+      createdId: createdId,
+      createdBy: createdAt,
+      workerBy: workerBy,
+      workerId: workerId,
+      approvedBy: approvedBy,
+      approvedId: approvedId,
       destination: destination,
       destinationId: destinationId,
+      location: location,
+      locationId: locationId,
       notes: notes,
-      preparationCode: preparationCode,
-      status: status,
-      temporaryLocation: temporaryLocation,
-      temporaryLocationId: temporaryLocationId,
+      createdAt: createdAt,
       totalBox: totalBox,
-      updatedAt: updatedAt,
-      updatedBy: updatedBy,
-      updatedById: updatedById,
-      approvedAt: approvedAt,
-      approvedBy: approvedBy,
-      approvedById: approvedById,
-      afterShipped: afterShipped,
     );
   }
 
@@ -166,26 +135,22 @@ class PreparationModel extends Equatable {
   List<Object?> get props {
     return [
       id,
-      preparationCode,
+      code,
+      type,
+      status,
       destinationId,
       destination,
-      assignedId,
-      assigned,
-      temporaryLocationId,
-      temporaryLocation,
-      totalBox,
-      status,
-      notes,
-      createdById,
+      createdId,
       createdBy,
-      createdAt,
-      updatedById,
-      updatedBy,
-      updatedAt,
-      approvedAt,
+      workerId,
+      workerBy,
+      approvedId,
       approvedBy,
-      approvedById,
-      afterShipped,
+      locationId,
+      location,
+      totalBox,
+      notes,
+      createdAt,
     ];
   }
 }

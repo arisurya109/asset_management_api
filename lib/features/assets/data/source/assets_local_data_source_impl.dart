@@ -41,7 +41,8 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	      ab.name AS brand,
 	      ats.name AS types,
 	      c.name AS color,
-	      l1.name AS location,
+	      l2.name AS location,
+	      l1.name AS location_detail,
 	      a.purchase_order AS purchase_order,
 	      a.remarks AS remarks
       FROM
@@ -52,6 +53,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
       LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
       LEFT JOIN t_colors AS c ON a.color_id  = c.id
       LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+      LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
       WHERE a.quantity > 0
       ''',
       );
@@ -177,7 +179,8 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	              ab.name AS brand,
 	              ats.name AS types,
 	              c.name AS color,
-	              l1.name AS location,
+	              l2.name AS location,
+	              l1.name AS location_detail,
 	              a.purchase_order AS purchase_order,
 	              a.remarks AS remarks
               FROM
@@ -188,6 +191,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
               LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
               LEFT JOIN t_colors AS c ON a.color_id  = c.id
               LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+              LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
                 WHERE a.id = ?
             ''',
                   [registredAsset.insertId],
@@ -279,7 +283,8 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	            ab.name AS brand,
 	            ats.name AS types,
 	            c.name AS color,
-	            l1.name AS location,
+	            l2.name AS location,
+	            l1.name AS location_detail,
 	            a.purchase_order AS purchase_order,
 	            a.remarks AS remarks
             FROM
@@ -290,6 +295,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
             LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
             LEFT JOIN t_colors AS c ON a.color_id  = c.id
             LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+            LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
             WHERE a.id = ?
             ''',
                 [registredAsset.insertId],
@@ -356,7 +362,8 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	              ab.name AS brand,
 	              ats.name AS types,
 	              c.name AS color,
-	              l1.name AS location,
+	              l2.name AS location,
+	              l1.name AS location_detail,
 	              a.purchase_order AS purchase_order,
 	              a.remarks AS remarks
               FROM
@@ -367,6 +374,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
               LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
               LEFT JOIN t_colors AS c ON a.color_id  = c.id
               LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+              LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
                 WHERE a.id = ?
             ''',
               [idAsset],
@@ -492,7 +500,8 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	              ab.name AS brand,
 	              ats.name AS types,
 	              c.name AS color,
-	              l1.name AS location,
+	              l2.name AS location,
+	              l1.name AS location_detail,
 	              a.purchase_order AS purchase_order,
 	              a.remarks AS remarks
               FROM
@@ -503,6 +512,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
               LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
               LEFT JOIN t_colors AS c ON a.color_id  = c.id
               LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+              LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
               WHERE a.id = ?
             ''',
           [registredAsset.insertId],
@@ -624,71 +634,72 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
       final db = await _database.connection;
 
       final response = await db.transaction((txn) async {
-        final checkAssetAndLocation = await txn.query(
-          '''
+        if (movementType == 'TRANSFER') {
+          final checkAssetAndLocation = await txn.query(
+            '''
         SELECT id FROM t_assets WHERE id = ? AND location_id = ?
         ''',
-          [assetId, fromLocationId],
-        );
-
-        int idAsset;
-
-        if (checkAssetAndLocation.firstOrNull == null) {
-          throw NotFoundException(
-            message: 'Asset code or from location not valid in system',
+            [assetId, fromLocationId],
           );
-        }
 
-        final checkToLocationType = await txn.query(
-          '''
+          int idAsset;
+
+          if (checkAssetAndLocation.firstOrNull == null) {
+            throw NotFoundException(
+              message: 'Asset code or from location not valid in system',
+            );
+          }
+
+          final checkToLocationType = await txn.query(
+            '''
         SELECT id FROM t_locations
         WHERE id = ? AND (location_type = 'RACK' OR location_type = 'BOX')
         ''',
-          [toLocationId],
-        );
-
-        if (checkToLocationType.firstOrNull == null) {
-          throw NotFoundException(
-            message: 'Failed to move asset, destination location not valid',
+            [toLocationId],
           );
-        }
 
-        idAsset = checkAssetAndLocation.first.fields['id'] as int;
+          if (checkToLocationType.firstOrNull == null) {
+            throw NotFoundException(
+              message: 'Failed to move asset, destination location not valid',
+            );
+          }
 
-        final newLocationAsset = await txn.query(
-          '''
+          idAsset = checkAssetAndLocation.first.fields['id'] as int;
+
+          final newLocationAsset = await txn.query(
+            '''
         UPDATE t_assets
         SET location_id = ?, updated_by = ?, updated_at = CURRENT_TIMESTAMP() 
         WHERE id = ?
         ''',
-          [toLocationId, movementById, idAsset],
-        );
-
-        if (newLocationAsset.affectedRows == null ||
-            newLocationAsset.affectedRows == 0) {
-          throw CreateException(
-            message: 'Failed, transfer asset to $toLocationId',
+            [toLocationId, movementById, idAsset],
           );
-        } else {
-          final movementAsset = await txn.query('''
+
+          if (newLocationAsset.affectedRows == null ||
+              newLocationAsset.affectedRows == 0) {
+            throw CreateException(
+              message: 'Failed, transfer asset to $toLocationId',
+            );
+          } else {
+            final movementAsset = await txn.query('''
           INSERT INTO t_asset_movements 
             (asset_id, movement_type, from_location_id, to_location_id, movement_by, quantity)
           VALUES
             (?, ?, ?, ?, ?, ?)
           ''', [
-            idAsset,
-            movementType,
-            fromLocationId,
-            toLocationId,
-            movementById,
-            quantity,
-          ]);
+              idAsset,
+              movementType,
+              fromLocationId,
+              toLocationId,
+              movementById,
+              quantity,
+            ]);
 
-          if (movementAsset.insertId == null || movementAsset.insertId == 0) {
-            txn.rollback();
-          } else {
-            final response = await txn.query(
-              '''
+            if (movementAsset.insertId == null || movementAsset.insertId == 0) {
+              txn.rollback();
+            } else {
+              final response = await txn.query(
+                '''
             SELECT
 	            a.id AS id,
 	            a.serial_number AS serial_number,
@@ -702,7 +713,8 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	            ab.name AS brand,
 	            ats.name AS types,
 	            c.name AS color,
-	            l1.name AS location,
+	            l2.name AS location,
+	            l1.name AS location_detail,
 	            a.purchase_order AS purchase_order,
 	            a.remarks AS remarks
             FROM
@@ -713,12 +725,88 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
             LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
             LEFT JOIN t_colors AS c ON a.color_id  = c.id
             LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+            LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
             WHERE a.id = ?
             ''',
-              [assetId],
-            );
-            return response.first.fields;
+                [assetId],
+              );
+              return response.first.fields;
+            }
           }
+        } else {
+          final updated = await txn.query(
+            '''
+            UPDATE t_assets
+            SET location_id = ?, updated_by = ?, status = ?, conditions = ?, updated_at = CURRENT_TIMESTAMP() 
+            WHERE id = ?
+            ''',
+            [toLocationId, movementById, 'USE', 'OLD', assetId],
+          );
+
+          if (updated.affectedRows == null || updated.affectedRows == 0) {
+            txn.rollback();
+            throw CreateException(
+              message: 'Failed, update asset',
+            );
+          }
+
+          final inserted = await txn.query(
+            '''
+            INSERT INTO t_asset_movements 
+              (asset_id, movement_type, from_location_id, to_location_id, movement_by, quantity)
+            VALUES
+              (?, ?, ?, ?, ?, ?)
+            ''',
+            [
+              assetId,
+              movementType,
+              fromLocationId,
+              toLocationId,
+              movementById,
+              quantity,
+            ],
+          );
+
+          if (inserted.insertId == null || inserted.insertId == 0) {
+            txn.rollback();
+            throw CreateException(
+              message: 'Failed, insert history asset',
+            );
+          }
+
+          final response = await txn.query(
+            '''
+            SELECT
+	            a.id AS id,
+	            a.serial_number AS serial_number,
+	            a.asset_code AS asset_code,
+	            a.status AS status,
+	            a.conditions AS conditions,
+	            a.quantity AS quantity,
+	            am.unit AS uom,
+	            am.name AS model,
+	            ac.name AS category,
+	            ab.name AS brand,
+	            ats.name AS types,
+	            c.name AS color,
+	            l2.name AS location,
+	            l1.name AS location_detail,
+	            a.purchase_order AS purchase_order,
+	            a.remarks AS remarks
+            FROM
+            	t_assets AS a
+            LEFT JOIN t_asset_models AS am ON a.asset_model_id  = am.id
+            LEFT JOIN t_asset_brands AS ab ON am.brand_id  = ab.id
+            LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+            LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
+            LEFT JOIN t_colors AS c ON a.color_id  = c.id
+            LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+            LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
+            WHERE a.id = ?
+            ''',
+            [assetId],
+          );
+          return response.first.fields;
         }
       });
 
@@ -761,7 +849,8 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 	        ab.name AS brand,
 	        ats.name AS types,
 	        c.name AS color,
-	        l1.name AS location,
+	        l2.name AS location,
+	        l1.name AS location_detail,
 	        a.purchase_order AS purchase_order,
 	        a.remarks AS remarks
         FROM
@@ -772,6 +861,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
         LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
         LEFT JOIN t_colors AS c ON a.color_id  = c.id
         LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+        LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
         WHERE a.asset_code = UPPER(?) AND l1.name = UPPER(?)
         LIMIT 1
         ''',
@@ -795,6 +885,89 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
       throw DatabaseException(message: e.message);
     } catch (e) {
       throw DatabaseException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<AssetsResponseModel>> findAssetByQuery({
+    required String params,
+  }) async {
+    try {
+      final db = await _database.connection;
+
+      var whereClause = '';
+      var queryArgs = <dynamic>[];
+
+      if (params.trim().isNotEmpty) {
+        final pattern = '%${params.trim()}%';
+
+        whereClause = '''
+        WHERE 
+          a.asset_code LIKE ? OR 
+          a.serial_number LIKE ? OR 
+          a.status LIKE ? OR 
+          a.conditions LIKE ? OR 
+          am.name LIKE ? OR 
+          ac.name LIKE ? OR 
+          ab.name LIKE ? OR 
+          ats.name LIKE ? OR 
+          c.name LIKE ? OR 
+          l2.name LIKE ? OR 
+          l1.name LIKE ? OR 
+          a.purchase_order LIKE ? OR 
+          a.remarks LIKE ?
+      ''';
+
+        queryArgs = List.filled(13, pattern);
+      }
+
+      final response = await db.query(
+        '''
+        SELECT
+          a.id AS id,
+          a.serial_number AS serial_number,
+          a.asset_code AS asset_code,
+          a.status AS status,
+          a.conditions AS conditions,
+          a.quantity AS quantity,
+          am.unit AS uom,
+          am.name AS model,
+          ac.name AS category,
+          ab.name AS brand,
+          ats.name AS types,
+          c.name AS color,
+          l2.name AS location,
+	        l1.name AS location_detail,
+          a.purchase_order AS purchase_order,
+          a.remarks AS remarks
+        FROM
+          t_assets AS a
+        LEFT JOIN t_asset_models AS am ON a.asset_model_id = am.id
+        LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
+        LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+        LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
+        LEFT JOIN t_colors AS c ON a.color_id = c.id
+        LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+        LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
+        $whereClause
+        ORDER BY a.id DESC
+        ''',
+        queryArgs,
+      );
+
+      if (response.firstOrNull == null) {
+        throw NotFoundException(message: 'Asset not found record');
+      } else {
+        return response
+            .map((row) => AssetsResponseModel.fromMap(row.fields))
+            .toList();
+      }
+    } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: 'Terjadi kesalahan: $e');
     }
   }
 }

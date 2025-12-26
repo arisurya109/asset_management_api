@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_await_in_return
 
 import 'package:asset_management_api/core/extensions/request_method_ext.dart';
+import 'package:asset_management_api/core/extensions/string_ext.dart';
 import 'package:asset_management_api/core/helpers/constant.dart';
 import 'package:asset_management_api/core/helpers/response_helper.dart';
 import 'package:asset_management_api/features/assets/assets_export.dart';
@@ -12,6 +13,7 @@ Future<Response> onRequest(RequestContext context) async {
 
     final assetCode = queryParams['assetCode'];
     final location = queryParams['location'];
+    final query = queryParams['query'];
 
     if (assetCode != null && location != null) {
       return await AssetsResponseUser.findAssetByAssetCodeAndLocation(
@@ -19,6 +21,10 @@ Future<Response> onRequest(RequestContext context) async {
         assetCode,
         location,
       );
+    }
+
+    if (query.isFilled()) {
+      return await AssetsResponseUser.findAssetByQuery(context, query!);
     }
 
     return await AssetsResponseUser.findAllAssets(context);

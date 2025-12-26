@@ -5,22 +5,26 @@ import 'package:asset_management_api/features/preparation/domain/entities/prepar
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class UpdateStatusCompletedPreparationUseCase {
-  UpdateStatusCompletedPreparationUseCase(this._repository);
+class UpdateStatusPreparationUseCase {
+  UpdateStatusPreparationUseCase(this._repository);
 
   final PreparationRepository _repository;
 
   Future<Either<Failure, Preparation>> call({
     required int id,
+    required String status,
     required int userId,
-    required List<int> fileBytes,
-    required String originalName,
+    int? totalBox,
+    int? locationId,
+    String? remarks,
   }) async {
-    return _repository.updateStatusCompletedPreparation(
+    return _repository.updateStatusPreparation(
       id: id,
+      status: status,
       userId: userId,
-      fileBytes: fileBytes,
-      originalName: originalName,
+      totalBox: totalBox,
+      locationId: locationId,
+      remarks: remarks,
     );
   }
 }

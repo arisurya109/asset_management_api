@@ -6,32 +6,15 @@ abstract class PreparationLocalDataSource {
   Future<List<PreparationModel>> findAllPreparation();
   Future<PreparationModel> findPreparationById(int params);
   Future<PreparationModel> createPreparation(PreparationModel params);
-  Future<PreparationModel> updateStatusAssignedPreparation({
+  Future<PreparationModel> updateStatusPreparation({
     required int id,
+    required String status,
     required int userId,
+    int? totalBox,
+    int? locationId,
+    String? remarks,
   });
-  Future<PreparationModel> updateStatusPickingPreparation({
-    required int id,
-    required int userId,
-  });
-  Future<PreparationModel> updateStatusReadyPreparation({
-    required int id,
-    required int userId,
-    required int locationId,
-    required int totalBox,
-  });
-  Future<PreparationModel> updateStatusApprovedPreparation({
-    required int id,
-    required int userId,
-  });
-  Future<PreparationModel> updateStatusCompletedPreparation({
-    required int id,
-    required int userId,
-    required List<int> fileBytes,
-    required String originalName,
-  });
-  Future<PreparationModel> updateStatusCancelledPreparation({
-    required int id,
-    required int userId,
+  Future<List<PreparationModel>> findPreparationByCodeOrDestination({
+    required String params,
   });
 }

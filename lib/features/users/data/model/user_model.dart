@@ -12,7 +12,7 @@ class UserModel extends Equatable {
   int? isActive;
   DateTime? createdAt;
   String? createdBy;
-  List<dynamic>? modules;
+  List<Map<String, dynamic>>? modules;
 
   UserModel({
     this.id,
@@ -75,7 +75,9 @@ class UserModel extends Equatable {
       createdBy: map['created_by'] != null ? map['created_by'] as String : null,
       createdAt:
           map['created_at'] != null ? map['created_at'] as DateTime : null,
-      modules: map['modules'] != null ? map['modules'] as List<dynamic> : null,
+      modules: map['modules'] != null
+          ? map['modules'] as List<Map<String, dynamic>>
+          : null,
     );
   }
 }

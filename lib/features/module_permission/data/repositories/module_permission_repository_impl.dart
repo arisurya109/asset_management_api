@@ -16,6 +16,7 @@ class ModulePermissionRepositoryImpl implements ModulePermissionRepository {
       findAllModulePermission() async {
     try {
       final response = await _source.findAllModulePermission();
+      print(response);
       return Right(response.map((e) => e.toEntity()).toList());
     } catch (e) {
       return Left(NotFoundFailure(e.toString()));

@@ -11,7 +11,7 @@ class User extends Equatable {
   int? isActive;
   DateTime? createdAt;
   String? createdBy;
-  List<dynamic>? modules;
+  List<Map<String, dynamic>>? modules;
 
   User({
     this.id,
@@ -64,7 +64,9 @@ class User extends Equatable {
       password: map['password'] != null ? map['password'] as String : null,
       name: map['name'] != null ? map['name'] as String : null,
       createdBy: map['created_by'] != null ? map['created_by'] as String : null,
-      modules: map['modules'] != null ? map['modules'] as List<dynamic> : null,
+      modules: map['modules'] != null
+          ? map['modules'] as List<Map<String, dynamic>>
+          : null,
     );
   }
 }

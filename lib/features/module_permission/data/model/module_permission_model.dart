@@ -1,40 +1,84 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynamic_calls
 
 import 'package:asset_management_api/features/module_permission/domain/entities/module_permission.dart';
 import 'package:equatable/equatable.dart';
 
-// ignore: must_be_immutable
-class ModulePermissionModel extends Equatable {
-  int? id;
-  String? modulePermissionName;
-  String? modulePermissionLabel;
-
-  ModulePermissionModel({
-    this.id,
-    this.modulePermissionName,
-    this.modulePermissionLabel,
+class PermissionItemModel extends Equatable {
+  const PermissionItemModel({
+    required this.id,
+    required this.name,
   });
 
-  factory ModulePermissionModel.fromDatabase(Map<String, dynamic> map) {
-    return ModulePermissionModel(
-      id: map['id'] != null ? map['id'] as int : null,
-      modulePermissionName: map['module_permission_name'] != null
-          ? map['module_permission_name'] as String
-          : null,
-      modulePermissionLabel: map['module_permission_label'] != null
-          ? map['module_permission_label'] as String
-          : null,
-    );
-  }
+  final int id;
+  final String name;
 
-  ModulePermission toEntity() {
-    return ModulePermission(
+  PermissionItem toEntity() {
+    return PermissionItem(
       id: id,
-      modulePermissionLabel: modulePermissionLabel,
-      modulePermissionName: modulePermissionName,
+      name: name,
     );
   }
 
   @override
-  List<Object?> get props => [id, modulePermissionName, modulePermissionLabel];
+  List<Object?> get props => [id, name];
+}
+
+class ModulePermissionModel extends Equatable {
+  const ModulePermissionModel({
+    required this.module,
+    required this.permissions,
+  });
+  final String module;
+  final List<PermissionItemModel> permissions;
+
+  ModulePermission toEntity() {
+    return ModulePermission(
+      module: module,
+      permissions: permissions.map((p) => p.toEntity()).toList(),
+    );
+  }
+
+  factory ModulePermissionModel.fromGroupedMap(
+    String moduleName,
+    List<Map<String, dynamic>> permissionsList,
+  ) {
+    return ModulePermissionModel(
+      module: moduleName,
+      permissions: permissionsList
+          .map(
+            (p) => PermissionItemModel(
+              id: p['id'] as int,
+              name: p['name'] as String,
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  static List<ModulePermissionModel> transformFromDatabase(
+    List<dynamic> queryResult,
+  ) {
+    final grouped = <String, List<Map<String, dynamic>>>{};
+
+    for (final row in queryResult) {
+      final data = row as Map<String, dynamic>;
+      final moduleName = data['module'].toString();
+
+      if (!grouped.containsKey(moduleName)) {
+        grouped[moduleName] = [];
+      }
+
+      grouped[moduleName]!.add({
+        'id': data['id'],
+        'name': data['permission'],
+      });
+    }
+
+    return grouped.entries.map((entry) {
+      return ModulePermissionModel.fromGroupedMap(entry.key, entry.value);
+    }).toList();
+  }
+
+  @override
+  List<Object?> get props => [module, permissions];
 }

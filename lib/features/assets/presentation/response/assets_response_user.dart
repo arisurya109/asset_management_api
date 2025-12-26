@@ -11,6 +11,7 @@ import 'package:asset_management_api/features/assets/domain/usecases/create_asse
 import 'package:asset_management_api/features/assets/domain/usecases/create_assets_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_all_assets_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_asset_code_and_location_use_case.dart';
+import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_query_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_detail_by_id_use_case.dart';
 import 'package:dart_frog/dart_frog.dart';
 
@@ -164,6 +165,34 @@ class AssetsResponseUser {
           code: HttpStatus.ok,
           status: 'Successfully get asset by asset code and location',
           body: r.toJson(),
+        ),
+      );
+    }
+  }
+
+  static Future<Response> findAssetByQuery(
+    RequestContext context,
+    String query,
+  ) async {
+    final jwt = context.read<JwtService>();
+
+    final validateToken = await jwt.verifyToken(context);
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else {
+      final usecase = context.read<FindAssetByQueryUseCase>();
+
+      final response = await usecase(
+        params: query,
+      );
+
+      return response.fold(
+        (l) => ResponseHelper.badRequest(description: l.message!),
+        (r) => ResponseHelper.json(
+          code: HttpStatus.ok,
+          status: 'Successfully find asset by query',
+          body: r.map((e) => e.toJson()).toList(),
         ),
       );
     }

@@ -108,4 +108,22 @@ class AssetsRepositoryImpl implements AssetsRepository {
       return Left(NotFoundFailure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, List<AssetsResponse>>> findAssetByQuery({
+    required String params,
+  }) async {
+    try {
+      final response = await _source.findAssetByQuery(
+        params: params,
+      );
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
+    } on CreateException catch (e) {
+      return Left(CreateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
 }

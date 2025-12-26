@@ -5,15 +5,14 @@ import 'package:asset_management_api/features/preparation/domain/entities/prepar
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class UpdateStatusPickingPreparationUseCase {
-  UpdateStatusPickingPreparationUseCase(this._repository);
+class FindPreparationByCodeOrDestinationUseCase {
+  FindPreparationByCodeOrDestinationUseCase(this._repository);
 
   final PreparationRepository _repository;
 
-  Future<Either<Failure, Preparation>> call({
-    required int id,
-    required int userId,
+  Future<Either<Failure, List<Preparation>>> call({
+    required String params,
   }) async {
-    return _repository.updateStatusPickingPreparation(id: id, userId: userId);
+    return _repository.findPreparationByCodeOrDestination(params: params);
   }
 }

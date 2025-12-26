@@ -5,110 +5,91 @@ import 'package:equatable/equatable.dart';
 // ignore: must_be_immutable
 class Preparation extends Equatable {
   int? id;
-  String? preparationCode;
+  String? code;
+  String? type;
+  String? status;
   int? destinationId;
   String? destination;
-  int? assignedId;
-  String? assigned;
-  int? temporaryLocationId;
-  String? temporaryLocation;
-  int? totalBox;
-  String? status;
-  String? notes;
-  int? createdById;
+  int? createdId;
   String? createdBy;
-  DateTime? createdAt;
-  int? updatedById;
-  String? updatedBy;
-  DateTime? updatedAt;
-  int? approvedById;
+  int? workerId;
+  String? workerBy;
+  int? approvedId;
   String? approvedBy;
-  DateTime? approvedAt;
-  String? afterShipped;
+  int? locationId;
+  String? location;
+  int? totalBox;
+  String? notes;
+  String? createdAt;
 
   Preparation({
     this.id,
-    this.preparationCode,
+    this.code,
+    this.type,
+    this.status,
     this.destinationId,
     this.destination,
-    this.assignedId,
-    this.assigned,
-    this.temporaryLocationId,
-    this.temporaryLocation,
-    this.totalBox,
-    this.status,
-    this.notes,
-    this.createdById,
+    this.createdId,
     this.createdBy,
-    this.createdAt,
-    this.updatedById,
-    this.updatedBy,
-    this.updatedAt,
-    this.approvedById,
+    this.workerId,
+    this.workerBy,
+    this.approvedId,
     this.approvedBy,
-    this.approvedAt,
-    this.afterShipped,
+    this.locationId,
+    this.location,
+    this.totalBox,
+    this.notes,
+    this.createdAt,
   });
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
-      'preparation_code': preparationCode,
-      'total_box': totalBox,
+      'code': code,
+      'type': type,
       'status': status,
-      'notes': notes,
       'destination': {
         'id': destinationId,
         'name': destination,
       },
-      'assigned': {
-        'id': assignedId,
-        'name': assigned,
-      },
-      'temporary_location': {
-        'id': temporaryLocationId,
-        'name': temporaryLocation,
-      },
       'created_by': {
-        'id': createdById,
+        'id': createdId,
         'name': createdBy,
       },
-      'updated_by': {
-        'id': updatedById,
-        'name': updatedBy,
+      'worker_by': {
+        'id': workerId,
+        'name': workerBy,
       },
       'approved_by': {
-        'id': approvedById,
+        'id': approvedId,
         'name': approvedBy,
       },
-      'after_shipped': afterShipped,
+      'location': {
+        'id': locationId,
+        'name': location,
+      },
+      'total_box': totalBox,
+      'notes': notes,
+      'created_at': createdAt,
     };
   }
 
   factory Preparation.fromJson(Map<String, dynamic> map) {
     return Preparation(
       id: map['id'] != null ? map['id'] as int? : null,
-      preparationCode: map['preparation_code'] != null
-          ? map['preparation_code'] as String?
-          : null,
+      code: map['code'] != null ? map['code'] as String? : null,
       destinationId:
           map['destination_id'] != null ? map['destination_id'] as int? : null,
-      assignedId:
-          map['assigned_id'] != null ? map['assigned_id'] as int? : null,
-      temporaryLocationId: map['temporary_location_id'] != null
-          ? map['temporary_location_id'] as int?
-          : null,
+      workerId: map['worker_id'] != null ? map['worker_id'] as int? : null,
+      locationId:
+          map['location_id'] != null ? map['location_id'] as int? : null,
       totalBox: map['total_box'] != null ? map['total_box'] as int? : null,
       status: map['status'] != null ? map['status'] as String? : null,
       notes: map['notes'] != null ? map['notes'] as String? : null,
-      createdById:
-          map['created_by_id'] != null ? map['created_by_id'] as int? : null,
-      updatedById:
-          map['updated_by_id'] != null ? map['updated_by_id'] as int? : null,
-      approvedById:
-          map['approved_by_id'] != null ? map['approved_by_id'] as int? : null,
-      afterShipped:
-          map['after_shipped'] != null ? map['after_shipped'] as String? : null,
+      createdId: map['created_id'] != null ? map['created_id'] as int? : null,
+      approvedId:
+          map['approved_id'] != null ? map['approved_id'] as int? : null,
+      type: map['type'] != null ? map['type'] as String? : null,
     );
   }
 
@@ -116,26 +97,21 @@ class Preparation extends Equatable {
   List<Object?> get props {
     return [
       id,
-      preparationCode,
+      code,
+      status,
+      type,
       destinationId,
       destination,
-      assignedId,
-      assigned,
-      temporaryLocationId,
-      temporaryLocation,
       totalBox,
       status,
       notes,
-      createdById,
       createdBy,
-      createdAt,
-      updatedById,
-      updatedBy,
-      updatedAt,
+      createdId,
       approvedBy,
-      approvedById,
-      afterShipped,
-      approvedAt,
+      createdId,
+      workerId,
+      workerBy,
+      createdAt,
     ];
   }
 }

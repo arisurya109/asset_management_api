@@ -21,4 +21,7 @@ abstract class AssetsLocalDataSource {
     required String assetCode,
     required String location,
   });
+  Future<List<AssetsResponseModel>> findAssetByQuery({
+    required String params,
+  });
 }

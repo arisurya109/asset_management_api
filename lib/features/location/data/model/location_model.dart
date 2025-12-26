@@ -13,6 +13,7 @@ class LocationModel extends Equatable {
   String? init;
   int? parentId;
   String? parentName;
+  int? isStorage;
 
   LocationModel({
     this.id,
@@ -23,16 +24,18 @@ class LocationModel extends Equatable {
     this.init,
     this.parentId,
     this.parentName,
+    this.isStorage,
   });
 
   factory LocationModel.fromDatabase(Map<String, dynamic> map) {
     return LocationModel(
       id: map['id'] != null ? map['id'] as int : null,
+      isStorage: map['is_storage'] != null ? map['is_storage'] as int : null,
       name: map['name'] != null ? map['name'] as String : null,
       locationType:
           map['location_type'] != null ? map['location_type'] as String : null,
       boxType: map['box_type'] != null ? map['box_type'] as String : null,
-      code: map['code'] != null ? map['code'] as String : null,
+      code: map['code'] != null ? (map['code'] as int).toString() : null,
       init: map['init'] != null ? map['init'] as String : null,
       parentId: map['parent_id'] != null ? map['parent_id'] as int : null,
       parentName:
@@ -43,6 +46,7 @@ class LocationModel extends Equatable {
   factory LocationModel.fromEntity(Location params) {
     return LocationModel(
       id: params.id,
+      isStorage: params.isStorage,
       name: params.name,
       locationType: params.locationType,
       boxType: params.boxType,
@@ -56,6 +60,7 @@ class LocationModel extends Equatable {
   Location toEntity() {
     return Location(
       id: id,
+      isStorage: isStorage,
       name: name,
       init: init,
       code: code,
@@ -70,6 +75,7 @@ class LocationModel extends Equatable {
   List<Object?> get props {
     return [
       id,
+      isStorage,
       name,
       locationType,
       boxType,

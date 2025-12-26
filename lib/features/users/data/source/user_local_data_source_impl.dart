@@ -4,6 +4,7 @@ import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/features/users/data/model/user_model.dart';
 import 'package:asset_management_api/features/users/data/source/user_local_data_source.dart';
+import 'package:mysql1/mysql1.dart';
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   UserLocalDataSourceImpl(this._database);
@@ -12,82 +13,104 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
   @override
   Future<UserModel> createUser(UserModel params) async {
-    final db = await _database.connection;
+    try {
+      final db = await _database.connection;
 
-    final response = await db.transaction((txn) async {
-      final isUsernameExists = await txn.query(
-        'SELECT COUNT(id) FROM t_users WHERE username = ?',
-        [params.username],
-      );
-
-      if (isUsernameExists.first.fields['COUNT(id)'] as int > 0) {
-        throw CreateException(
-          message: 'Failed create new user, username already to exits',
-        );
-      } else {
-        final insertedNewUser = await txn.query(
-          '''
-          INSERT INTO t_users (username, password, name, created_by)
-          VALUES (?, ?, ?, ?)
-          ''',
-          [params.username, params.password, params.name, params.createdBy],
-        );
-
-        if (insertedNewUser.insertId == 0) {
-          throw CreateException(
-            message: 'Failed to create new user, please try again',
-          );
-        } else {
-          for (final modulePermissionId in params.modules!) {
-            await txn.query(
-              '''
-              INSERT INTO t_user_permission_module (user_id, module_permission_id)
-              VALUES (?, ?)
-              ''',
-              [insertedNewUser.insertId, modulePermissionId],
-            );
-          }
-        }
-
-        final responseUser = await txn.query(
-          '''
-          SELECT 
-            u.id,
-            u.username,
-            u.name,
-            u.created_by,
-            u.is_active,
-            u.created_at
-          FROM t_users AS u
-          WHERE u.username = ?
-          ''',
+      final response = await db.transaction((txn) async {
+        final isUsernameExists = await txn.query(
+          'SELECT COUNT(id) FROM t_users WHERE username = ?',
           [params.username],
         );
 
-        final responseModule = await txn.query(
-          '''
-          SELECT
-	          CONCAT(m.module_name, '_', p.permission_name) AS modules
-          FROM
-	          t_user_permission_module AS upm
-          LEFT JOIN t_module_permission AS mp ON upm.module_permission_id = mp.id
-          LEFT JOIN t_modules AS m ON mp.module_id = m.id
-          LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
-          WHERE upm.user_id = ? 
+        if (isUsernameExists.first.fields['COUNT(id)'] as int > 0) {
+          throw CreateException(
+            message: 'Failed create new user, username already to exits',
+          );
+        } else {
+          final insertedNewUser = await txn.query(
+            '''
+          INSERT INTO t_users (username, password, name, created_by)
+          VALUES (?, ?, ?, ?)
           ''',
-          [responseUser.first.fields['id']],
-        );
+            [params.username, params.password, params.name, params.createdBy],
+          );
 
-        final newUser = responseUser.first.fields;
+          if (insertedNewUser.insertId == 0) {
+            throw CreateException(
+              message: 'Failed to create new user, please try again',
+            );
+          } else {
+            for (final modulePermissionId in params.modules!) {
+              await txn.query(
+                '''
+              INSERT INTO t_user_permission_module (user_id, module_permission_id)
+              VALUES (?, ?)
+              ''',
+                [insertedNewUser.insertId, modulePermissionId['id']],
+              );
+            }
+          }
 
-        final modules = responseModule.map((e) => e['modules']).toList();
+          final responseUser = await txn.query(
+            '''
+        SELECT id, is_active
+        FROM t_users
+        WHERE username = ?
+        ''',
+            [params.username],
+          );
 
-        newUser.addEntries({'modules': modules}.entries);
-        return newUser;
-      }
-    });
+          final user = responseUser.first.fields;
 
-    return UserModel.fromDatabase(response!);
+          final responseModule = await txn.query(
+            '''
+          SELECT DISTINCT
+          	u.id,
+          	u.username,
+          	u.name,
+          	u.is_active,
+          	tmp.id AS module_permission_id,
+          	m.module_name,
+          	p.permission_name
+          FROM
+          	t_user_permission_module AS tupm
+          LEFT JOIN t_users AS u ON tupm.user_id = u.id
+          LEFT JOIN t_module_permission AS tmp ON tupm.module_permission_id = tmp.id
+          LEFT JOIN t_modules AS m ON tmp.module_id = m.id
+          LEFT JOIN t_permissions AS p ON tmp.permission_id = p.id
+          WHERE u.id = ?
+          ''',
+            [insertedNewUser.insertId],
+          );
+
+          final response = responseModule.map((e) => e.fields).toList();
+
+          user.addAll({
+            'username': response.first['username'],
+            'name': response.first['name'],
+          });
+
+          final modules = responseModule.map((item) {
+            return {
+              'id': item['module_permission_id'],
+              'name': '${item['module_name']}_${item['permission_name']}',
+            };
+          }).toList();
+
+          user['modules'] = modules;
+
+          return user;
+        }
+      });
+
+      return UserModel.fromDatabase(response!);
+    } on CreateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: 'Terjadi kesalahan: $e');
+    }
   }
 
   @override
@@ -196,7 +219,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     final response = await db.transaction((txn) async {
       final responseUser = await txn.query(
         '''
-        SELECT id, username, name, is_active
+        SELECT id, is_active
         FROM t_users
         WHERE username = ? AND password = ?
         ''',
@@ -207,26 +230,49 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
         throw NotFoundException(
           message: 'Username or password you entered is incorrect',
         );
+      } else if (responseUser.first.fields['is_active'] == 0) {
+        throw NotFoundException(
+          message: 'User is not actived',
+        );
       } else {
         final user = responseUser.first.fields;
 
         final responseModule = await txn.query(
           '''
-          SELECT
-	          CONCAT(m.module_name, '_', p.permission_name) AS modules
+          SELECT DISTINCT
+          	u.id,
+          	u.username,
+          	u.name,
+          	u.is_active,
+          	tmp.id AS module_permission_id,
+          	m.module_name,
+          	p.permission_name
           FROM
-	          t_user_permission_module AS upm
-          LEFT JOIN t_module_permission AS mp ON upm.module_permission_id = mp.id
-          LEFT JOIN t_modules AS m ON mp.module_id = m.id
-          LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
-          WHERE upm.user_id = ? 
+          	t_user_permission_module AS tupm
+          LEFT JOIN t_users AS u ON tupm.user_id = u.id
+          LEFT JOIN t_module_permission AS tmp ON tupm.module_permission_id = tmp.id
+          LEFT JOIN t_modules AS m ON tmp.module_id = m.id
+          LEFT JOIN t_permissions AS p ON tmp.permission_id = p.id
+          WHERE u.id = ?
           ''',
           [user['id']],
         );
 
-        final module = responseModule.map((e) => e['modules']).toList();
+        final response = responseModule.map((e) => e.fields).toList();
 
-        user.addEntries({'modules': module}.entries);
+        user.addAll({
+          'username': response.first['username'],
+          'name': response.first['name'],
+        });
+
+        final modules = response.map((item) {
+          return {
+            'id': item['module_permission_id'],
+            'name': '${item['module_name']}_${item['permission_name']}',
+          };
+        }).toList();
+
+        user['modules'] = modules;
 
         return user;
       }
@@ -248,27 +294,33 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       [id],
     );
 
-    final user = responseUser.first.fields;
+    final user = responseUser.first.fields; // Map<String, dynamic>
 
+// Ambil modules user
     final responseModule = await db.query(
       '''
-          SELECT
-	          CONCAT(m.module_name, '_', p.permission_name) AS modules
-          FROM
-	          t_user_permission_module AS upm
-          LEFT JOIN t_module_permission AS mp ON upm.module_permission_id = mp.id
-          LEFT JOIN t_modules AS m ON mp.module_id = m.id
-          LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
-          WHERE upm.user_id = ? 
-          ''',
+  SELECT
+    CONCAT(m.module_name, '_', p.permission_name) AS modules
+  FROM
+    t_user_permission_module AS upm
+  LEFT JOIN t_module_permission AS mp ON upm.module_permission_id = mp.id
+  LEFT JOIN t_modules AS m ON mp.module_id = m.id
+  LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
+  WHERE upm.user_id = ? 
+  ''',
       [id],
     );
 
-    final module = responseModule.map((e) => e['modules']).toList();
+    final modules =
+        responseModule.map<String>((e) => e['modules'] as String).toList();
 
-    user.addEntries({'modules': module}.entries);
+    final userWithModules = <String, dynamic>{
+      ...user,
+      'modules': modules,
+    };
 
-    return UserModel.fromDatabase(user);
+// Return UserModel
+    return UserModel.fromDatabase(userWithModules);
   }
 
   @override

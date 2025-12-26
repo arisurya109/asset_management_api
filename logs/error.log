@@ -1,0 +1,1111 @@
+[00:18:57] POST /api/login
+→ Status: 400 (158ms)
+--------------------------------------------------------------------------------
+[01:46:44] PATCH /api/preparation/33
+→ Status: 400 (2ms)
+--------------------------------------------------------------------------------
+[01:46:59] PATCH /api/preparation/33
+→ Status: 400 (1ms)
+--------------------------------------------------------------------------------
+[01:49:11] PATCH /api/preparation/33
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[00:16:48] POST /api/login
+→ Status: 400 (18ms)
+--------------------------------------------------------------------------------
+[00:17:19] POST /api/login
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[00:17:20] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[00:17:21] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[00:22:22] POST /api/login
+→ Status: 400 (40ms)
+--------------------------------------------------------------------------------
+[00:22:26] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[00:23:53] POST /api/login
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[00:26:10] POST /api/login
+→ Status: 400 (51ms)
+--------------------------------------------------------------------------------
+[00:33:03] POST /api/login
+→ Status: 400 (41ms)
+--------------------------------------------------------------------------------
+[00:33:10] POST /api/login
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[00:33:53] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[00:34:15] POST /api/login
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[00:34:55] POST /api/login
+→ Status: 400 (12ms)
+--------------------------------------------------------------------------------
+[00:36:14] POST /api/login
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[00:36:45] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[00:37:22] POST /api/login
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[00:37:45] POST /api/login
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[00:38:01] POST /api/login
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[00:38:08] POST /api/login
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[00:38:16] POST /api/login
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[00:38:24] POST /api/login
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[01:41:12] POST /api/login
+→ Status: 400 (37ms)
+--------------------------------------------------------------------------------
+[13:13:43] POST /api/login
+→ Status: 400 (285ms)
+--------------------------------------------------------------------------------
+[13:14:30] POST /api/login
+→ Status: 400 (172ms)
+--------------------------------------------------------------------------------
+[13:14:40] POST /api/login
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[13:14:52] POST /api/login
+→ Status: 400 (14ms)
+--------------------------------------------------------------------------------
+[13:14:58] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[13:15:21] POST /api/login
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[13:15:54] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[13:16:15] POST /api/login
+→ Status: 400 (14ms)
+--------------------------------------------------------------------------------
+[13:16:24] POST /api/login
+→ Status: 400 (20ms)
+--------------------------------------------------------------------------------
+[13:16:32] POST /api/login
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[13:16:40] POST /api/login
+→ Status: 400 (19ms)
+--------------------------------------------------------------------------------
+[13:16:48] POST /api/login
+→ Status: 400 (20ms)
+--------------------------------------------------------------------------------
+[13:16:52] POST /api/login
+→ Status: 400 (22ms)
+--------------------------------------------------------------------------------
+[21:23:53] GET /api/auto_login
+→ Status: 401 (3ms)
+--------------------------------------------------------------------------------
+[09:10:53] GET /api/auto_login
+→ Status: 401 (8ms)
+--------------------------------------------------------------------------------
+[09:11:02] POST /api/login
+→ Status: 400 (77ms)
+--------------------------------------------------------------------------------
+[00:21:19] GET /api/auto_login
+→ Status: 401 (152ms)
+--------------------------------------------------------------------------------
+[00:21:27] POST /api/login
+→ Status: 400 (130ms)
+--------------------------------------------------------------------------------
+[01:15:22] GET /api/auto_login
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[11:57:37] GET /api/auto_login
+→ Status: 401 (75ms)
+--------------------------------------------------------------------------------
+[11:57:51] POST /api/login
+→ Status: 400 (125ms)
+--------------------------------------------------------------------------------
+[00:22:40] GET /api/auto_login
+→ Status: 401 (16ms)
+--------------------------------------------------------------------------------
+[00:22:51] ERROR HttpMethod.post /api/login
+Bad state: Cannot write to socket, it is closed
+#0      BufferedSocket.writeBufferPart (package:mysql1/src/buffered_socket.dart:133:7)
+#1      BufferedSocket.writeBuffer (package:mysql1/src/buffered_socket.dart:127:12)
+#2      ReqRespConnection._sendBufferPart (package:mysql1/src/single_connection.dart:432:19)
+#3      ReqRespConnection.sendBuffer (package:mysql1/src/single_connection.dart:420:14)
+#4      ReqRespConnection._processHandler (package:mysql1/src/single_connection.dart:467:11)
+#5      ReqRespConnection.processHandlerWithResults.<anonymous closure> (package:mysql1/src/single_connection.dart:492:19)
+#6      Pool.withResource (package:pool/pool.dart:127:28)
+<asynchronous suspension>
+#7      MySqlConnection.transaction (package:mysql1/src/single_connection.dart:213:5)
+<asynchronous suspension>
+#8      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:196:22)
+<asynchronous suspension>
+#9      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87:24)
+<asynchronous suspension>
+#10     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20:24)
+<asynchronous suspension>
+#11     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/login/index.dart:11:12)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#15     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#16     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#17     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#18     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#19     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#20     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#21     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#22     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#23     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#24     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#25     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[00:24:11] GET /api/auto_login
+→ Status: 401 (102ms)
+--------------------------------------------------------------------------------
+[03:17:31] POST /api/login
+→ Status: 400 (199ms)
+--------------------------------------------------------------------------------
+[03:18:30] POST /api/login
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[03:18:35] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[03:18:37] POST /api/login
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[03:19:20] POST /api/login
+→ Status: 400 (48ms)
+--------------------------------------------------------------------------------
+[03:20:33] POST /api/login
+→ Status: 400 (33ms)
+--------------------------------------------------------------------------------
+[03:20:51] POST /api/login
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[03:21:11] POST /api/login
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[03:21:57] POST /api/login
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[03:22:51] POST /api/login
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[03:23:05] POST /api/login
+→ Status: 400 (8ms)
+--------------------------------------------------------------------------------
+[03:23:18] POST /api/login
+→ Status: 400 (18ms)
+--------------------------------------------------------------------------------
+[03:23:29] POST /api/login
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[03:23:35] POST /api/login
+→ Status: 400 (17ms)
+--------------------------------------------------------------------------------
+[03:23:44] POST /api/login
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[03:23:55] POST /api/login
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[03:24:05] POST /api/login
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[03:24:12] POST /api/login
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[03:24:23] POST /api/login
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[03:29:32] POST /api/login
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[03:31:32] POST /api/login
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[03:40:47] POST /api/login
+→ Status: 400 (130ms)
+--------------------------------------------------------------------------------
+[03:40:56] ERROR HttpMethod.post /api/login
+type 'List<dynamic>' is not a subtype of type 'List<String>' in type cast
+#0      new UserModel.fromDatabase (package:asset_management_api/features/users/data/model/user_model.dart:78:56)
+#1      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:235:22)
+<asynchronous suspension>
+#2      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87:24)
+<asynchronous suspension>
+#3      LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20:24)
+<asynchronous suspension>
+#4      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/login/index.dart:11:12)
+<asynchronous suspension>
+#5      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#6      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#7      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#8      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#9      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#11     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#12     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#13     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#14     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#15     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#16     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#17     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#18     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[05:20:44] POST /api/login
+→ Status: 400 (27ms)
+--------------------------------------------------------------------------------
+[05:20:53] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[14:54:41] GET /api/assets/
+→ Status: 401 (3ms)
+--------------------------------------------------------------------------------
+[14:54:46] GET /api/user
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[14:54:47] GET /api/assets/
+→ Status: 401 (2ms)
+--------------------------------------------------------------------------------
+[14:55:03] GET /api/assets/
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[14:55:58] GET /api/user
+→ Status: 401 (3ms)
+--------------------------------------------------------------------------------
+[14:55:59] GET /api/assets/
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[14:56:03] GET /api/assets/
+→ Status: 401 (1ms)
+--------------------------------------------------------------------------------
+[14:56:41] POST /api/login
+→ Status: 400 (32ms)
+--------------------------------------------------------------------------------
+[18:34:42] GET /api/assets
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[18:36:11] GET /api/assets
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[18:40:19] GET /api/assets
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[18:46:43] GET /api/assets
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[18:46:49] GET /api/assets
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[18:46:52] GET /api/assets
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[18:47:04] GET /api/assets
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[18:47:17] GET /api/assets
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[19:32:14] GET /api/assets
+→ Status: 400 (46ms)
+--------------------------------------------------------------------------------
+[20:29:40] GET /api/module
+→ Status: 400 (42ms)
+--------------------------------------------------------------------------------
+[20:36:21] GET /api/module
+→ Status: 400 (14ms)
+--------------------------------------------------------------------------------
+[20:36:43] GET /api/module
+→ Status: 400 (13ms)
+--------------------------------------------------------------------------------
+[20:37:25] GET /api/module
+→ Status: 400 (16ms)
+--------------------------------------------------------------------------------
+[20:37:49] GET /api/module
+→ Status: 400 (14ms)
+--------------------------------------------------------------------------------
+[22:23:29] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      new User.fromRequest (package:asset_management_api/features/users/domain/entities/user.dart:68:28)
+#1      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:49:48)
+<asynchronous suspension>
+#2      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#3      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#4      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#5      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#6      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#12     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#13     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#14     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#15     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#16     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:24:43] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      new User.fromRequest (package:asset_management_api/features/users/domain/entities/user.dart:68:28)
+#1      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:51:48)
+<asynchronous suspension>
+#2      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#3      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#4      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#5      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#6      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#12     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#13     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#14     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#15     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#16     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:25:48] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      new User.fromRequest (package:asset_management_api/features/users/domain/entities/user.dart:68:28)
+#1      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:51:48)
+<asynchronous suspension>
+#2      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#3      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#4      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#5      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#6      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#12     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#13     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#14     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#15     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#16     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:26:25] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:49:33)
+<asynchronous suspension>
+#1      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#2      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#3      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#4      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#5      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#6      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#7      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#8      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#9      logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#10     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#12     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#13     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#14     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#15     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:27:38] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:49:33)
+<asynchronous suspension>
+#1      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#2      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#3      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#4      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#5      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#6      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#7      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#8      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#9      logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#10     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#12     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#13     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#14     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#15     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:32:32] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:49:33)
+<asynchronous suspension>
+#1      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#2      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#3      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#4      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#5      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#6      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#7      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#8      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#9      logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#10     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#12     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#13     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#14     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#15     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:35:15] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:49:33)
+<asynchronous suspension>
+#1      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#2      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#3      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#4      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#5      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#6      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#7      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#8      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#9      logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#10     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#12     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#13     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#14     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#15     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:36:00] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      new User.fromRequest (package:asset_management_api/features/users/domain/entities/user.dart:68:28)
+#1      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:51:48)
+<asynchronous suspension>
+#2      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#3      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#4      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#5      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#6      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#12     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#13     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#14     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#15     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#16     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:36:49] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      new User.fromRequest (package:asset_management_api/features/users/domain/entities/user.dart:68:28)
+#1      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:53:48)
+<asynchronous suspension>
+#2      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#3      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#4      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#5      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#6      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#12     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#13     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#14     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#15     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#16     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:39:10] ERROR HttpMethod.post /api/user
+type 'Null' is not a subtype of type 'List<dynamic>' in type cast
+#0      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:49:47)
+<asynchronous suspension>
+#1      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#2      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#3      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#4      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#5      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#6      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#7      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#8      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#9      logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#10     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#12     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#13     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#14     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#15     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:39:30] ERROR HttpMethod.post /api/user
+type 'List<dynamic>' is not a subtype of type 'List<Map<String, dynamic>>' in type cast
+#0      new UserModel.fromDatabase (package:asset_management_api/features/users/data/model/user_model.dart:79:28)
+#1      UserLocalDataSourceImpl.createUser (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:90:22)
+<asynchronous suspension>
+#2      UserRepositoryImpl.createUser (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:19:24)
+<asynchronous suspension>
+#3      UserResponse.createUser (package:asset_management_api/features/users/presentation/response/user_response.dart:59:26)
+<asynchronous suspension>
+#4      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/user/index.dart:13:12)
+<asynchronous suspension>
+#5      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#6      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#7      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#8      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#9      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#10     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#11     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#12     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#13     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#14     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#15     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#16     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#17     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#18     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:48:29] POST /api/user
+→ Status: 400 (64ms)
+--------------------------------------------------------------------------------
+[22:48:52] POST /api/user
+→ Status: 400 (72ms)
+--------------------------------------------------------------------------------
+[22:51:55] POST /api/user
+→ Status: 400 (55ms)
+--------------------------------------------------------------------------------
+[22:53:35] POST /api/user
+→ Status: 400 (61ms)
+--------------------------------------------------------------------------------
+[23:04:55] POST /api/login
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[13:55:34] GET /api/user
+→ Status: 401 (10ms)
+--------------------------------------------------------------------------------
+[13:55:35] GET /api/module
+→ Status: 401 (0ms)
+--------------------------------------------------------------------------------
+[13:55:35] GET /api/user
+→ Status: 401 (3ms)
+--------------------------------------------------------------------------------
+[13:56:03] ERROR HttpMethod.post /api/login
+Bad state: Cannot write to socket, it is closed
+#0      BufferedSocket.writeBufferPart (package:mysql1/src/buffered_socket.dart:133:7)
+#1      BufferedSocket.writeBuffer (package:mysql1/src/buffered_socket.dart:127:12)
+#2      ReqRespConnection._sendBufferPart (package:mysql1/src/single_connection.dart:432:19)
+#3      ReqRespConnection.sendBuffer (package:mysql1/src/single_connection.dart:420:14)
+#4      ReqRespConnection._processHandler (package:mysql1/src/single_connection.dart:467:11)
+#5      ReqRespConnection.processHandlerWithResults.<anonymous closure> (package:mysql1/src/single_connection.dart:492:19)
+#6      Pool.withResource (package:pool/pool.dart:127:28)
+<asynchronous suspension>
+#7      MySqlConnection.transaction (package:mysql1/src/single_connection.dart:213:5)
+<asynchronous suspension>
+#8      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:219:22)
+<asynchronous suspension>
+#9      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87:24)
+<asynchronous suspension>
+#10     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20:24)
+<asynchronous suspension>
+#11     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/login/index.dart:11:12)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#15     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#16     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#17     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#18     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#19     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#20     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#21     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#22     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#23     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#24     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#25     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[13:56:52] ERROR HttpMethod.post /api/login
+Bad state: Cannot write to socket, it is closed
+#0      BufferedSocket.writeBufferPart (package:mysql1/src/buffered_socket.dart:133:7)
+#1      BufferedSocket.writeBuffer (package:mysql1/src/buffered_socket.dart:127:12)
+#2      ReqRespConnection._sendBufferPart (package:mysql1/src/single_connection.dart:432:19)
+#3      ReqRespConnection.sendBuffer (package:mysql1/src/single_connection.dart:420:14)
+#4      ReqRespConnection._processHandler (package:mysql1/src/single_connection.dart:467:11)
+#5      ReqRespConnection.processHandlerWithResults.<anonymous closure> (package:mysql1/src/single_connection.dart:492:19)
+#6      Pool.withResource (package:pool/pool.dart:127:28)
+<asynchronous suspension>
+#7      MySqlConnection.transaction (package:mysql1/src/single_connection.dart:213:5)
+<asynchronous suspension>
+#8      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:219:22)
+<asynchronous suspension>
+#9      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87:24)
+<asynchronous suspension>
+#10     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20:24)
+<asynchronous suspension>
+#11     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/login/index.dart:11:12)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#15     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#16     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#17     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#18     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#19     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#20     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#21     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#22     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#23     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#24     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#25     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[18:02:12] POST /api/login
+→ Status: 400 (28ms)
+--------------------------------------------------------------------------------
+[18:19:45] POST /api/login
+→ Status: 400 (14ms)
+--------------------------------------------------------------------------------
+[19:31:48] POST /api/login
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[19:58:45] POST /api/login
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[20:01:52] POST /api/login
+→ Status: 400 (12ms)
+--------------------------------------------------------------------------------
+[00:34:34] POST /api/login
+→ Status: 400 (30ms)
+--------------------------------------------------------------------------------
+[23:16:51] ERROR HttpMethod.post /api/login
+Bad state: Cannot write to socket, it is closed
+#0      BufferedSocket.writeBufferPart (package:mysql1/src/buffered_socket.dart:133:7)
+#1      BufferedSocket.writeBuffer (package:mysql1/src/buffered_socket.dart:127:12)
+#2      ReqRespConnection._sendBufferPart (package:mysql1/src/single_connection.dart:432:19)
+#3      ReqRespConnection.sendBuffer (package:mysql1/src/single_connection.dart:420:14)
+#4      ReqRespConnection._processHandler (package:mysql1/src/single_connection.dart:467:11)
+#5      ReqRespConnection.processHandlerWithResults.<anonymous closure> (package:mysql1/src/single_connection.dart:492:19)
+#6      Pool.withResource (package:pool/pool.dart:127:28)
+<asynchronous suspension>
+#7      MySqlConnection.transaction (package:mysql1/src/single_connection.dart:213:5)
+<asynchronous suspension>
+#8      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:219:22)
+<asynchronous suspension>
+#9      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87:24)
+<asynchronous suspension>
+#10     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20:24)
+<asynchronous suspension>
+#11     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/login/index.dart:11:12)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#15     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#16     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#17     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#18     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#19     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#20     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#21     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#22     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#23     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#24     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#25     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[04:25:00] POST /api/login
+→ Status: 400 (20ms)
+--------------------------------------------------------------------------------
+[17:12:01] ERROR HttpMethod.post /api/login
+Bad state: Cannot write to socket, it is closed
+#0      BufferedSocket.writeBufferPart (package:mysql1/src/buffered_socket.dart:133:7)
+#1      BufferedSocket.writeBuffer (package:mysql1/src/buffered_socket.dart:127:12)
+#2      ReqRespConnection._sendBufferPart (package:mysql1/src/single_connection.dart:432:19)
+#3      ReqRespConnection.sendBuffer (package:mysql1/src/single_connection.dart:420:14)
+#4      ReqRespConnection._processHandler (package:mysql1/src/single_connection.dart:467:11)
+#5      ReqRespConnection.processHandlerWithResults.<anonymous closure> (package:mysql1/src/single_connection.dart:492:19)
+#6      Pool.withResource (package:pool/pool.dart:127:28)
+<asynchronous suspension>
+#7      MySqlConnection.transaction (package:mysql1/src/single_connection.dart:213:5)
+<asynchronous suspension>
+#8      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:219:22)
+<asynchronous suspension>
+#9      UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87:24)
+<asynchronous suspension>
+#10     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20:24)
+<asynchronous suspension>
+#11     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/login/index.dart:11:12)
+<asynchronous suspension>
+#12     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#13     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#14     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#15     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#16     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#17     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#18     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#19     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#20     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#21     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#22     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#23     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#24     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#25     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[17:19:01] POST /api/login
+→ Status: 400 (19ms)
+--------------------------------------------------------------------------------
+[17:50:57] POST /api/login
+→ Status: 400 (16ms)
+--------------------------------------------------------------------------------
+[18:21:23] POST /api/login
+→ Status: 400 (44ms)
+--------------------------------------------------------------------------------
+[22:28:01] POST /api/login
+→ Status: 400 (558ms)
+--------------------------------------------------------------------------------
+[22:28:13] POST /api/login
+→ Status: 400 (10ms)
+--------------------------------------------------------------------------------
+[22:28:32] POST /api/login
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[22:28:43] POST /api/login
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[22:33:52] GET /api/preparation
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[22:34:03] GET /api/preparation
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[22:35:14] GET /api/preparation
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[22:35:19] GET /api/preparation
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[23:23:23] POST /api/login
+→ Status: 400 (140ms)
+--------------------------------------------------------------------------------
+[23:23:32] POST /api/login
+→ Status: 400 (8ms)
+--------------------------------------------------------------------------------
+[02:16:05] GET /api/assets
+→ Status: 400 (21ms)
+--------------------------------------------------------------------------------
+[02:16:34] GET /api/assets
+→ Status: 400 (16ms)
+--------------------------------------------------------------------------------
+[02:16:37] GET /api/assets
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[02:18:18] GET /api/assets
+→ Status: 400 (18ms)
+--------------------------------------------------------------------------------
+[02:41:52] GET /api/location
+→ Status: 400 (42ms)
+--------------------------------------------------------------------------------
+[02:41:54] GET /api/location
+→ Status: 400 (39ms)
+--------------------------------------------------------------------------------
+[02:42:54] GET /api/location
+→ Status: 400 (72ms)
+--------------------------------------------------------------------------------
+[02:44:12] GET /api/location
+→ Status: 400 (333ms)
+--------------------------------------------------------------------------------
+[02:44:18] GET /api/location
+→ Status: 400 (62ms)
+--------------------------------------------------------------------------------
+[02:45:06] GET /api/location
+→ Status: 400 (72ms)
+--------------------------------------------------------------------------------
+[03:43:19] POST /api/login
+→ Status: 400 (93ms)
+--------------------------------------------------------------------------------
+[04:05:29] POST /api/login
+→ Status: 400 (34ms)
+--------------------------------------------------------------------------------
+[06:49:10] POST /api/login
+→ Status: 400 (181ms)
+--------------------------------------------------------------------------------
+[07:24:22] POST /api/login
+→ Status: 400 (31ms)
+--------------------------------------------------------------------------------
+[07:27:23] POST /api/login
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------

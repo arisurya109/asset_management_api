@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 // ignore: must_be_immutable
 class Location extends Equatable {
   int? id;
+  int? isStorage;
   String? name;
   String? locationType;
   String? boxType;
@@ -15,6 +16,7 @@ class Location extends Equatable {
 
   Location({
     this.id,
+    this.isStorage,
     this.name,
     this.locationType,
     this.boxType,
@@ -27,6 +29,7 @@ class Location extends Equatable {
   Map<String, dynamic> toResponse() {
     return <String, dynamic>{
       'id': id,
+      'is_storage': isStorage,
       'name': name,
       'code': code,
       'init': init,
@@ -42,6 +45,7 @@ class Location extends Equatable {
   factory Location.fromRequest(Map<String, dynamic> map) {
     return Location(
       id: map['id'] != null ? map['id'] as int : null,
+      isStorage: map['is_storage'] != null ? map['is_storage'] as int : null,
       name: map['name'] != null ? map['name'] as String : null,
       locationType:
           map['location_type'] != null ? map['location_type'] as String : null,
@@ -58,6 +62,7 @@ class Location extends Equatable {
   List<Object?> get props {
     return [
       id,
+      isStorage,
       name,
       locationType,
       boxType,

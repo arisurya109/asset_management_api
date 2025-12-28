@@ -734,6 +734,46 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
             }
           }
         } else {
+          // Check From Location is Storage and To Location is Non Storage
+          if (fromLocationId == toLocationId) {
+            throw CreateException(
+              message: 'Failed. Origin and destination locations are the same',
+            );
+          }
+
+          final results = await txn.query(
+            'SELECT id, is_storage FROM t_locations WHERE id IN (?, ?)',
+            [fromLocationId, toLocationId],
+          );
+
+          final locationMap = {
+            for (final row in results)
+              row.fields['id']: row.fields['is_storage'],
+          };
+
+          if (!locationMap.containsKey(fromLocationId) ||
+              !locationMap.containsKey(toLocationId)) {
+            throw CreateException(
+              message: 'One or both locations were not found ',
+            );
+          }
+
+          final isFromStorage = locationMap[fromLocationId] == 1;
+          final isToStorage = locationMap[toLocationId] == 1;
+
+          if (!isFromStorage) {
+            throw CreateException(
+              message: 'Source location is not a storage area',
+            );
+          }
+
+          if (isToStorage) {
+            throw CreateException(
+              message: 'Destination location cannot be a storage area',
+            );
+          }
+          // END Check From Location is Storage and To Location is Non Storage
+
           final updated = await txn.query(
             '''
             UPDATE t_assets
@@ -744,7 +784,6 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
           );
 
           if (updated.affectedRows == null || updated.affectedRows == 0) {
-            txn.rollback();
             throw CreateException(
               message: 'Failed, update asset',
             );
@@ -768,7 +807,6 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
           );
 
           if (inserted.insertId == null || inserted.insertId == 0) {
-            txn.rollback();
             throw CreateException(
               message: 'Failed, insert history asset',
             );

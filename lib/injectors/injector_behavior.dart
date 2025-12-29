@@ -20,6 +20,8 @@ import 'package:asset_management_api/features/preparation/data/source/preparatio
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_destination_external_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_destination_internal_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_code_or_destination_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/update_status_preparation_use_case.dart';
@@ -222,6 +224,10 @@ final FindPreparationByCodeOrDestinationUseCase
     FindPreparationByCodeOrDestinationUseCase(preparationRepository);
 final UpdateStatusPreparationUseCase updateStatusPreparationUseCase =
     UpdateStatusPreparationUseCase(preparationRepository);
+final FindDestinationInternalUseCase findDestinationInternalUseCase =
+    FindDestinationInternalUseCase(preparationRepository);
+final FindDestinationExternalUseCase findDestinationExternalUseCase =
+    FindDestinationExternalUseCase(preparationRepository);
 
 // Preparation Detail
 final PreparationDetailLocalDataSource preparationDetailLocalDataSource =

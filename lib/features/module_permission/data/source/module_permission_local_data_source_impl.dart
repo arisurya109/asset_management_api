@@ -40,15 +40,15 @@ class ModulePermissionLocalDataSourceImpl
     // 1. Ambil data baris tersebut untuk tahu ini modul apa
     final query = await db.query(
       '''
-    SELECT
-      m.module_name AS module,
-      mp.id AS id,
-      p.permission_name AS permission
-    FROM
-      t_module_permission AS mp
-    LEFT JOIN t_modules AS m ON mp.module_id = m.id
-    LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
-    WHERE m.id = (SELECT module_id FROM t_module_permission WHERE id = ?)
+      SELECT
+        m.module_name AS module,
+        mp.id AS id,
+        p.permission_name AS permission
+      FROM
+        t_module_permission AS mp
+      LEFT JOIN t_modules AS m ON mp.module_id = m.id
+      LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
+      WHERE m.id = (SELECT module_id FROM t_module_permission WHERE id = ?)
     ''',
       [params],
     );

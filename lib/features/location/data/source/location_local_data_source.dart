@@ -7,4 +7,8 @@ abstract class LocationLocalDataSource {
   Future<LocationModel> createLocation(LocationModel params);
   Future<LocationModel> updateLocation(LocationModel params);
   Future<LocationModel> findByIdLocation(int params);
+  Future<List<LocationModel>> findLocationByQuery(String query);
+  Future<List<LocationModel>> findLocationStorage();
+  Future<List<LocationModel>> findLocationNonStorage();
+  Future<List<String>> findAllLocationType();
 }

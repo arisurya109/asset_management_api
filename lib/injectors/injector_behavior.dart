@@ -12,6 +12,10 @@ import 'package:asset_management_api/features/assets/domain/usecases/create_asse
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_asset_code_and_location_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_query_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_detail_by_id_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_all_location_type_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_location_by_query_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_location_non_storage_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_location_storage_use_case.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
 import 'package:asset_management_api/features/preparation/data/repositories/preparation_repository_impl.dart';
@@ -160,7 +164,14 @@ final FindByIdLocationUseCase findByIdocationUseCase =
     FindByIdLocationUseCase(locationRepository);
 final UpdateLocationUseCase updateocationUseCase =
     UpdateLocationUseCase(locationRepository);
-
+final FindLocationByQueryUseCase findLocationByQueryUseCase =
+    FindLocationByQueryUseCase(locationRepository);
+final FindLocationStorageUseCase findLocationStorageUseCase =
+    FindLocationStorageUseCase(locationRepository);
+final FindLocationNonStorageUseCase findLocationNonStorageUseCase =
+    FindLocationNonStorageUseCase(locationRepository);
+final FindAllLocationTypeUseCase findAllLocationTypeUseCase =
+    FindAllLocationTypeUseCase(locationRepository);
 // Assets
 final AssetsLocalDataSource assetsLocalDataSource =
     AssetsLocalDataSourceImpl(database, databaseErpOld);

@@ -33,10 +33,8 @@ class LocationRepositoryImpl implements LocationRepository {
       final response = await _source.findAllLocation();
       return Right(response.map((e) => e.toEntity()).toList());
     } on DatabaseException catch (e) {
-      print(e.message);
       return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
-      print(e.message);
       return Left(NotFoundFailure(e.message));
     }
   }
@@ -64,6 +62,56 @@ class LocationRepositoryImpl implements LocationRepository {
       return Left(UpdateFailure(e.message));
     } on UpdateException catch (e) {
       return Left(UpdateFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Location>>> findLocationByQuery(
+    String query,
+  ) async {
+    try {
+      final response = await _source.findLocationByQuery(query);
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Location>>> findLocationNonStorage() async {
+    try {
+      final response = await _source.findLocationNonStorage();
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Location>>> findLocationStorage() async {
+    try {
+      final response = await _source.findLocationStorage();
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<String>>> findAllLocationType() async {
+    try {
+      final response = await _source.findAllLocationType();
+      return Right(response);
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
     }
   }
 }

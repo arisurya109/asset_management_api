@@ -2,6 +2,7 @@
 
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/error/failure.dart';
+import 'package:asset_management_api/features/location/domain/entities/location.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_model.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation.dart';
@@ -94,6 +95,30 @@ class PreparationRepositoryImpl implements PreparationRepository {
       return Left(UpdateFailure(e.message));
     } on UpdateException catch (e) {
       return Left(UpdateFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Location>>> findDestinationExternal() async {
+    try {
+      final response = await _source.findDestinationExternal();
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(UpdateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Location>>> findDestinationInternal() async {
+    try {
+      final response = await _source.findDestinationInternal();
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(UpdateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
     }
   }
 }

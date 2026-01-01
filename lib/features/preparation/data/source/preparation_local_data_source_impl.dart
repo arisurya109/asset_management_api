@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/helpers/asset.dart';
+import 'package:asset_management_api/features/location/data/model/location_model.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_model.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
 import 'package:mysql1/mysql1.dart';
@@ -384,6 +385,90 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
       return PreparationModel.fromDatabase(response!);
     } on UpdateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<LocationModel>> findDestinationExternal() async {
+    try {
+      final db = await _database.connection;
+
+      final response = await db.query(
+        '''
+        SELECT
+          c.id AS id,
+          c.name AS name,
+          c.code AS code,
+          c.init AS init,
+          c.location_type AS location_type,
+          c.box_type AS box_type,
+          c.parent_id AS parent_id,
+          p.name AS parent_name
+        FROM
+          t_locations AS c
+        LEFT JOIN
+          t_locations AS P ON c.parent_id = p.id
+        WHERE c.is_storage = 0 AND c.location_type = 'VENDOR' AND c.is_active = 1
+        ''',
+      );
+
+      if (response.firstOrNull == null) {
+        throw NotFoundException(message: 'Destination Location not found');
+      }
+
+      return response.map((e) => LocationModel.fromDatabase(e.fields)).toList();
+    } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<LocationModel>> findDestinationInternal() async {
+    try {
+      final db = await _database.connection;
+
+      final response = await db.query(
+        '''
+        SELECT
+          c.id AS id,
+          c.name AS name,
+          c.code AS code,
+          c.init AS init,
+          c.location_type AS location_type,
+          c.box_type AS box_type,
+          c.parent_id AS parent_id,
+          p.name AS parent_name
+        FROM
+          t_locations AS c
+        LEFT JOIN
+          t_locations AS P ON c.parent_id = p.id
+        WHERE c.is_storage = 0 AND c.is_active = 1 AND c.location_type != 'VENDOR'
+        ''',
+      );
+
+      if (response.firstOrNull == null) {
+        throw NotFoundException(message: 'Destination Location not found');
+      }
+
+      return response.map((e) => LocationModel.fromDatabase(e.fields)).toList();
+    } on NotFoundException {
       rethrow;
     } on MySqlException catch (e) {
       throw DatabaseException(message: e.message);

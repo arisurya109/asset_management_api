@@ -9,6 +9,8 @@ import 'package:asset_management_api/core/services/jwt.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_destination_external_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_destination_internal_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_code_or_destination_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_id_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/update_status_preparation_use_case.dart';
@@ -167,6 +169,52 @@ class PreparationResponse {
           body: response.toJson(),
         ),
       );
+    }
+  }
+
+  static Future<Response> findDestinationByType(
+    RequestContext context,
+    String params,
+  ) async {
+    final jwt = context.read<JwtService>();
+
+    final validateToken = await jwt.verifyToken(context);
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else {
+      final usecaseInternal = context.read<FindDestinationInternalUseCase>();
+      final usecaseExternal = context.read<FindDestinationExternalUseCase>();
+
+      final paramsType = params == 'I';
+
+      if (paramsType) {
+        final failureOrDestination = await usecaseInternal();
+
+        return failureOrDestination.fold(
+          (failure) => ResponseHelper.badRequest(
+            description: failure.message!,
+          ),
+          (destination) => ResponseHelper.json(
+            code: HttpStatus.ok,
+            status: 'Successfully get destination internal',
+            body: destination.map((e) => e.toResponse()).toList(),
+          ),
+        );
+      } else {
+        final failureOrDestination = await usecaseExternal();
+
+        return failureOrDestination.fold(
+          (failure) => ResponseHelper.badRequest(
+            description: failure.message!,
+          ),
+          (destination) => ResponseHelper.json(
+            code: HttpStatus.ok,
+            status: 'Successfully get destination external',
+            body: destination.map((e) => e.toResponse()).toList(),
+          ),
+        );
+      }
     }
   }
 }

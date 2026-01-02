@@ -14,6 +14,8 @@ Future<Response> onRequest(
     return await LocationResponse.findByIdLocation(context, id);
   } else if (context.httpMethodPut) {
     return await LocationResponse.updateLocation(context, id);
+  } else if (context.httpMethodDelete) {
+    return await LocationResponse.deleteLocation(context, id);
   }
   return ResponseHelper.methodNotAllowed(description: ErrorMsg.methodAllowed);
 }

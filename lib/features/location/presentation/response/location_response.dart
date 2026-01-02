@@ -8,6 +8,7 @@ import 'package:asset_management_api/core/helpers/response_helper.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
 import 'package:asset_management_api/features/location/domain/entities/location.dart';
 import 'package:asset_management_api/features/location/domain/usecases/create_location_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/delete_location_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_all_location_type_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_all_location_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_by_id_location_use_case.dart';
@@ -25,13 +26,33 @@ class LocationResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'add',
+    );
+
     if (!validateToken) {
-      return ResponseHelper.unAuthorized(description: ErrorMsg.methodAllowed);
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
-      final usecase = context.read<CreateLocationUseCase>();
       final params = await context.requestJSON();
 
-      final response = await usecase(Location.fromRequest(params));
+      final paramsLocation = Location.fromRequest(params);
+
+      final validateRequest = paramsLocation.checkCreateRequest();
+
+      if (validateRequest != null) {
+        return ResponseHelper.badRequest(
+          description: validateRequest,
+        );
+      }
+
+      final usecase = context.read<CreateLocationUseCase>();
+      final userId = await jwt.getIdUser(context);
+
+      final response = await usecase(paramsLocation, userId);
 
       return response.fold(
         (l) => ResponseHelper.badRequest(description: l.message!),
@@ -49,8 +70,16 @@ class LocationResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'view',
+    );
+
     if (!validateToken) {
-      return ResponseHelper.unAuthorized(description: ErrorMsg.methodAllowed);
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindAllLocationUseCase>();
 
@@ -75,8 +104,16 @@ class LocationResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'view',
+    );
+
     if (!validateToken) {
-      return ResponseHelper.unAuthorized(description: ErrorMsg.methodAllowed);
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindByIdLocationUseCase>();
       final params = await context.parseUri(id);
@@ -102,8 +139,16 @@ class LocationResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'update',
+    );
+
     if (!validateToken) {
-      return ResponseHelper.unAuthorized(description: ErrorMsg.methodAllowed);
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<UpdateLocationUseCase>();
       final paramsId = await context.parseUri(id);
@@ -134,8 +179,16 @@ class LocationResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'view',
+    );
+
     if (!validateToken) {
-      return ResponseHelper.unAuthorized(description: ErrorMsg.methodAllowed);
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindLocationByQueryUseCase>();
 
@@ -160,8 +213,16 @@ class LocationResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'view',
+    );
+
     if (!validateToken) {
-      return ResponseHelper.unAuthorized(description: ErrorMsg.methodAllowed);
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecaseStorage = context.read<FindLocationStorageUseCase>();
       final usecaseNonStorage = context.read<FindLocationNonStorageUseCase>();
@@ -199,8 +260,16 @@ class LocationResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'add',
+    );
+
     if (!validateToken) {
-      return ResponseHelper.unAuthorized(description: ErrorMsg.methodAllowed);
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindAllLocationTypeUseCase>();
 
@@ -212,6 +281,39 @@ class LocationResponse {
           code: HttpStatus.ok,
           status: 'Successfully find location type',
           body: r,
+        ),
+      );
+    }
+  }
+
+  static Future<Response> deleteLocation(
+    RequestContext context,
+    String id,
+  ) async {
+    final jwt = context.read<JwtService>();
+
+    final validateToken = await jwt.verifyToken(context);
+
+    final verifyAccess =
+        await jwt.checkPermissionUser(context, 'master', 'delete');
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!verifyAccess) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
+    } else {
+      final usecase = context.read<DeleteLocationUseCase>();
+
+      final locationId = await context.parseUri(id);
+      final userId = await jwt.getIdUser(context);
+
+      final response = await usecase(id: locationId, userId: userId);
+
+      return response.fold(
+        (l) => ResponseHelper.badRequest(description: l.message!),
+        (r) => ResponseHelper.json(
+          code: HttpStatus.ok,
+          status: r,
         ),
       );
     }

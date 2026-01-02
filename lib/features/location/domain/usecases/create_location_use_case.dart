@@ -10,7 +10,10 @@ class CreateLocationUseCase {
 
   final LocationRepository _repository;
 
-  Future<Either<Failure, Location>> call(Location params) async {
-    return _repository.createLocation(params);
+  Future<Either<Failure, Location>> call(
+    Location params,
+    int userId,
+  ) async {
+    return _repository.createLocation(params, userId);
   }
 }

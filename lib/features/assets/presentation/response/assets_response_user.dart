@@ -23,8 +23,16 @@ class AssetsResponseUser {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'assets',
+      'view',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindAllAssetsUseCase>();
 
@@ -46,8 +54,16 @@ class AssetsResponseUser {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'assets',
+      'add',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<CreateAssetsUseCase>();
 
@@ -83,8 +99,16 @@ class AssetsResponseUser {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'assets',
+      'view',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindAssetDetailByIdUseCase>();
 
@@ -111,8 +135,16 @@ class AssetsResponseUser {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'assets',
+      'update',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<CreateAssetTransferUseCase>();
       final params = await context.requestJSON();
@@ -149,8 +181,16 @@ class AssetsResponseUser {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'assets',
+      'view',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindAssetByAssetCodeAndLocationUseCase>();
 
@@ -178,8 +218,16 @@ class AssetsResponseUser {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'assets',
+      'view',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindAssetByQueryUseCase>();
 

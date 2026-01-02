@@ -26,10 +26,8 @@ class UserResponse {
         description: ErrorMsg.unAuthorized,
       );
     } else {
-      final validatePermissionUser = await jwt.checkPermissionUser(
-        context,
-        2,
-      );
+      final validatePermissionUser =
+          await jwt.checkPermissionUser(context, 'user', 'add');
 
       if (!validatePermissionUser) {
         return ResponseHelper.unAuthorized(
@@ -79,7 +77,8 @@ class UserResponse {
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
     } else {
-      final validatePermissionUser = await jwt.checkPermissionUser(context, 1);
+      final validatePermissionUser =
+          await jwt.checkPermissionUser(context, 'user', 'view');
 
       if (!validatePermissionUser) {
         return ResponseHelper.unAuthorized(
@@ -115,7 +114,8 @@ class UserResponse {
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
     } else {
-      final validatePermissionUser = await jwt.checkPermissionUser(context, 1);
+      final validatePermissionUser =
+          await jwt.checkPermissionUser(context, 'user', 'view');
 
       if (!validatePermissionUser) {
         return ResponseHelper.unAuthorized(
@@ -151,7 +151,8 @@ class UserResponse {
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
     } else {
-      final validatePermissionUser = await jwt.checkPermissionUser(context, 3);
+      final validatePermissionUser =
+          await jwt.checkPermissionUser(context, 'user', 'delete');
 
       if (!validatePermissionUser) {
         return ResponseHelper.unAuthorized(
@@ -185,7 +186,8 @@ class UserResponse {
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
     } else {
-      final validatePermissionUser = await jwt.checkPermissionUser(context, 3);
+      final validatePermissionUser =
+          await jwt.checkPermissionUser(context, 'user', 'update');
 
       if (!validatePermissionUser) {
         return ResponseHelper.unAuthorized(

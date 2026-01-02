@@ -14,10 +14,14 @@ class LocationRepositoryImpl implements LocationRepository {
   final LocationLocalDataSource _source;
 
   @override
-  Future<Either<Failure, Location>> createLocation(Location params) async {
+  Future<Either<Failure, Location>> createLocation(
+    Location params,
+    int userId,
+  ) async {
     try {
       final response = await _source.createLocation(
         LocationModel.fromEntity(params),
+        userId,
       );
       return Right(response.toEntity());
     } on DatabaseException catch (e) {
@@ -112,6 +116,21 @@ class LocationRepositoryImpl implements LocationRepository {
       return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> deleteLocation({
+    required int id,
+    required int userId,
+  }) async {
+    try {
+      final response = await _source.deleteLocation(id: id, userId: userId);
+      return Right(response);
+    } on DatabaseException catch (e) {
+      return Left(DeleteFailure(e.message));
+    } on DeleteException catch (e) {
+      return Left(DeleteFailure(e.message));
     }
   }
 }

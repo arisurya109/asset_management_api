@@ -285,42 +285,59 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   Future<UserModel> autoLogin(int id) async {
     final db = await _database.connection;
 
-    final responseUser = await db.query(
-      '''
-      SELECT id, username, name, is_active
-      FROM t_users
-      WHERE id = ?
-      ''',
-      [id],
-    );
+    final response = await db.transaction((txn) async {
+      final responseUser = await txn.query(
+        '''
+        SELECT id, is_active
+        FROM t_users
+        WHERE id = ?
+        ''',
+        [id],
+      );
 
-    final user = responseUser.first.fields; // Map<String, dynamic>
+      final user = responseUser.first.fields;
 
-// Ambil modules user
-    final responseModule = await db.query(
-      '''
-  SELECT
-    CONCAT(m.module_name, '_', p.permission_name) AS modules
-  FROM
-    t_user_permission_module AS upm
-  LEFT JOIN t_module_permission AS mp ON upm.module_permission_id = mp.id
-  LEFT JOIN t_modules AS m ON mp.module_id = m.id
-  LEFT JOIN t_permissions AS p ON mp.permission_id = p.id
-  WHERE upm.user_id = ? 
-  ''',
-      [id],
-    );
+      final responseModule = await txn.query(
+        '''
+          SELECT DISTINCT
+          	u.id,
+          	u.username,
+          	u.name,
+          	u.is_active,
+          	tmp.id AS module_permission_id,
+          	m.module_name,
+          	p.permission_name
+          FROM
+          	t_user_permission_module AS tupm
+          LEFT JOIN t_users AS u ON tupm.user_id = u.id
+          LEFT JOIN t_module_permission AS tmp ON tupm.module_permission_id = tmp.id
+          LEFT JOIN t_modules AS m ON tmp.module_id = m.id
+          LEFT JOIN t_permissions AS p ON tmp.permission_id = p.id
+          WHERE u.id = ?
+          ''',
+        [user['id']],
+      );
 
-    final modules =
-        responseModule.map<String>((e) => e['modules'] as String).toList();
+      final response = responseModule.map((e) => e.fields).toList();
 
-    final userWithModules = <String, dynamic>{
-      ...user,
-      'modules': modules,
-    };
+      user.addAll({
+        'username': response.first['username'],
+        'name': response.first['name'],
+      });
 
-// Return UserModel
-    return UserModel.fromDatabase(userWithModules);
+      final modules = response.map((item) {
+        return {
+          'id': item['module_permission_id'],
+          'name': '${item['module_name']}_${item['permission_name']}',
+        };
+      }).toList();
+
+      user['modules'] = modules;
+
+      return user;
+    });
+
+    return UserModel.fromDatabase(response!);
   }
 
   @override

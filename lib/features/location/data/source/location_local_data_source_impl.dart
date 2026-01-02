@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
 import 'dart:async';
 
@@ -15,12 +15,15 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
   final Database _database;
 
   @override
-  Future<LocationModel> createLocation(LocationModel params) async {
+  Future<LocationModel> createLocation(
+    LocationModel params,
+    int userId,
+  ) async {
     try {
       final db = await _database.connection;
 
       final checkName = await db.query(
-        'SELECT id FROM t_locations WHERE name = ?',
+        'SELECT id FROM t_locations WHERE name = ? AND is_active = 1',
         [params.name],
       );
 
@@ -32,8 +35,8 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
 
       final response = await db.query(
         '''
-      INSERT INTO t_locations (name, code, init, location_type, box_type, parent_id, is_storage)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO t_locations (name, code, init, location_type, box_type, parent_id, is_storage, created_by)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       ''',
         [
           params.name?.toUpperCase(),
@@ -43,6 +46,7 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
           params.boxType?.toUpperCase(),
           params.parentId,
           params.isStorage,
+          userId,
         ],
       );
 
@@ -392,6 +396,95 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
 
       return response.map((e) => e.fields['location_type'] as String).toList();
     } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<String> deleteLocation({
+    required int id,
+    required int userId,
+  }) async {
+    try {
+      final db = await _database.connection;
+
+      final response = await db.transaction((txn) async {
+        final responseLocation = await txn.query(
+          'SELECT * FROM t_locations WHERE id = ?',
+          [id],
+        );
+
+        final location = responseLocation.first.fields;
+
+        final checkIsAssetAlreadyInLocation = await txn.query(
+          '''
+          SELECT
+	          a.id AS id,
+	          a.serial_number AS serial_number,
+	          a.asset_code AS asset_code,
+	          a.status AS status,
+	          a.conditions AS conditions,
+	          a.quantity AS quantity,
+	          am.unit AS uom,
+	          am.name AS model,
+	          ac.name AS category,
+	          ab.name AS brand,
+	          ats.name AS types,
+	          c.name AS color,
+	          l2.name AS location,
+	          l1.name AS location_detail,
+	          a.purchase_order AS purchase_order,
+	          a.remarks AS remarks
+          FROM
+          	t_assets AS a
+          LEFT JOIN t_asset_models AS am ON a.asset_model_id  = am.id
+          LEFT JOIN t_asset_brands AS ab ON am.brand_id  = ab.id
+          LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+          LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
+          LEFT JOIN t_colors AS c ON a.color_id  = c.id
+          LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+          LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
+          WHERE l1.id = ? OR l2.id = ?
+          ''',
+          [id, id],
+        );
+
+        if (checkIsAssetAlreadyInLocation.firstOrNull != null) {
+          throw DeleteException(
+            message:
+                'Failed delete location ${location['name']}, there are still assets at that location',
+          );
+        }
+
+        final response = await txn.query(
+          '''
+          UPDATE t_locations
+          SET is_active = 0, updated_by = ?
+          WHERE id = ?
+          ''',
+          [userId, id],
+        );
+
+        if (response.affectedRows == null) {
+          throw DeleteException(
+            message:
+                'Failed delete location ${location['name']}, please try again',
+          );
+        }
+
+        return 'Successfully delete location ${location['name']}';
+      });
+
+      return response!;
+    } on DeleteException {
       rethrow;
     } on MySqlException catch (e) {
       throw DatabaseException(message: e.message);

@@ -37,7 +37,6 @@ class ModulePermissionLocalDataSourceImpl
   Future<ModulePermissionModel> findModulePermissionById(int params) async {
     final db = await _database.connection;
 
-    // 1. Ambil data baris tersebut untuk tahu ini modul apa
     final query = await db.query(
       '''
       SELECT

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
+import 'package:asset_management_api/features/location/domain/usecases/delete_location_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_all_location_type_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_by_query_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_non_storage_use_case.dart';
@@ -48,6 +49,11 @@ Handler locationInjector(Handler handler) {
       .use(
         provider<FindAllLocationTypeUseCase>(
           (_) => findAllLocationTypeUseCase,
+        ),
+      )
+      .use(
+        provider<DeleteLocationUseCase>(
+          (_) => deleteLocationUseCase,
         ),
       );
 }

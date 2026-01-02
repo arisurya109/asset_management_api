@@ -97,6 +97,7 @@ class UserRepositoryImpl implements UserRepository {
       final response = await _source.autoLogin(id);
       return Right(response.toEntity());
     } catch (e) {
+      print(e);
       return Left(CreateFailure(e.toString()));
     }
   }

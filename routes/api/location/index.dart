@@ -9,29 +9,33 @@ import 'package:dart_frog/dart_frog.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   final queryParams = context.request.uri.queryParameters;
-  final query = context.request.uri.query;
 
-  final isStorageParam = queryParams['is_storage'];
   final searchQuery = queryParams['query'];
+  final searchCategory = queryParams['category'];
+  final searchType = queryParams['type'];
 
   if (context.httpMethodPost) {
     return await LocationResponse.createLocation(context);
   }
 
   if (context.httpMethodGet) {
-    if (query == 'type') {
+    if (searchType != null) {
       return await LocationResponse.findAllLocationType(context);
     }
-    if (isStorageParam != null) {
-      if (isStorageParam != '1' && isStorageParam != '0') {
+
+    if (searchCategory != null) {
+      final validCategories = ['STORAGE', 'NON STORAGE'];
+
+      if (!validCategories.contains(searchCategory)) {
         return ResponseHelper.badRequest(
-          description:
-              'Invalid value for "is_storage". Use "1" for true or "0" for false.',
+          description: 'Category not valid. Use STORAGE or NON STORAGE',
         );
       }
+
+      final isStorage = searchCategory == 'STORAGE' ? '1' : '0';
       return await LocationResponse.findLocationByStorage(
         context,
-        isStorageParam,
+        isStorage,
       );
     }
 

@@ -950,13 +950,12 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
           ab.name LIKE ? OR 
           ats.name LIKE ? OR 
           c.name LIKE ? OR 
-          l2.name LIKE ? OR 
           l1.name LIKE ? OR 
           a.purchase_order LIKE ? OR 
           a.remarks LIKE ?
       ''';
 
-        queryArgs = List.filled(13, pattern);
+        queryArgs = List.filled(12, pattern);
       }
 
       final response = await db.query(

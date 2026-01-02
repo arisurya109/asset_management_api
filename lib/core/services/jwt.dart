@@ -11,7 +11,8 @@ abstract class JwtService {
   Future<String> getUsername(RequestContext context);
   Future<bool> checkPermissionUser(
     RequestContext context,
-    int modulePermission,
+    String module,
+    String permission,
   );
 }
 
@@ -79,7 +80,8 @@ class JwtServiceImpl implements JwtService {
   @override
   Future<bool> checkPermissionUser(
     RequestContext context,
-    int modulePermission,
+    String module,
+    String permission,
   ) async {
     final idUser = await getIdUser(context);
 
@@ -87,13 +89,22 @@ class JwtServiceImpl implements JwtService {
 
     final response = await db.query(
       '''
-      SELECT EXISTS (
-        SELECT 1 
-        FROM t_user_permission_module 
-        WHERE user_id = ? AND module_permission_id = ?
-      ) AS access
+      SELECT 
+        CASE 
+          WHEN EXISTS (
+            SELECT 1 
+            FROM t_user_permission_module AS upm
+            JOIN t_module_permission AS mp ON upm.module_permission_id = mp.id
+            JOIN t_modules AS m ON mp.module_id = m.id
+            JOIN t_permissions AS p ON mp.permission_id = p.id
+            WHERE upm.user_id = ? 
+              AND m.module_name = ? 
+              AND p.permission_name = ?
+        ) THEN 1 
+        ELSE 0 
+      END AS access
       ''',
-      [idUser, modulePermission],
+      [idUser, module, permission],
     );
 
     if (response.first.fields['access'] == 0) {

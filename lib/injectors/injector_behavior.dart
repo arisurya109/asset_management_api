@@ -3,15 +3,19 @@
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
 import 'package:asset_management_api/features/asset_brand/asset_brand_export.dart';
+import 'package:asset_management_api/features/asset_brand/domain/usecases/find_asset_brand_by_query_use_case.dart';
 import 'package:asset_management_api/features/asset_categories/asset_category_export.dart';
+import 'package:asset_management_api/features/asset_categories/domain/usecases/find_asset_category_by_query_use_case.dart';
 import 'package:asset_management_api/features/asset_models/asset_model_export.dart';
+import 'package:asset_management_api/features/asset_models/domain/usecases/find_asset_model_by_query_use_case.dart';
 
 import 'package:asset_management_api/features/asset_type/asset_type_export.dart';
 import 'package:asset_management_api/features/assets/assets_export.dart';
-import 'package:asset_management_api/features/assets/domain/usecases/create_asset_transfer_use_case.dart';
-import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_asset_code_and_location_use_case.dart';
+import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_pagination_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_by_query_use_case.dart';
 import 'package:asset_management_api/features/assets/domain/usecases/find_asset_detail_by_id_use_case.dart';
+import 'package:asset_management_api/features/assets/domain/usecases/migration_asset_use_case.dart';
+import 'package:asset_management_api/features/assets/domain/usecases/registration_asset_use_case.dart';
 import 'package:asset_management_api/features/inventory/data/repositories/inventory_repository_impl.dart';
 import 'package:asset_management_api/features/inventory/data/source/inventory_local_data_source.dart';
 import 'package:asset_management_api/features/inventory/data/source/inventory_local_data_source_impl.dart';
@@ -24,6 +28,11 @@ import 'package:asset_management_api/features/location/domain/usecases/find_loca
 import 'package:asset_management_api/features/location/domain/usecases/find_location_storage_use_case.dart';
 import 'package:asset_management_api/features/location/location_export.dart';
 import 'package:asset_management_api/features/module_permission/module_permission_export.dart';
+import 'package:asset_management_api/features/movement/data/repositories/movement_repository_impl.dart';
+import 'package:asset_management_api/features/movement/data/source/movement_local_data_source.dart';
+import 'package:asset_management_api/features/movement/data/source/movement_local_data_source_impl.dart';
+import 'package:asset_management_api/features/movement/domain/repositories/movement_repository.dart';
+import 'package:asset_management_api/features/movement/domain/usecases/create_movement_use_case.dart';
 import 'package:asset_management_api/features/preparation/data/repositories/preparation_repository_impl.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source_impl.dart';
@@ -130,6 +139,8 @@ final UpdateAssetCategoryUseCase updateAssetCategoryUseCase =
     UpdateAssetCategoryUseCase(assetCategoryRepository);
 final FindByIdAssetCategoryUseCase findByIdAssetCategoryUseCase =
     FindByIdAssetCategoryUseCase(assetCategoryRepository);
+final FindAssetCategoryByQueryUseCase findAssetCategoryByQueryUseCase =
+    FindAssetCategoryByQueryUseCase(assetCategoryRepository);
 
 // Asset Brand
 final AssetBrandLocalDataSource assetBrandLocalDataSource =
@@ -144,6 +155,8 @@ final CreateAssetBrandUseCase createAssetBrandUseCase =
     CreateAssetBrandUseCase(assetBrandRepository);
 final UpdateAssetBrandUseCase updateAssetBrandUseCase =
     UpdateAssetBrandUseCase(assetBrandRepository);
+final FindAssetBrandByQueryUseCase findAssetBrandByQueryUseCase =
+    FindAssetBrandByQueryUseCase(assetBrandRepository);
 
 // Asset Model
 final AssetModelLocalDataSource assetModelLocalDataSource =
@@ -158,6 +171,8 @@ final CreateAssetModelUseCase createAssetModelUseCase =
     CreateAssetModelUseCase(assetModelRepository);
 final UpdateAssetModelUseCase updateAssetModelUseCase =
     UpdateAssetModelUseCase(assetModelRepository);
+final FindAssetModelByQueryUseCase findAssetModelByQueryUseCase =
+    FindAssetModelByQueryUseCase(assetModelRepository);
 
 // Location
 final LocationLocalDataSource locationLocalDataSource =
@@ -190,17 +205,16 @@ final AssetsRepository assetsRepository =
     AssetsRepositoryImpl(assetsLocalDataSource);
 final FindAllAssetsUseCase findAllAssetsUseCase =
     FindAllAssetsUseCase(assetsRepository);
-final CreateAssetsUseCase createAssetsUseCase =
-    CreateAssetsUseCase(assetsRepository);
+final MigrationAssetUseCase migrationAssetUseCase =
+    MigrationAssetUseCase(assetsRepository);
+final RegistrationAssetUseCase registrationAssetUseCase =
+    RegistrationAssetUseCase(assetsRepository);
 final FindAssetDetailByIdUseCase findAssetDetailByIdUseCase =
     FindAssetDetailByIdUseCase(assetsRepository);
-final CreateAssetTransferUseCase createAssetTransferUseCase =
-    CreateAssetTransferUseCase(assetsRepository);
-final FindAssetByAssetCodeAndLocationUseCase
-    findAssetByAssetCodeAndLocationUseCase =
-    FindAssetByAssetCodeAndLocationUseCase(assetsRepository);
 final FindAssetByQueryUseCase findAssetByQueryUseCase =
     FindAssetByQueryUseCase(assetsRepository);
+final FindAssetByPaginationUseCase findAssetByPaginationUseCase =
+    FindAssetByPaginationUseCase(assetsRepository);
 
 // Vendors
 final VendorLocalDataSource vendorLocalDataSource =
@@ -322,3 +336,10 @@ final InventoryRepository inventoryRepository =
     InventoryRepositoryImpl(inventoryLocalDataSource);
 final FindInventoryUseCase findInventoryUseCase =
     FindInventoryUseCase(inventoryRepository);
+
+final MovementLocalDataSource movementLocalDataSource =
+    MovementLocalDataSourceImpl(database);
+final MovementRepository movementRepository =
+    MovementRepositoryImpl(movementLocalDataSource);
+final CreateMovementUseCase createMovementUseCase =
+    CreateMovementUseCase(movementRepository);

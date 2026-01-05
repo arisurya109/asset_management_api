@@ -70,7 +70,7 @@ class AssetBrandLocalDataSourceImpl implements AssetBrandLocalDataSource {
         final db = await _database.connection;
 
         final response = await db.query(
-          'SELECT * FROM t_asset_brands',
+          'SELECT * FROM t_asset_brands ORDER BY name ASC',
         );
 
         if (response.firstOrNull == null) {
@@ -165,6 +165,42 @@ class AssetBrandLocalDataSourceImpl implements AssetBrandLocalDataSource {
       });
       return AssetBrandModel.fromDatabase(response!);
     } on UpdateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<AssetBrandModel>> findAssetBrandByQuery(String params) async {
+    try {
+      final db = await _database.connection;
+
+      final pattern = '%${params.trim()}%';
+
+      final response = await db.query(
+        '''
+        SELECT * FROM t_asset_brands
+        WHERE LOWER(name) LIKE LOWER(?) OR LOWER(init) LIKE LOWER(?) 
+        ORDER BY name ASC
+        ''',
+        [pattern, pattern],
+      );
+
+      if (response.firstOrNull == null) {
+        throw NotFoundException(message: 'Not found record asset brand');
+      }
+
+      return response
+          .map((e) => AssetBrandModel.fromDatabase(e.fields))
+          .toList();
+    } on NotFoundException {
       rethrow;
     } on MySqlException catch (e) {
       throw DatabaseException(message: e.message);

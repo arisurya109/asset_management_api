@@ -23,14 +23,40 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
       final db = await _database.connection;
 
       final checkName = await db.query(
-        'SELECT id FROM t_locations WHERE name = ? AND is_active = 1',
-        [params.name],
+        'SELECT id FROM t_locations WHERE UPPER(name) = ? AND is_active = 1',
+        [params.name?.toUpperCase()],
       );
 
       if (checkName.firstOrNull != null) {
         throw CreateException(
           message: 'Failed create location, name already exists',
         );
+      }
+
+      if (params.init.isFilled()) {
+        final checkInit = await db.query(
+          'SELECT id FROM t_locations WHERE UPPER(init) = ? AND is_active = 1',
+          [params.init],
+        );
+
+        if (checkInit.firstOrNull != null) {
+          throw CreateException(
+            message: 'Failed create location, init already exists',
+          );
+        }
+      }
+
+      if (params.code.isFilled()) {
+        final checkCode = await db.query(
+          'SELECT id FROM t_locations WHERE code = ? AND is_active = 1',
+          [int.parse(params.code!)],
+        );
+
+        if (checkCode.firstOrNull != null) {
+          throw CreateException(
+            message: 'Failed create location, code already exists',
+          );
+        }
       }
 
       final response = await db.query(
@@ -113,6 +139,7 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
       LEFT JOIN
         t_locations AS P ON c.parent_id = p.id
       WHERE c.is_active = 1
+      ORDER BY c.name ASC
       ''',
       );
 
@@ -235,20 +262,13 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
       final db = await _database.connection;
 
       var whereClause = '';
-      var queryArgs = <dynamic>[];
+      final pattern = '%${query.trim()}%';
 
-      if (query.trim().isFilled()) {
-        final pattern = '%${query.trim()}%';
-
-        whereClause = '''
+      whereClause = '''
         WHERE 
-          c.name LIKE ? OR 
-          c.init LIKE ? AND
-          c.is_active = 1
+          (c.name LIKE ? OR c.init LIKE ?) 
+          AND c.is_active = ?
         ''';
-
-        queryArgs = List.filled(2, pattern);
-      }
 
       final response = await db.query(
         '''
@@ -267,8 +287,9 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
         LEFT JOIN
           t_locations AS P ON c.parent_id = p.id
         $whereClause
+        ORDER BY c.name ASC
         ''',
-        queryArgs,
+        [pattern, pattern, 1],
       );
 
       if (response.firstOrNull == null) {
@@ -313,6 +334,7 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
       LEFT JOIN
         t_locations AS P ON c.parent_id = p.id
       WHERE c.is_active = 1 AND c.is_storage = 0
+      ORDER BY c.name ASC
       ''',
       );
 
@@ -358,6 +380,7 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
       LEFT JOIN
         t_locations AS P ON c.parent_id = p.id
       WHERE c.is_active = 1 AND c.is_storage = 1
+      ORDER BY c.name ASC
       ''',
       );
 

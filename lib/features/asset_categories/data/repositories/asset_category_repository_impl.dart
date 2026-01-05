@@ -70,4 +70,20 @@ class AssetCategoryRepositoryImpl implements AssetCategoryRepository {
       return Left(UpdateFailure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, List<AssetCategory>>> findAssetCategoryByQuery(
+    String params,
+  ) async {
+    try {
+      final response = await _source.findAssetCategoryByQuery(
+        params,
+      );
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
 }

@@ -10,7 +10,13 @@ class CreateMovementUseCase {
 
   final MovementRepository _repository;
 
-  Future<Either<Failure, String>> call(Movement params) async {
-    return _repository.createMovement(params);
+  Future<Either<Failure, String>> call({
+    required Movement params,
+    required int userId,
+  }) async {
+    return _repository.createMovement(
+      userId: userId,
+      params: params,
+    );
   }
 }

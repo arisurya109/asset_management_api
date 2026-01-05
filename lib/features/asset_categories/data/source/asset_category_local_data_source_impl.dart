@@ -72,7 +72,7 @@ class AssetCategoryLocalDataSourceImpl implements AssetCategoryLocalDataSource {
       final db = await _database.connection;
 
       final response = await db.query(
-        'SELECT * FROM t_asset_categories',
+        'SELECT * FROM t_asset_categories ORDER BY name ASC',
       );
 
       if (response.firstOrNull == null) {
@@ -165,6 +165,46 @@ class AssetCategoryLocalDataSourceImpl implements AssetCategoryLocalDataSource {
 
       return AssetCategoryModel.fromDatabase(response!);
     } on UpdateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<AssetCategoryModel>> findAssetCategoryByQuery(
+    String params,
+  ) async {
+    try {
+      final db = await _database.connection;
+
+      final pattern = '%${params.trim()}%';
+
+      final response = await db.query(
+        '''
+        SELECT * FROM t_asset_categories
+        WHERE LOWER(name) LIKE LOWER(?) OR LOWER(init) LIKE LOWER(?)
+        ORDER BY name ASC
+        ''',
+        [pattern, pattern],
+      );
+
+      print(response);
+
+      if (response.firstOrNull == null) {
+        throw NotFoundException(message: 'Not found record asset category');
+      }
+
+      return response
+          .map((e) => AssetCategoryModel.fromDatabase(e.fields))
+          .toList();
+    } on NotFoundException {
       rethrow;
     } on MySqlException catch (e) {
       throw DatabaseException(message: e.message);

@@ -35,8 +35,10 @@ class AssetModelRepositoryImpl implements AssetModelRepository {
       final response = await _source.findAllAssetModel();
       return Right(response.map((e) => e.toEntity()).toList());
     } on NotFoundException catch (e) {
+      print(e.message);
       return Left(NotFoundFailure(e.message));
     } on DatabaseException catch (e) {
+      print(e.message);
       return Left(NotFoundFailure(e.message));
     }
   }
@@ -66,6 +68,22 @@ class AssetModelRepositoryImpl implements AssetModelRepository {
       return Left(UpdateFailure(e.message));
     } on DatabaseException catch (e) {
       return Left(UpdateFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AssetModel>>> findAssetModelByQuery(
+    String params,
+  ) async {
+    try {
+      final response = await _source.findAssetModelByQuery(
+        params,
+      );
+      return Right(response.map((e) => e.toEntity()).toList());
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     }
   }
 }

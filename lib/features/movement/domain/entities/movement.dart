@@ -5,24 +5,29 @@ import 'package:equatable/equatable.dart';
 
 class Movement extends Equatable {
   Movement({
+    this.assetId,
     this.type,
-    this.assetCode,
     this.destination,
+    this.fromLocation,
     this.status,
     this.conditions,
+    this.remarks,
   });
 
   factory Movement.fromJson(Map<String, dynamic> params) {
     return Movement(
+      assetId: params['asset_id'] != null ? params['asset_id'] as int : null,
       type: params['type'] != null ? params['type'] as String : null,
-      assetCode:
-          params['asset_code'] != null ? params['asset_code'] as String : null,
+      fromLocation: params['from_location'] != null
+          ? params['from_location'] as String
+          : null,
       destination: params['destination'] != null
           ? params['destination'] as String
           : null,
       status: params['status'] != null ? params['status'] as String : null,
       conditions:
           params['conditions'] != null ? params['conditions'] as String : null,
+      remarks: params['remarks'] != null ? params['remarks'] as String : null,
     );
   }
 
@@ -35,11 +40,15 @@ class Movement extends Equatable {
       'DISPOSAL',
     ];
 
+    if (!assetId.toString().isFilled()) return 'Asset Id is required';
     if (!type.isFilled()) return 'Type is required';
     if (!allowedTypes.contains(type)) return 'Invalid type';
-    if (!assetCode.isFilled()) return 'Asset code cannot be empty';
 
     if (!destination.isFilled()) return 'Destination cannot be empty';
+    if (!fromLocation.isFilled()) return 'From Location cannot be empty';
+    if (destination == fromLocation) {
+      return 'The destination is the same as the current location';
+    }
 
     if (type == 'RETURN') {
       if (!status.isFilled()) {
@@ -50,15 +59,27 @@ class Movement extends Equatable {
       }
     }
 
+    if (type == 'PREPARATION') {
+      if (!status.isFilled()) {
+        return 'Status cannot be empty';
+      }
+      if (status != 'USE' && status != 'REPAIR') {
+        return 'Status not valid';
+      }
+    }
+
     return null;
   }
 
+  int? assetId;
   String? type;
-  String? assetCode;
   String? destination;
+  String? fromLocation;
   String? status;
   String? conditions;
+  String? remarks;
 
   @override
-  List<Object?> get props => [type, assetCode, destination, status, conditions];
+  List<Object?> get props =>
+      [assetId, type, fromLocation, destination, status, conditions, remarks];
 }

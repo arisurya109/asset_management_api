@@ -9,4 +9,7 @@ abstract class AssetBrandRepository {
   Future<Either<Failure, AssetBrand>> findByIdAssetBrand(int params);
   Future<Either<Failure, AssetBrand>> createAssetBrand(AssetBrand params);
   Future<Either<Failure, AssetBrand>> updateAssetBrand(AssetBrand params);
+  Future<Either<Failure, List<AssetBrand>>> findAssetBrandByQuery(
+    String params,
+  );
 }

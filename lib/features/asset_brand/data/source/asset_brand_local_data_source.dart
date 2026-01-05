@@ -7,4 +7,5 @@ abstract class AssetBrandLocalDataSource {
   Future<AssetBrandModel> findByIdAssetBrand(int params);
   Future<AssetBrandModel> createAssetBrand(AssetBrandModel params);
   Future<AssetBrandModel> updateAssetBrand(AssetBrandModel params);
+  Future<List<AssetBrandModel>> findAssetBrandByQuery(String params);
 }

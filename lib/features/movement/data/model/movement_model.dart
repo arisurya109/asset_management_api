@@ -6,28 +6,35 @@ import 'package:equatable/equatable.dart';
 class MovementModel extends Equatable {
   MovementModel({
     this.type,
-    this.assetCode,
+    this.assetId,
+    this.fromLocation,
     this.destination,
     this.status,
     this.conditions,
+    this.remarks,
   });
 
   factory MovementModel.fromEntity(Movement params) {
     return MovementModel(
       type: params.type,
-      assetCode: params.assetCode,
+      assetId: params.assetId,
+      fromLocation: params.fromLocation,
       destination: params.destination,
       status: params.status,
       conditions: params.conditions,
+      remarks: params.remarks,
     );
   }
 
+  int? assetId;
   String? type;
-  String? assetCode;
+  String? fromLocation;
   String? destination;
   String? status;
   String? conditions;
+  String? remarks;
 
   @override
-  List<Object?> get props => [type, assetCode, destination, status, conditions];
+  List<Object?> get props =>
+      [type, assetId, fromLocation, destination, status, conditions, remarks];
 }

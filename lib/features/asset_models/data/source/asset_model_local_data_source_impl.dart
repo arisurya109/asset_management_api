@@ -112,6 +112,7 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
       LEFT JOIN t_asset_types AS at ON am.type_id = at.id
       LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
       LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
+      ORDER BY am.name ASC
       ''',
       );
 
@@ -243,6 +244,61 @@ class AssetModelLocalDataSourceImpl implements AssetModelLocalDataSource {
 
       return AssetModelModels.fromDatabase(response!);
     } on UpdateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<AssetModelModels>> findAssetModelByQuery(String params) async {
+    try {
+      final db = await _database.connection;
+
+      final pattern = '%${params.trim()}%';
+
+      final response = await db.query(
+        '''
+        SELECT
+          am.id AS id, 
+          am.name AS name,
+          am.has_serial AS has_serial,
+          am.is_consumable AS is_consumable,
+          am.unit AS unit,
+          am.type_id AS type_id,
+          at.name AS type_name,
+          am.category_id AS category_id,
+          ac.name AS category_name,
+          am.brand_id AS brand_id,
+          ab.name AS brand_name
+        FROM t_asset_models AS am
+        LEFT JOIN t_asset_types AS at ON am.type_id = at.id
+        LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+        LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
+        WHERE
+          LOWER(am.name) LIKE LOWER(?) OR
+          LOWER(at.name) LIKE LOWER(?) OR
+          LOWER(ac.name) LIKE LOWER(?) OR
+          LOWER(ab.name) LIKE LOWER(?)
+        ORDER BY am.name ASC
+        ''',
+        [pattern, pattern, pattern, pattern],
+      );
+
+      if (response.firstOrNull == null) {
+        throw NotFoundException(message: 'Not found record asset model');
+      }
+
+      return response
+          .map((e) => AssetModelModels.fromDatabase(e.fields))
+          .toList();
+    } on NotFoundException {
       rethrow;
     } on MySqlException catch (e) {
       throw DatabaseException(message: e.message);

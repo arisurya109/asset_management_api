@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unnecessary_parenthesis
 
 import 'package:asset_management_api/core/extensions/string_ext.dart';
 import 'package:equatable/equatable.dart';
@@ -44,9 +44,7 @@ class Location extends Equatable {
   }
 
   String? checkCreateRequest() {
-    if (isStorage == null) {
-      return 'Category invalid';
-    } else if (!name.isFilled()) {
+    if (!name.isFilled()) {
       return 'Name cannot be empty';
     } else if (!locationType.isFilled()) {
       return 'Type Cannot be empty';
@@ -55,15 +53,13 @@ class Location extends Equatable {
   }
 
   factory Location.fromRequest(Map<String, dynamic> map) {
+    final locationType = map['location_type'] as String;
+    final isStorage = (locationType == 'WAREHOUSE' ||
+        locationType == 'RACK' ||
+        locationType == 'BOX');
     return Location(
       id: map['id'] != null ? map['id'] as int : null,
-      isStorage: map['category'] != null
-          ? map['category'] as String == 'STORAGE'
-              ? 1
-              : map['category'] as String == 'NON STORAGE'
-                  ? 0
-                  : null
-          : null,
+      isStorage: isStorage ? 1 : 0,
       name: map['name'] != null ? map['name'] as String : null,
       locationType:
           map['location_type'] != null ? map['location_type'] as String : null,

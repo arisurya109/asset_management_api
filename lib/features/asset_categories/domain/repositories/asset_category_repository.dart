@@ -11,4 +11,7 @@ abstract class AssetCategoryRepository {
   Future<Either<Failure, AssetCategory>> findByIdAssetCategory(
     int params,
   );
+  Future<Either<Failure, List<AssetCategory>>> findAssetCategoryByQuery(
+    String params,
+  );
 }

@@ -4,12 +4,12 @@ import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/assets/assets_export.dart';
 import 'package:dartz/dartz.dart';
 
-class CreateAssetsUseCase {
-  CreateAssetsUseCase(this._repository);
+class RegistrationAssetUseCase {
+  RegistrationAssetUseCase(this._repository);
 
   final AssetsRepository _repository;
 
   Future<Either<Failure, AssetsResponse>> call(AssetsRequest params) async {
-    return _repository.createAssets(params);
+    return _repository.registrationAsset(params);
   }
 }

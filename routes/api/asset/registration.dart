@@ -6,13 +6,9 @@ import 'package:asset_management_api/core/helpers/response_helper.dart';
 import 'package:asset_management_api/features/assets/assets_export.dart';
 import 'package:dart_frog/dart_frog.dart';
 
-Future<Response> onRequest(
-  RequestContext context,
-  String id,
-) async {
-  if (context.httpMethodGet) {
-    return await AssetsResponseUser.findAssetDetailById(context, id);
+Future<Response> onRequest(RequestContext context) async {
+  if (context.httpMethodPost) {
+    return await AssetsResponseUser.registrationAsset(context);
   }
-
   return ResponseHelper.methodNotAllowed(description: ErrorMsg.methodAllowed);
 }

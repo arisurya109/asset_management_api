@@ -9,6 +9,7 @@ import 'package:asset_management_api/core/services/jwt.dart';
 import 'package:asset_management_api/features/asset_brand/domain/entities/asset_brand.dart';
 import 'package:asset_management_api/features/asset_brand/domain/usecases/create_asset_brand_use_case.dart';
 import 'package:asset_management_api/features/asset_brand/domain/usecases/find_all_asset_brand_use_case.dart';
+import 'package:asset_management_api/features/asset_brand/domain/usecases/find_asset_brand_by_query_use_case.dart';
 import 'package:asset_management_api/features/asset_brand/domain/usecases/find_by_id_asset_brand_use_case.dart';
 import 'package:asset_management_api/features/asset_brand/domain/usecases/update_asset_brand_use_case.dart';
 import 'package:dart_frog/dart_frog.dart';
@@ -21,8 +22,16 @@ class AssetBrandResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'add',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<CreateAssetBrandUseCase>();
       final params = await context.requestJSON();
@@ -45,8 +54,16 @@ class AssetBrandResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'view',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindAllAssetBrandUseCase>();
 
@@ -71,8 +88,16 @@ class AssetBrandResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'update',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<UpdateAssetBrandUseCase>();
       final params = await context.requestJSON();
@@ -103,8 +128,16 @@ class AssetBrandResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'view',
+    );
+
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindByIdAssetBrandUseCase>();
       final paramsId = await context.parseUri(id);
@@ -117,6 +150,40 @@ class AssetBrandResponse {
           code: HttpStatus.ok,
           status: 'Successfully get asset brand',
           body: r.toResponse(),
+        ),
+      );
+    }
+  }
+
+  static Future<Response> findAssetBrandByQuery(
+    RequestContext context,
+    String params,
+  ) async {
+    final jwt = context.read<JwtService>();
+
+    final validateToken = await jwt.verifyToken(context);
+
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'view',
+    );
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
+    } else {
+      final usecase = context.read<FindAssetBrandByQueryUseCase>();
+
+      final response = await usecase(params);
+
+      return response.fold(
+        (l) => ResponseHelper.badRequest(description: l.message!),
+        (r) => ResponseHelper.json(
+          code: HttpStatus.ok,
+          status: 'Successfully get asset brand by query',
+          body: r.map((e) => e.toResponse()).toList(),
         ),
       );
     }

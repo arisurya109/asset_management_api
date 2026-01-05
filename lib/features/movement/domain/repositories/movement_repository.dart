@@ -5,5 +5,8 @@ import 'package:asset_management_api/features/movement/domain/entities/movement.
 import 'package:dartz/dartz.dart';
 
 abstract class MovementRepository {
-  Future<Either<Failure, String>> createMovement(Movement params);
+  Future<Either<Failure, String>> createMovement({
+    required Movement params,
+    required int userId,
+  });
 }

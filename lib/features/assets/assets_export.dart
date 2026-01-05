@@ -6,6 +6,5 @@ export 'data/source/assets_local_data_source_impl.dart';
 export 'domain/entities/assets_request.dart';
 export 'domain/entities/assets_response.dart';
 export 'domain/repositories/asset_repository.dart';
-export 'domain/usecases/create_assets_use_case.dart';
 export 'domain/usecases/find_all_assets_use_case.dart';
 export 'presentation/response/assets_response_user.dart';

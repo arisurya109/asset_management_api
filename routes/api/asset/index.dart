@@ -11,15 +11,16 @@ Future<Response> onRequest(RequestContext context) async {
   if (context.httpMethodGet) {
     final queryParams = context.request.uri.queryParameters;
 
-    final assetCode = queryParams['assetCode'];
-    final location = queryParams['location'];
     final query = queryParams['query'];
+    final limit = queryParams['limit'];
+    final page = queryParams['page'];
 
-    if (assetCode != null && location != null) {
-      return await AssetsResponseUser.findAssetByAssetCodeAndLocation(
+    if (limit.isFilled() && page.isFilled()) {
+      return await AssetsResponseUser.findAssetByPagination(
         context,
-        assetCode,
-        location,
+        query,
+        limit!,
+        page!,
       );
     }
 
@@ -28,8 +29,6 @@ Future<Response> onRequest(RequestContext context) async {
     }
 
     return await AssetsResponseUser.findAllAssets(context);
-  } else if (context.httpMethodPost) {
-    return await AssetsResponseUser.createAssets(context);
   }
   return ResponseHelper.methodNotAllowed(description: ErrorMsg.methodAllowed);
 }

@@ -7,4 +7,5 @@ abstract class AssetCategoryLocalDataSource {
   Future<List<AssetCategoryModel>> findAllAssetCategory();
   Future<AssetCategoryModel> updateAssetCategory(AssetCategoryModel params);
   Future<AssetCategoryModel> findByIdAssetCategory(int params);
+  Future<List<AssetCategoryModel>> findAssetCategoryByQuery(String params);
 }

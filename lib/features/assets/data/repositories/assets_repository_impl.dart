@@ -7,6 +7,7 @@ import 'package:asset_management_api/features/assets/data/source/assets_local_da
 import 'package:asset_management_api/features/assets/domain/entities/assets_detail.dart';
 import 'package:asset_management_api/features/assets/domain/entities/assets_request.dart';
 import 'package:asset_management_api/features/assets/domain/entities/assets_response.dart';
+import 'package:asset_management_api/features/assets/domain/entities/assets_response_pagination.dart';
 import 'package:asset_management_api/features/assets/domain/repositories/asset_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -28,24 +29,6 @@ class AssetsRepositoryImpl implements AssetsRepository {
   }
 
   @override
-  Future<Either<Failure, AssetsResponse>> createAssets(
-    AssetsRequest params,
-  ) async {
-    try {
-      final response = await _source.createAssets(
-        AssetsRequestModel.fromEntity(params),
-      );
-      return Right(response.toEntity());
-    } on DatabaseException catch (e) {
-      return Left(CreateFailure(e.message));
-    } on NotFoundException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    } on CreateException catch (e) {
-      return Left(CreateFailure(e.message));
-    }
-  }
-
-  @override
   Future<Either<Failure, List<AssetsDetail>>> findAssetDetailById(
     int params,
   ) async {
@@ -54,56 +37,6 @@ class AssetsRepositoryImpl implements AssetsRepository {
       return Right(response.map((e) => e.toEntity()).toList());
     } on DatabaseException catch (e) {
       return Left(NotFoundFailure(e.message));
-    } on NotFoundException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, AssetsResponse>> createAssetTransfer({
-    required int movementById,
-    required int assetId,
-    required String movementType,
-    required int fromLocationId,
-    required int toLocationId,
-    int quantity = 1,
-    String? notes,
-  }) async {
-    try {
-      final response = await _source.createAssetTransfer(
-        assetId: assetId,
-        movementById: movementById,
-        movementType: movementType,
-        fromLocationId: fromLocationId,
-        toLocationId: toLocationId,
-        quantity: quantity,
-        notes: notes,
-      );
-      return Right(response.toEntity());
-    } on DatabaseException catch (e) {
-      return Left(CreateFailure(e.message));
-    } on CreateException catch (e) {
-      return Left(CreateFailure(e.message));
-    } on NotFoundException catch (e) {
-      return Left(NotFoundFailure(e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, AssetsResponse>> findAssetByAssetCodeAndLocation({
-    required String assetCode,
-    required String location,
-  }) async {
-    try {
-      final response = await _source.findAssetByAssetCodeAndLocation(
-        assetCode: assetCode,
-        location: location,
-      );
-      return Right(response.toEntity());
-    } on DatabaseException catch (e) {
-      return Left(CreateFailure(e.message));
-    } on CreateException catch (e) {
-      return Left(CreateFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
     }
@@ -122,6 +55,58 @@ class AssetsRepositoryImpl implements AssetsRepository {
       return Left(CreateFailure(e.message));
     } on CreateException catch (e) {
       return Left(CreateFailure(e.message));
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AssetsResponse>> migrationAsset(
+    AssetsRequest params,
+  ) async {
+    try {
+      final response = await _source.migrationAsset(
+        AssetsRequestModel.fromEntity(params),
+      );
+      return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
+    } on CreateException catch (e) {
+      return Left(CreateFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AssetsResponse>> registrationAsset(
+    AssetsRequest params,
+  ) async {
+    try {
+      final response = await _source.registrationAsset(
+        AssetsRequestModel.fromEntity(params),
+      );
+      return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      return Left(CreateFailure(e.message));
+    } on CreateException catch (e) {
+      return Left(CreateFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AssetsResponsePagination>> findAssetByPagination({
+    required int page,
+    required int limit,
+    String? query,
+  }) async {
+    try {
+      final response = await _source.findAssetByPagination(
+        limit: limit,
+        page: page,
+        query: query,
+      );
+      return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
     }

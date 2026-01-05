@@ -9,4 +9,6 @@ abstract class AssetModelRepository {
   Future<Either<Failure, AssetModel>> createAssetModel(AssetModel params);
   Future<Either<Failure, AssetModel>> updateAssetModel(AssetModel params);
   Future<Either<Failure, AssetModel>> findByIdAssetModel(int params);
+  Future<Either<Failure, List<AssetModel>>> findAssetModelByQuery(
+      String params);
 }

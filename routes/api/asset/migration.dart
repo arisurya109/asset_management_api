@@ -6,12 +6,9 @@ import 'package:asset_management_api/core/helpers/response_helper.dart';
 import 'package:asset_management_api/features/assets/assets_export.dart';
 import 'package:dart_frog/dart_frog.dart';
 
-Future<Response> onRequest(
-  RequestContext context,
-  String id,
-) async {
+Future<Response> onRequest(RequestContext context) async {
   if (context.httpMethodPost) {
-    return await AssetsResponseUser.createAssetTransfer(context, id);
+    return await AssetsResponseUser.migrationAsset(context);
   }
   return ResponseHelper.methodNotAllowed(description: ErrorMsg.methodAllowed);
 }

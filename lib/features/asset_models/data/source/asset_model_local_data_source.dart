@@ -7,4 +7,5 @@ abstract class AssetModelLocalDataSource {
   Future<AssetModelModels> createAssetModel(AssetModelModels params);
   Future<AssetModelModels> updateAssetModel(AssetModelModels params);
   Future<AssetModelModels> findByIdAssetModel(int params);
+  Future<List<AssetModelModels>> findAssetModelByQuery(String params);
 }

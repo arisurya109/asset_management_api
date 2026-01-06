@@ -272,6 +272,10 @@ class MovementLocalDataSourceImpl implements MovementLocalDataSource {
           [params.fromLocation, 1, 1],
         );
 
+        if (rFromLocation.firstOrNull == null) {
+          throw CreateException(message: 'Current location asset cannot valid');
+        }
+
         final rDestination = await txn.query(
           'SELECT * FROM t_locations WHERE UPPER(name) = UPPER(?) AND is_active = ? LIMIT 1',
           [params.destination, 1],
@@ -315,7 +319,6 @@ class MovementLocalDataSourceImpl implements MovementLocalDataSource {
             1,
           ],
         );
-
         if (responseMovement.insertId == null) {
           throw CreateException(
             message:
@@ -333,7 +336,6 @@ class MovementLocalDataSourceImpl implements MovementLocalDataSource {
         );
 
         if (responseUpdate.affectedRows == null) {
-          txn.rollback();
           throw CreateException(
             message:
                 'Failed transfer asset ${asset['asset_code']} to ${params.destination}',

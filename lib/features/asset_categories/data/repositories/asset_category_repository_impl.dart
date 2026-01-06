@@ -35,8 +35,10 @@ class AssetCategoryRepositoryImpl implements AssetCategoryRepository {
       final response = await _source.findAllAssetCategory();
       return Right(response.map((e) => e.toEntity()).toList());
     } on NotFoundException catch (e) {
+      print(e);
       return Left(NotFoundFailure(e.message));
     } on DatabaseException catch (e) {
+      print(e);
       return Left(NotFoundFailure(e.message));
     }
   }

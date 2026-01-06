@@ -389,8 +389,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
 
       final response = await db.transaction((txn) async {
         // Serial Number Not Null or Not Empty
-
-        if (params.serialNumber!.isNotEmpty && params.uom == 1) {
+        if (params.serialNumber.isFilled()) {
           final checkSerialNumber = await txn.query(
             'SELECT COUNT(id) FROM t_assets WHERE serial_number = ?',
             [params.serialNumber],

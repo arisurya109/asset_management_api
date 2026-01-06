@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
+// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, unnecessary_await_in_return, non_constant_identifier_names
 
 import 'dart:async';
 
@@ -6,6 +6,7 @@ import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/extensions/string_ext.dart';
 import 'package:asset_management_api/features/location/data/model/location_model.dart';
+import 'package:asset_management_api/features/location/data/model/location_pagination_model.dart';
 import 'package:asset_management_api/features/location/data/source/location_local_data_source.dart';
 import 'package:mysql1/mysql1.dart';
 
@@ -508,6 +509,161 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
 
       return response!;
     } on DeleteException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<LocationPaginationModel> findLocationByPagination({
+    required int page,
+    required int limit,
+    String? query,
+  }) async {
+    if (query.isFilled()) {
+      return await _PaginationWithQuery(page, limit, query!);
+    } else {
+      return await _PaginationWithoutQuery(page, limit);
+    }
+  }
+
+  Future<LocationPaginationModel> _PaginationWithQuery(
+    int page,
+    int limit,
+    String query,
+  ) async {
+    try {
+      final db = await _database.connection;
+      final offset = (page - 1) * limit;
+
+      var whereClause = 'WHERE c.is_active = 1';
+      var queryArgs = <dynamic>[];
+
+      if (query.trim().isNotEmpty) {
+        final pattern = '%${query.trim()}%';
+        whereClause += ' AND (c.name LIKE ? OR c.init LIKE ?)';
+        queryArgs = [pattern, pattern];
+      }
+
+      final totalResponse = await db.query(
+        '''
+      SELECT COUNT(*) AS total 
+      FROM t_locations AS c
+      $whereClause
+      ''',
+        queryArgs,
+      );
+
+      final totalData = totalResponse.first.fields['total'] as int? ?? 0;
+
+      final dataArgs = [...queryArgs, limit, offset];
+      final response = await db.query(
+        '''
+      SELECT
+        c.id AS id,
+        c.name AS name,
+        c.code AS code,
+        c.init AS init,
+        c.location_type AS location_type,
+        c.box_type AS box_type,
+        c.parent_id AS parent_id,
+        p.name AS parent_name,
+        c.is_storage AS is_storage
+      FROM
+        t_locations AS c
+      LEFT JOIN
+        t_locations AS p ON c.parent_id = p.id
+      $whereClause
+      ORDER BY c.name ASC
+      LIMIT ? OFFSET ?
+      ''',
+        dataArgs,
+      );
+
+      final data =
+          // ignore: inference_failure_on_collection_literal
+          response.isEmpty ? [] : response.map((e) => e.fields).toList();
+
+      final result = {
+        'total_data': totalData,
+        'current_page': page,
+        'last_page': totalData > 0 ? (totalData / limit).ceil() : 1,
+        'limit': limit,
+        'data': data,
+      };
+
+      return LocationPaginationModel.fromDatabase(result);
+    } on NotFoundException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
+  }
+
+  Future<LocationPaginationModel> _PaginationWithoutQuery(
+    int page,
+    int limit,
+  ) async {
+    try {
+      final db = await _database.connection;
+
+      final offset = (page - 1) * limit;
+
+      final response = await db.query(
+        '''
+      SELECT
+        c.id AS id,
+        c.name AS name,
+        c.code AS code,
+        c.init AS init,
+        c.location_type AS location_type,
+        c.box_type AS box_type,
+        c.parent_id AS parent_id,
+        p.name AS parent_name,
+        c.is_storage AS is_storage
+      FROM
+        t_locations AS c
+      LEFT JOIN
+        t_locations AS P ON c.parent_id = p.id
+      WHERE c.is_active = ?
+      ORDER BY c.name ASC
+      LIMIT ? OFFSET ?
+      ''',
+        [1, limit, offset],
+      );
+
+      final responseTotalData = await db.query(
+        'SELECT COUNT(*) AS total FROM t_locations WHERE is_active = 1',
+      );
+
+      final totalData = responseTotalData.first.fields['total'] as int;
+      final currentPage = page;
+      final lastPage = (totalData / limit).ceil();
+      final data = response.map((e) => e.fields).toList();
+
+      final datas = {
+        'total_data': totalData,
+        'current_page': currentPage,
+        'last_page': lastPage,
+        'limit': limit,
+        'data': data,
+      };
+
+      return LocationPaginationModel.fromDatabase(datas);
+    } on NotFoundException {
       rethrow;
     } on MySqlException catch (e) {
       throw DatabaseException(message: e.message);

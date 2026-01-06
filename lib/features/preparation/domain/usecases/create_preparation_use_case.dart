@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation.dart';
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
@@ -13,8 +11,6 @@ class CreatePreparationUseCase {
   Future<Either<Failure, Preparation>> call({
     required Preparation params,
   }) async {
-    return _repository.createPreparation(
-      params: params,
-    );
+    return _repository.createPreparation(params: params);
   }
 }

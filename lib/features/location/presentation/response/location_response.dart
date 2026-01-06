@@ -12,6 +12,7 @@ import 'package:asset_management_api/features/location/domain/usecases/delete_lo
 import 'package:asset_management_api/features/location/domain/usecases/find_all_location_type_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_all_location_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_by_id_location_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_location_by_pagination_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_by_query_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_non_storage_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_storage_use_case.dart';
@@ -314,6 +315,47 @@ class LocationResponse {
         (r) => ResponseHelper.json(
           code: HttpStatus.ok,
           status: r,
+        ),
+      );
+    }
+  }
+
+  static Future<Response> findLocationByPagination(
+    RequestContext context,
+    String? query,
+    String limit,
+    String page,
+  ) async {
+    final jwt = context.read<JwtService>();
+
+    final validateToken = await jwt.verifyToken(context);
+
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'master',
+      'view',
+    );
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
+    } else {
+      final usecase = context.read<FindLocationByPaginationUseCase>();
+
+      final paramsLimit = await context.parseUri(limit);
+      final paramsPage = await context.parseUri(page);
+
+      final response = await usecase(
+        limit: paramsLimit,
+        page: paramsPage,
+        query: query,
+      );
+
+      return response.fold(
+        (l) => ResponseHelper.badRequest(description: l.message!),
+        (r) => Response.json(
+          body: r.toJson(),
         ),
       );
     }

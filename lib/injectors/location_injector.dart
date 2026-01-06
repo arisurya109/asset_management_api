@@ -2,6 +2,7 @@
 
 import 'package:asset_management_api/features/location/domain/usecases/delete_location_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_all_location_type_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_location_by_pagination_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_by_query_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_non_storage_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_storage_use_case.dart';
@@ -54,6 +55,11 @@ Handler locationInjector(Handler handler) {
       .use(
         provider<DeleteLocationUseCase>(
           (_) => deleteLocationUseCase,
+        ),
+      )
+      .use(
+        provider<FindLocationByPaginationUseCase>(
+          (_) => findLocationByPaginationUseCase,
         ),
       );
 }

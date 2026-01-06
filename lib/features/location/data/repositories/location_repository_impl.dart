@@ -5,6 +5,7 @@ import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/location/data/model/location_model.dart';
 import 'package:asset_management_api/features/location/data/source/location_local_data_source.dart';
 import 'package:asset_management_api/features/location/domain/entities/location.dart';
+import 'package:asset_management_api/features/location/domain/entities/location_pagination.dart';
 import 'package:asset_management_api/features/location/domain/repositories/location_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -131,6 +132,28 @@ class LocationRepositoryImpl implements LocationRepository {
       return Left(DeleteFailure(e.message));
     } on DeleteException catch (e) {
       return Left(DeleteFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, LocationPagination>> findLocationByPagination({
+    required int page,
+    required int limit,
+    String? query,
+  }) async {
+    try {
+      final response = await _source.findLocationByPagination(
+        limit: limit,
+        page: page,
+        query: query,
+      );
+      return Right(response.toEntity());
+    } on DatabaseException catch (e) {
+      print(e.message);
+      return Left(NotFoundFailure(e.message));
+    } on NotFoundException catch (e) {
+      print(e.message);
+      return Left(NotFoundFailure(e.message));
     }
   }
 }

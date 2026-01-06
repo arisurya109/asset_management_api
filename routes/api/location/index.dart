@@ -13,6 +13,8 @@ Future<Response> onRequest(RequestContext context) async {
   final searchQuery = queryParams['query'];
   final searchCategory = queryParams['category'];
   final searchType = queryParams['type'];
+  final limit = queryParams['limit'];
+  final page = queryParams['page'];
 
   if (context.httpMethodPost) {
     return await LocationResponse.createLocation(context);
@@ -36,6 +38,15 @@ Future<Response> onRequest(RequestContext context) async {
       return await LocationResponse.findLocationByStorage(
         context,
         isStorage,
+      );
+    }
+
+    if (limit.isFilled() && page.isFilled()) {
+      return await LocationResponse.findLocationByPagination(
+        context,
+        searchQuery,
+        limit!,
+        page!,
       );
     }
 

@@ -5,12 +5,20 @@ import 'package:asset_management_api/features/preparation/domain/entities/prepar
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class FindPreparationByIdUseCase {
-  FindPreparationByIdUseCase(this._repository);
+class FindPreparationByPaginationUseCase {
+  FindPreparationByPaginationUseCase(this._repository);
 
   final PreparationRepository _repository;
 
-  Future<Either<Failure, Preparation>> call({required int params}) async {
-    return _repository.findPreparationById(params: params);
+  Future<Either<Failure, List<Preparation>>> call({
+    required int page,
+    required int limit,
+    String? query,
+  }) async {
+    return _repository.findPreparationByPagination(
+      page: page,
+      limit: limit,
+      query: query,
+    );
   }
 }

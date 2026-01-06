@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:asset_management_api/features/location/data/model/location_model.dart';
+import 'package:asset_management_api/features/location/data/model/location_pagination_model.dart';
 
 abstract class LocationLocalDataSource {
   Future<List<LocationModel>> findAllLocation();
@@ -17,5 +18,10 @@ abstract class LocationLocalDataSource {
   Future<String> deleteLocation({
     required int id,
     required int userId,
+  });
+  Future<LocationPaginationModel> findLocationByPagination({
+    required int page,
+    required int limit,
+    String? query,
   });
 }

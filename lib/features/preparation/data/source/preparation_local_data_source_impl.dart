@@ -1,11 +1,9 @@
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: unnecessary_await_in_return
 
 import 'dart:async';
 
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
-import 'package:asset_management_api/core/helpers/asset.dart';
-import 'package:asset_management_api/features/location/data/model/location_model.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_model.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
 import 'package:mysql1/mysql1.dart';
@@ -16,99 +14,49 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
   final Database _database;
 
   @override
-  Future<PreparationModel> createPreparation(PreparationModel params) async {
+  Future<PreparationModel> createPreparation({
+    required PreparationModel params,
+  }) async {
+    if (params.type == 'INTERNAL') {
+      return await _createPreparationInternal(params);
+    } else {
+      return await _createPreparationInternal(params);
+    }
+  }
+
+  Future<PreparationModel> _createPreparationInternal(
+    PreparationModel params,
+  ) async {
     try {
       final db = await _database.connection;
 
       final response = await db.transaction((txn) async {
-        final templateCode = AssetHelper.templateCode;
-
-        final response = await txn.query(
-          '''
-            SELECT COUNT(id) FROM t_preparations
-            WHERE DATE(created_at) = CURDATE()
-            ''',
+        final checkDestination = await txn.query(
+          'SELECT * FROM t_locations WHERE id = ? AND is_active = 1 LIMIT 1',
+          [params.destinationId],
         );
 
-        const width = 4;
-
-        final count = response.first.fields['COUNT(id)'] as int;
-        final lastCode = (count + 1).toString().padLeft(width, '0');
-
-        final assetCode = 'AP-$templateCode$lastCode';
-
-        final newPreparation = await txn.query(
-          '''
-          INSERT INTO t_preparations
-            (code, types, 
-            destination_id, created_id, 
-            worker_id, approved_id, 
-            notes)
-          VALUES
-            (?, ?, ?, ?, ?, ?, ?, ?)
-          ''',
-          [
-            assetCode,
-            params.type,
-            params.destinationId,
-            params.createdId,
-            params.workerId,
-            params.approvedId,
-            params.notes,
-          ],
-        );
-
-        if (newPreparation.insertId == null || newPreparation.insertId == 0) {
-          throw CreateException(
-            message: 'Failed to create preparation, please try again',
+        if (checkDestination.firstOrNull == null) {
+          throw NotFoundException(
+            message: 'An error occurred, destination not found',
           );
-        } else {
-          final responsePreparation = await txn.query(
-            '''
-            SELECT
-            	t.id AS id,
-            	t.code AS code,
-            	t.types AS type, 
-            	t.status AS status,
-            	t.destination_id AS destination_id,
-            	l1.name AS destination,
-            	t.created_id AS created_id,
-            	u1.name AS created_by,
-            	t.worker_id AS worker_id,
-            	u2.name AS worker_by,
-            	t.approved_id AS approved_id,
-            	u3.name AS approved_by,
-            	t.location_id AS location_id,
-            	l2.name AS location,
-            	t.total_box AS total_box,
-            	t.notes AS notes,
-            	t.created_at AS created_at
-            FROM
-            	t_preparations AS t
-            LEFT JOIN t_locations AS l1 ON t.destination_id = l1.id
-            LEFT JOIN t_users AS u1 ON t.created_id = u1.id
-            LEFT JOIN t_users AS u2 ON t.worker_id = u2.id
-            LEFT JOIN t_users AS u3 ON t.approved_id = u3.id
-            LEFT JOIN t_locations AS l2 ON t.location_id = l2.id
-            WHERE t.id = ?
-            ''',
-            [newPreparation.insertId],
-          );
-
-          await txn.query(
-            '''
-            INSERT t_preparation_logs
-              (preparation_id, status_to, changed_by)
-            VALUES
-              (?, ?, ?)
-            ''',
-            [newPreparation.insertId, 'DRAFT', params.createdId],
-          );
-
-          return responsePreparation.first.fields;
         }
+
+        final destinationMap = checkDestination.first.fields;
+
+        if (destinationMap['is_storage'] == 1 ||
+            destinationMap['location_type'] == 'VENDOR') {
+          throw CreateException(
+            message: 'An error occurred, destination cannot valid',
+          );
+        }
+
+        return destinationMap;
       });
-      return PreparationModel.fromDatabase(response!);
+
+      return PreparationModel.fromJson(response!);
+    } on NotFoundException {
+      rethrow;
     } on CreateException {
       rethrow;
     } on MySqlException catch (e) {
@@ -123,361 +71,22 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
   }
 
   @override
-  Future<List<PreparationModel>> findAllPreparation() async {
-    try {
-      final db = await _database.connection;
-
-      final responsePreparation = await db.query(
-        '''
-        SELECT
-        	t.id AS id,
-        	t.code AS code,
-        	t.types AS type, 
-        	t.status AS status,
-        	t.destination_id AS destination_id,
-        	l1.name AS destination,
-        	t.created_id AS created_id,
-        	u1.name AS created_by,
-        	t.worker_id AS worker_id,
-        	u2.name AS worker_by,
-        	t.approved_id AS approved_id,
-        	u3.name AS approved_by,
-        	t.location_id AS location_id,
-        	l2.name AS location,
-        	t.total_box AS total_box,
-        	t.notes AS notes,
-        	t.created_at AS created_at
-        FROM
-        	t_preparations AS t
-        LEFT JOIN t_locations AS l1 ON t.destination_id = l1.id
-        LEFT JOIN t_users AS u1 ON t.created_id = u1.id
-        LEFT JOIN t_users AS u2 ON t.worker_id = u2.id
-        LEFT JOIN t_users AS u3 ON t.approved_id = u3.id
-        LEFT JOIN t_locations AS l2 ON t.location_id = l2.id
-        ''',
-      );
-
-      if (responsePreparation.firstOrNull == null ||
-          responsePreparation.isEmpty) {
-        throw NotFoundException(message: 'Preparation is empty');
-      }
-
-      return responsePreparation
-          .map((e) => PreparationModel.fromDatabase(e.fields))
-          .toList();
-    } on NotFoundException {
-      rethrow;
-    } on MySqlException catch (e) {
-      throw DatabaseException(message: e.message);
-    } on TimeoutException {
-      throw DatabaseException(message: 'Database Request time out');
-    } on FormatException catch (e) {
-      throw DatabaseException(message: e.message);
-    } catch (e) {
-      throw DatabaseException(message: e.toString());
-    }
+  Future<List<PreparationModel>> findPreparationByPagination(
+      {required int page, required int limit, String? query}) {
+    // TODO: implement findPreparationByPagination
+    throw UnimplementedError();
   }
 
   @override
-  Future<PreparationModel> findPreparationById(int params) async {
-    try {
-      final db = await _database.connection;
-
-      final responsePreparation = await db.query(
-        '''
-        SELECT
-        	t.id AS id,
-        	t.code AS code,
-        	t.types AS type, 
-        	t.status AS status,
-        	t.destination_id AS destination_id,
-        	l1.name AS destination,
-        	t.created_id AS created_id,
-        	u1.name AS created_by,
-        	t.worker_id AS worker_id,
-        	u2.name AS worker_by,
-        	t.approved_id AS approved_id,
-        	u3.name AS approved_by,
-        	t.location_id AS location_id,
-        	l2.name AS location,
-        	t.total_box AS total_box,
-        	t.notes AS notes,
-        	t.created_at AS created_at
-        FROM
-        	t_preparations AS t
-        LEFT JOIN t_locations AS l1 ON t.destination_id = l1.id
-        LEFT JOIN t_users AS u1 ON t.created_id = u1.id
-        LEFT JOIN t_users AS u2 ON t.worker_id = u2.id
-        LEFT JOIN t_users AS u3 ON t.approved_id = u3.id
-        LEFT JOIN t_locations AS l2 ON t.location_id = l2.id
-        WHERE t.id = ?
-        ''',
-        [params],
-      );
-
-      if (responsePreparation.firstOrNull == null ||
-          responsePreparation.isEmpty) {
-        throw NotFoundException(message: 'Preparation not found');
-      }
-
-      return PreparationModel.fromDatabase(responsePreparation.first.fields);
-    } on NotFoundException {
-      rethrow;
-    } on MySqlException catch (e) {
-      throw DatabaseException(message: e.message);
-    } on TimeoutException {
-      throw DatabaseException(message: 'Database Request time out');
-    } on FormatException catch (e) {
-      throw DatabaseException(message: e.message);
-    } catch (e) {
-      throw DatabaseException(message: e.toString());
-    }
+  Future<List<String>> getPreparationTypes() {
+    // TODO: implement getPreparationTypes
+    throw UnimplementedError();
   }
 
   @override
-  Future<List<PreparationModel>> findPreparationByCodeOrDestination({
-    required String params,
-  }) async {
-    try {
-      final db = await _database.connection;
-
-      final searchPattern = '%$params%';
-
-      final responsePreparation = await db.query(
-        '''
-        SELECT
-        	t.id AS id,
-        	t.code AS code,
-        	t.types AS type, 
-        	t.status AS status,
-        	t.destination_id AS destination_id,
-        	l1.name AS destination,
-        	t.created_id AS created_id,
-        	u1.name AS created_by,
-        	t.worker_id AS worker_id,
-        	u2.name AS worker_by,
-        	t.approved_id AS approved_id,
-        	u3.name AS approved_by,
-        	t.location_id AS location_id,
-        	l2.name AS location,
-        	t.total_box AS total_box,
-        	t.notes AS notes,
-        	t.created_at AS created_at
-        FROM
-        	t_preparations AS t
-        LEFT JOIN t_locations AS l1 ON t.destination_id = l1.id
-        LEFT JOIN t_users AS u1 ON t.created_id = u1.id
-        LEFT JOIN t_users AS u2 ON t.worker_id = u2.id
-        LEFT JOIN t_users AS u3 ON t.approved_id = u3.id
-        LEFT JOIN t_locations AS l2 ON t.location_id = l2.id
-        WHERE 
-          t.code LIKE ? OR l1.name LIKE ?
-        ORDER BY t.created_at DESC
-        ''',
-        [searchPattern, searchPattern],
-      );
-
-      if (responsePreparation.firstOrNull == null ||
-          responsePreparation.isEmpty) {
-        throw NotFoundException(message: 'Preparation not found');
-      }
-
-      return responsePreparation
-          .map((e) => PreparationModel.fromDatabase(e.fields))
-          .toList();
-    } on NotFoundException {
-      rethrow;
-    } on MySqlException catch (e) {
-      throw DatabaseException(message: e.message);
-    } on TimeoutException {
-      throw DatabaseException(message: 'Database Request time out');
-    } on FormatException catch (e) {
-      throw DatabaseException(message: e.message);
-    } catch (e) {
-      throw DatabaseException(message: e.toString());
-    }
-  }
-
-  @override
-  Future<PreparationModel> updateStatusPreparation({
-    required int id,
-    required String status,
-    required int userId,
-    int? totalBox,
-    int? locationId,
-    String? remarks,
-  }) async {
-    try {
-      final db = await _database.connection;
-
-      final response = await db.transaction((txn) async {
-        final preparationOld = await txn.query(
-          'SELECT code, status FROM t_preparations WHERE id = ?',
-          [id],
-        );
-
-        final oldStatus = preparationOld.first.fields['status'];
-        final code = preparationOld.first.fields['code'];
-
-        final response = await txn.query(
-          '''
-          UPDATE t_preparations
-          SET status = ?, total_box = COALESCE(?, total_box), location_id = COALESCE(?, location_id)
-          WHERE id = ?
-          ''',
-          [status, totalBox, locationId, id],
-        );
-
-        if (response.affectedRows == null || response.affectedRows == 0) {
-          txn.rollback();
-          throw UpdateException(message: 'Failed $status $code');
-        }
-
-        final insertLogs = await txn.query(
-          '''
-          INSERT INTO t_preparation_logs
-            (preparation_id, status_from, status_to, changed_by, remarks)
-          VALUES
-            (?, ?, ?, ?, ?)
-          ''',
-          [id, oldStatus, status, userId, remarks],
-        );
-
-        if (insertLogs.affectedRows == null || insertLogs.affectedRows == 0) {
-          txn.rollback();
-          throw UpdateException(message: 'Failed $status $code');
-        }
-
-        final responsePreparation = await txn.query(
-          '''
-          SELECT
-          	t.id AS id,
-          	t.code AS code,
-          	t.types AS type, 
-          	t.status AS status,
-          	t.destination_id AS destination_id,
-          	l1.name AS destination,
-          	t.created_id AS created_id,
-          	u1.name AS created_by,
-          	t.worker_id AS worker_id,
-          	u2.name AS worker_by,
-          	t.approved_id AS approved_id,
-          	u3.name AS approved_by,
-          	t.location_id AS location_id,
-          	l2.name AS location,
-          	t.total_box AS total_box,
-          	t.notes AS notes,
-          	t.created_at AS created_at
-          FROM
-          	t_preparations AS t
-          LEFT JOIN t_locations AS l1 ON t.destination_id = l1.id
-          LEFT JOIN t_users AS u1 ON t.created_id = u1.id
-          LEFT JOIN t_users AS u2 ON t.worker_id = u2.id
-          LEFT JOIN t_users AS u3 ON t.approved_id = u3.id
-          LEFT JOIN t_locations AS l2 ON t.location_id = l2.id
-          WHERE t.id = ?
-          ''',
-          [id],
-        );
-
-        return responsePreparation.first.fields;
-      });
-
-      return PreparationModel.fromDatabase(response!);
-    } on UpdateException {
-      rethrow;
-    } on MySqlException catch (e) {
-      throw DatabaseException(message: e.message);
-    } on TimeoutException {
-      throw DatabaseException(message: 'Database Request time out');
-    } on FormatException catch (e) {
-      throw DatabaseException(message: e.message);
-    } catch (e) {
-      throw DatabaseException(message: e.toString());
-    }
-  }
-
-  @override
-  Future<List<LocationModel>> findDestinationExternal() async {
-    try {
-      final db = await _database.connection;
-
-      final response = await db.query(
-        '''
-        SELECT
-          c.id AS id,
-          c.name AS name,
-          c.code AS code,
-          c.init AS init,
-          c.location_type AS location_type,
-          c.box_type AS box_type,
-          c.parent_id AS parent_id,
-          p.name AS parent_name
-        FROM
-          t_locations AS c
-        LEFT JOIN
-          t_locations AS P ON c.parent_id = p.id
-        WHERE c.is_storage = 0 AND c.location_type = 'VENDOR' AND c.is_active = 1
-        ''',
-      );
-
-      if (response.firstOrNull == null) {
-        throw NotFoundException(message: 'Destination Location not found');
-      }
-
-      return response.map((e) => LocationModel.fromDatabase(e.fields)).toList();
-    } on NotFoundException {
-      rethrow;
-    } on MySqlException catch (e) {
-      throw DatabaseException(message: e.message);
-    } on TimeoutException {
-      throw DatabaseException(message: 'Database Request time out');
-    } on FormatException catch (e) {
-      throw DatabaseException(message: e.message);
-    } catch (e) {
-      throw DatabaseException(message: e.toString());
-    }
-  }
-
-  @override
-  Future<List<LocationModel>> findDestinationInternal() async {
-    try {
-      final db = await _database.connection;
-
-      final response = await db.query(
-        '''
-        SELECT
-          c.id AS id,
-          c.name AS name,
-          c.code AS code,
-          c.init AS init,
-          c.location_type AS location_type,
-          c.box_type AS box_type,
-          c.parent_id AS parent_id,
-          p.name AS parent_name
-        FROM
-          t_locations AS c
-        LEFT JOIN
-          t_locations AS P ON c.parent_id = p.id
-        WHERE c.is_storage = 0 AND c.is_active = 1 AND c.location_type != 'VENDOR'
-        ''',
-      );
-
-      if (response.firstOrNull == null) {
-        throw NotFoundException(message: 'Destination Location not found');
-      }
-
-      return response.map((e) => LocationModel.fromDatabase(e.fields)).toList();
-    } on NotFoundException {
-      rethrow;
-    } on MySqlException catch (e) {
-      throw DatabaseException(message: e.message);
-    } on TimeoutException {
-      throw DatabaseException(message: 'Database Request time out');
-    } on FormatException catch (e) {
-      throw DatabaseException(message: e.message);
-    } catch (e) {
-      throw DatabaseException(message: e.toString());
-    }
+  Future<PreparationModel> updatePreparationStatus(
+      {required String params, required int userId}) {
+    // TODO: implement updatePreparationStatus
+    throw UnimplementedError();
   }
 }

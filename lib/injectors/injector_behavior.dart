@@ -23,6 +23,7 @@ import 'package:asset_management_api/features/inventory/domain/repositories/inve
 import 'package:asset_management_api/features/inventory/domain/usecases/find_inventory_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/delete_location_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_all_location_type_use_case.dart';
+import 'package:asset_management_api/features/location/domain/usecases/find_location_by_pagination_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_by_query_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_non_storage_use_case.dart';
 import 'package:asset_management_api/features/location/domain/usecases/find_location_storage_use_case.dart';
@@ -33,17 +34,6 @@ import 'package:asset_management_api/features/movement/data/source/movement_loca
 import 'package:asset_management_api/features/movement/data/source/movement_local_data_source_impl.dart';
 import 'package:asset_management_api/features/movement/domain/repositories/movement_repository.dart';
 import 'package:asset_management_api/features/movement/domain/usecases/create_movement_use_case.dart';
-import 'package:asset_management_api/features/preparation/data/repositories/preparation_repository_impl.dart';
-import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
-import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source_impl.dart';
-import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/find_all_preparation_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/find_destination_external_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/find_destination_internal_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_code_or_destination_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_id_use_case.dart';
-import 'package:asset_management_api/features/preparation/domain/usecases/update_status_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation_detail/data/repositories/preparation_detail_repository_impl.dart';
 import 'package:asset_management_api/features/preparation_detail/data/source/preparation_detail_local_data_source.dart';
 import 'package:asset_management_api/features/preparation_detail/data/source/preparation_detail_local_data_source_impl.dart';
@@ -197,6 +187,8 @@ final FindAllLocationTypeUseCase findAllLocationTypeUseCase =
     FindAllLocationTypeUseCase(locationRepository);
 final DeleteLocationUseCase deleteLocationUseCase =
     DeleteLocationUseCase(locationRepository);
+final FindLocationByPaginationUseCase findLocationByPaginationUseCase =
+    FindLocationByPaginationUseCase(locationRepository);
 
 // Assets
 final AssetsLocalDataSource assetsLocalDataSource =
@@ -241,27 +233,6 @@ final FindPurchaseOrderDetailItemUseCase findPurchaseOrderDetailItemUseCase =
     FindPurchaseOrderDetailItemUseCase(purchaseOrderRepository);
 final UpdatePurchaseOrderUseCase updatePurchaseOrderUseCase =
     UpdatePurchaseOrderUseCase(purchaseOrderRepository);
-
-// Preparation
-final PreparationLocalDataSource preparationLocalDataSource =
-    PreparationLocalDataSourceImpl(database);
-final PreparationRepository preparationRepository =
-    PreparationRepositoryImpl(preparationLocalDataSource);
-final CreatePreparationUseCase createPreparationUseCase =
-    CreatePreparationUseCase(preparationRepository);
-final FindAllPreparationUseCase findAllPreparationUseCase =
-    FindAllPreparationUseCase(preparationRepository);
-final FindPreparationByIdUseCase findPreparationByIdUseCase =
-    FindPreparationByIdUseCase(preparationRepository);
-final FindPreparationByCodeOrDestinationUseCase
-    findPreparationByCodeOrDestinationUseCase =
-    FindPreparationByCodeOrDestinationUseCase(preparationRepository);
-final UpdateStatusPreparationUseCase updateStatusPreparationUseCase =
-    UpdateStatusPreparationUseCase(preparationRepository);
-final FindDestinationInternalUseCase findDestinationInternalUseCase =
-    FindDestinationInternalUseCase(preparationRepository);
-final FindDestinationExternalUseCase findDestinationExternalUseCase =
-    FindDestinationExternalUseCase(preparationRepository);
 
 // Preparation Detail
 final PreparationDetailLocalDataSource preparationDetailLocalDataSource =

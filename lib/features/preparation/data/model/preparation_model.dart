@@ -1,5 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynam
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:asset_management_api/features/preparation/domain/entities/preparation.dart';
 import 'package:equatable/equatable.dart';
 
@@ -11,17 +10,17 @@ class PreparationModel extends Equatable {
   String? status;
   int? destinationId;
   String? destination;
+  int? temporaryLocationId;
+  String? temporaryLocation;
   int? createdId;
-  String? createdBy;
+  String? created;
   int? workerId;
-  String? workerBy;
+  String? worker;
   int? approvedId;
-  String? approvedBy;
-  int? locationId;
-  String? location;
+  String? approved;
   int? totalBox;
   String? notes;
-  String? createdAt;
+  DateTime? createdAt;
 
   PreparationModel({
     this.id,
@@ -30,60 +29,45 @@ class PreparationModel extends Equatable {
     this.status,
     this.destinationId,
     this.destination,
+    this.temporaryLocationId,
+    this.temporaryLocation,
     this.createdId,
-    this.createdBy,
+    this.created,
     this.workerId,
-    this.workerBy,
+    this.worker,
     this.approvedId,
-    this.approvedBy,
-    this.locationId,
-    this.location,
+    this.approved,
     this.totalBox,
     this.notes,
     this.createdAt,
   });
 
-  // Map<String, dynamic> toDatabase() {
-  //   return <String, dynamic>{
-  //     'id': id,
-  //     'preparation_code': preparationCode,
-  //     'total_box': totalBox,
-  //     'status': status,
-  //     'notes': notes,
-  //     'destination_id': destinationId,
-  //     'assigned_id': assignedId,
-  //     'temporary_location_id': temporaryLocationId,
-  //     'created_by': createdById,
-  //     'updated_by': updatedById,
-  //     'approved_by': approvedById,
-  //     'after_shipped': afterShipped,
-  //   };
-  // }
-
-  factory PreparationModel.fromDatabase(Map<String, dynamic> map) {
+  factory PreparationModel.fromJson(Map<String, dynamic> map) {
     return PreparationModel(
       id: map['id'] != null ? map['id'] as int : null,
       code: map['code'] != null ? map['code'] as String : null,
-      status: map['status'] != null ? map['status'] as String : null,
       type: map['type'] != null ? map['type'] as String : null,
+      status: map['status'] != null ? map['status'] as String : null,
       destinationId:
           map['destination_id'] != null ? map['destination_id'] as int : null,
       destination:
           map['destination'] != null ? map['destination'] as String : null,
+      temporaryLocationId: map['temporary_location_id'] != null
+          ? map['temporary_location_id'] as int
+          : null,
+      temporaryLocation: map['temporary_location'] != null
+          ? map['temporary_location'] as String
+          : null,
       createdId: map['created_id'] != null ? map['created_id'] as int : null,
-      createdBy: map['created_by'] != null ? map['created_by'] as String : null,
+      created: map['created'] != null ? map['created'] as String : null,
       workerId: map['worker_id'] != null ? map['worker_id'] as int : null,
-      workerBy: map['worker_by'] != null ? map['worker_by'] as String : null,
+      worker: map['worker'] != null ? map['worker'] as String : null,
       approvedId: map['approved_id'] != null ? map['approved_id'] as int : null,
-      approvedBy:
-          map['approved_by'] != null ? map['approved_by'] as String : null,
-      locationId: map['location_id'] != null ? map['location_id'] as int : null,
-      location: map['location'] != null ? map['location'] as String : null,
+      approved: map['approved'] != null ? map['approved'] as String : null,
       totalBox: map['total_box'] != null ? map['total_box'] as int : null,
       notes: map['notes'] != null ? map['notes'] as String : null,
-      createdAt: map['created_at'] != null
-          ? (map['created_at'] as DateTime).toIso8601String()
-          : null,
+      createdAt:
+          map['created_at'] != null ? map['created_at'] as DateTime : null,
     );
   }
 
@@ -91,21 +75,21 @@ class PreparationModel extends Equatable {
     return PreparationModel(
       id: params.id,
       code: params.code,
-      status: params.status,
       type: params.type,
-      createdId: params.createdId,
-      createdBy: params.createdBy,
-      workerId: params.workerId,
-      workerBy: params.workerBy,
-      approvedId: params.approvedId,
-      approvedBy: params.approvedBy,
-      destinationId: params.destinationId,
+      status: params.status,
       destination: params.destination,
-      locationId: params.locationId,
-      location: params.location,
+      destinationId: params.destinationId,
+      temporaryLocation: params.temporaryLocation,
+      temporaryLocationId: params.temporaryLocationId,
+      createdId: params.createdId,
+      created: params.created,
+      worker: params.worker,
+      workerId: params.workerId,
+      approved: params.approved,
+      approvedId: params.approvedId,
+      createdAt: params.createdAt,
       notes: params.notes,
       totalBox: params.totalBox,
-      createdAt: params.createdAt,
     );
   }
 
@@ -113,21 +97,21 @@ class PreparationModel extends Equatable {
     return Preparation(
       id: id,
       code: code,
-      status: status,
       type: type,
-      createdId: createdId,
-      createdBy: createdAt,
-      workerBy: workerBy,
-      workerId: workerId,
-      approvedBy: approvedBy,
-      approvedId: approvedId,
+      status: status,
       destination: destination,
       destinationId: destinationId,
-      location: location,
-      locationId: locationId,
-      notes: notes,
+      temporaryLocation: temporaryLocation,
+      temporaryLocationId: temporaryLocationId,
+      created: created,
+      createdId: createdId,
       createdAt: createdAt,
+      approved: approved,
+      approvedId: approvedId,
+      notes: notes,
       totalBox: totalBox,
+      worker: worker,
+      workerId: workerId,
     );
   }
 
@@ -140,14 +124,14 @@ class PreparationModel extends Equatable {
       status,
       destinationId,
       destination,
+      temporaryLocationId,
+      temporaryLocation,
       createdId,
-      createdBy,
+      created,
       workerId,
-      workerBy,
+      worker,
       approvedId,
-      approvedBy,
-      locationId,
-      location,
+      approved,
       totalBox,
       notes,
       createdAt,

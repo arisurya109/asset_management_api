@@ -11,10 +11,12 @@ class UpdatePreparationStatusUseCase {
   final PreparationRepository _repository;
 
   Future<Either<Failure, Preparation>> call({
+    required int id,
     required String params,
     required int userId,
   }) async {
     return _repository.updatePreparationStatus(
+      id: id,
       params: params,
       userId: userId,
     );

@@ -14,11 +14,15 @@ class UpdatePreparationStatusUseCase {
     required int id,
     required String params,
     required int userId,
+    int? totalBox,
+    int? temporaryLocationId,
   }) async {
     return _repository.updatePreparationStatus(
       id: id,
       params: params,
       userId: userId,
+      temporaryLocationId: temporaryLocationId,
+      totalBox: totalBox,
     );
   }
 }

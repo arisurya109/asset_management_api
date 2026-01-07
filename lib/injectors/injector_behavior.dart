@@ -34,6 +34,14 @@ import 'package:asset_management_api/features/movement/data/source/movement_loca
 import 'package:asset_management_api/features/movement/data/source/movement_local_data_source_impl.dart';
 import 'package:asset_management_api/features/movement/domain/repositories/movement_repository.dart';
 import 'package:asset_management_api/features/movement/domain/usecases/create_movement_use_case.dart';
+import 'package:asset_management_api/features/preparation/data/repositories/preparation_repository_impl.dart';
+import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
+import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source_impl.dart';
+import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_pagination_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/get_preparation_types_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/update_preparation_status_use_case.dart';
 import 'package:asset_management_api/features/preparation_detail/data/repositories/preparation_detail_repository_impl.dart';
 import 'package:asset_management_api/features/preparation_detail/data/source/preparation_detail_local_data_source.dart';
 import 'package:asset_management_api/features/preparation_detail/data/source/preparation_detail_local_data_source_impl.dart';
@@ -308,9 +316,24 @@ final InventoryRepository inventoryRepository =
 final FindInventoryUseCase findInventoryUseCase =
     FindInventoryUseCase(inventoryRepository);
 
+// Movement
 final MovementLocalDataSource movementLocalDataSource =
     MovementLocalDataSourceImpl(database);
 final MovementRepository movementRepository =
     MovementRepositoryImpl(movementLocalDataSource);
 final CreateMovementUseCase createMovementUseCase =
     CreateMovementUseCase(movementRepository);
+
+// Preparation
+final PreparationLocalDataSource preparationLocalDataSource =
+    PreparationLocalDataSourceImpl(database);
+final PreparationRepository preparationRepository =
+    PreparationRepositoryImpl(preparationLocalDataSource);
+final CreatePreparationUseCase createPreparationUseCase =
+    CreatePreparationUseCase(preparationRepository);
+final FindPreparationByPaginationUseCase findPreparationByPaginationUseCase =
+    FindPreparationByPaginationUseCase(preparationRepository);
+final UpdatePreparationStatusUseCase updatePreparationStatusUseCase =
+    UpdatePreparationStatusUseCase(preparationRepository);
+final GetPreparationTypesUseCase getPreparationTypesUseCase =
+    GetPreparationTypesUseCase(preparationRepository);

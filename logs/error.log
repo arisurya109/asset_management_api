@@ -34,3 +34,107 @@
 [04:41:55] GET /api/preparation
 → Status: 404 (1ms)
 --------------------------------------------------------------------------------
+[09:38:56] ERROR HttpMethod.post /api/login
+SocketException: The remote computer refused the network connection.
+ (OS Error: The remote computer refused the network connection.
+, errno = 1225), address = localhost, port = 59574
+#0      _NativeSocket.startConnect (dart:io-patch/socket_patch.dart:822:35)
+#1      _NativeSocket.connect (dart:io-patch/socket_patch.dart:1147:12)
+#2      _RawSocket.connect (dart:io-patch/socket_patch.dart:2270:26)
+#3      RawSocket.connect (dart:io-patch/socket_patch.dart:31:23)
+#4      BufferedSocket.defaultSocketFactory (package:mysql1/src/buffered_socket.dart:72:24)
+#5      BufferedSocket.connect (package:mysql1/src/buffered_socket.dart:89:28)
+#6      MySqlConnection.connect (package:mysql1/src/single_connection.dart:139:39)
+#7      Database._connect (package:asset_management_api/core/config/database.dart:27:36)
+#8      Database.connection (package:asset_management_api/core/config/database.dart:16:27)
+#9      UserLocalDataSourceImpl.login (package:asset_management_api/features/users/data/source/user_local_data_source_impl.dart:217:32)
+#10     UserRepositoryImpl.login (package:asset_management_api/features/users/data/repositories/user_repository_impl.dart:87:38)
+#11     LoginUseCase.call (package:asset_management_api/features/users/domain/usecases/login_use_case.dart:14:24)
+#12     LoginResponse.login (package:asset_management_api/features/users/presentation/response/login_response.dart:20:42)
+<asynchronous suspension>
+#13     onRequest (file:///C:/Development/asset_management_api/routes/api/login/index.dart:11:12)
+<asynchronous suspension>
+#14     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#15     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#16     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#17     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#18     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#19     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#20     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#21     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#22     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#23     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#24     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#25     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#26     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#27     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[11:52:34] GET /api/auto_login
+→ Status: 401 (19ms)
+--------------------------------------------------------------------------------
+[12:57:34] POST /api/location
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[16:20:47] POST /api/login
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[16:22:49] POST /api/asset/migration
+→ Status: 400 (8ms)
+--------------------------------------------------------------------------------
+[16:23:08] POST /api/asset/migration
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[16:23:24] POST /api/asset/migration
+→ Status: 400 (2ms)
+--------------------------------------------------------------------------------
+[16:23:56] POST /api/asset/migration
+→ Status: 400 (4ms)
+--------------------------------------------------------------------------------
+[16:24:34] POST /api/asset/migration
+→ Status: 400 (7ms)
+--------------------------------------------------------------------------------
+[16:24:47] POST /api/asset/migration
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[16:26:21] POST /api/asset/migration
+→ Status: 400 (18ms)
+--------------------------------------------------------------------------------
+[16:36:01] GET /api/preparation
+→ Status: 405 (2ms)
+--------------------------------------------------------------------------------
+[17:04:26] GET /api/preparation
+→ Status: 405 (0ms)
+--------------------------------------------------------------------------------
+[18:13:30] GET /api/preparation
+→ Status: 400 (27ms)
+--------------------------------------------------------------------------------
+[18:14:35] GET /api/preparation
+→ Status: 400 (2ms)
+--------------------------------------------------------------------------------
+[18:15:29] GET /api/preparation
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[18:15:31] GET /api/preparation
+→ Status: 400 (1ms)
+--------------------------------------------------------------------------------
+[18:20:27] GET /api/preparation
+→ Status: 400 (3ms)
+--------------------------------------------------------------------------------
+[18:21:38] GET /api/preparation
+→ Status: 400 (2ms)
+--------------------------------------------------------------------------------

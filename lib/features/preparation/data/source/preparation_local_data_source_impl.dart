@@ -28,7 +28,8 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
   }
 
   Future<PreparationModel> _createPreparationExternal(
-      PreparationModel params) async {
+    PreparationModel params,
+  ) async {
     try {
       final db = await _database.connection;
 
@@ -529,7 +530,125 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
     required int userId,
     int? temporaryLocationId,
   }) async {
-    throw NotFoundException();
+    try {
+      final db = await _database.connection;
+
+      final response = await db.transaction((txn) async {
+        final responseGetPreparation = await txn.query(
+          'SELECT * FROM t_preparations WHERE id = ? LIMIT 1',
+          [id],
+        );
+
+        if (responseGetPreparation.firstOrNull == null) {
+          throw NotFoundException(
+            message: 'An error occurred, not found picking tasks',
+          );
+        }
+
+        final preparation = responseGetPreparation.first.fields;
+
+        // Check update preparation
+        if (preparation['worker_id'] != userId) {
+          throw UpdateException(
+            message: 'An error occurred, you do not have access',
+          );
+        }
+
+        Results responseUpdate;
+
+        if (temporaryLocationId != null) {
+          responseUpdate = await txn.query(
+            '''
+            UPDATE t_preparations
+            SET status = ?, temporary_location_id = ?
+            WHERE id = ? AND worker_id = ?
+            ''',
+            [params, temporaryLocationId, id, userId],
+          );
+        } else {
+          responseUpdate = await txn.query(
+            '''
+            UPDATE t_preparations
+            SET status = ?
+            WHERE id = ? AND worker_id = ?
+            ''',
+            [params, id, userId],
+          );
+        }
+
+        if (responseUpdate.affectedRows == null) {
+          throw UpdateException(
+            message: 'An error occurred, please try again',
+          );
+        }
+
+        final preparationLogs = await txn.query(
+          '''
+            INSERT INTO t_preparation_logs
+              (preparation_id, from_status, to_status, updated_by)
+            VALUES
+              (?, ?, ?, ?)
+            ''',
+          [id, preparation['status'], params, userId],
+        );
+
+        if (preparationLogs.insertId == null) {
+          txn.rollback();
+          throw UpdateException(
+            message: 'An error occurred, please try again',
+          );
+        }
+
+        final newPreparation = await txn.query(
+          '''
+            SELECT
+            	p.id AS id,
+            	p.preparation_code AS code,
+            	p.preparation_type AS type,
+            	p.status AS status,
+            	p.destination_id AS destination_id,
+            	d.name AS destination,
+            	p.temporary_location_id AS temporary_location_id,
+            	t.name AS temporary_location,
+            	p.created_id AS created_id,
+            	c.name AS created,
+            	p.worker_id AS worker_id,
+            	w.name AS worker,
+            	p.approved_id AS approved_id,
+            	a.name AS approved,
+            	p.total_box AS total_box,
+            	p.notes AS notes,
+            	p.created_at AS created_at
+            FROM
+            	t_preparations AS p
+            LEFT JOIN t_locations AS d ON p.destination_id = d.id
+            LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
+            LEFT JOIN t_users AS c ON p.created_id = c.id
+            LEFT JOIN t_users AS w ON p.worker_id = w.id
+            LEFT JOIN t_users AS a ON p.approved_id = a.id
+            WHERE p.id = ?
+            LIMIT 1
+            ''',
+          [id],
+        );
+
+        return newPreparation.first.fields;
+      });
+
+      return PreparationModel.fromJson(response!);
+    } on NotFoundException {
+      rethrow;
+    } on UpdateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
   }
 
   Future<PreparationModel> _updateByApproved({
@@ -537,6 +656,113 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
     required String params,
     required int userId,
   }) async {
-    throw NotFoundException();
+    try {
+      final db = await _database.connection;
+
+      final response = await db.transaction((txn) async {
+        final responseGetPreparation = await txn.query(
+          'SELECT * FROM t_preparations WHERE id = ? LIMIT 1',
+          [id],
+        );
+
+        if (responseGetPreparation.firstOrNull == null) {
+          throw NotFoundException(
+            message: 'An error occurred, not found approval',
+          );
+        }
+
+        final preparation = responseGetPreparation.first.fields;
+
+        // Check update preparation
+        if (preparation['approved_id'] != userId) {
+          throw UpdateException(
+            message: 'An error occurred, you do not have access',
+          );
+        }
+
+        Results responseUpdate;
+
+        responseUpdate = await txn.query(
+          '''
+            UPDATE t_preparations
+            SET status = ?
+            WHERE id = ? AND approved_id = ?
+            ''',
+          [params, id, userId],
+        );
+
+        if (responseUpdate.affectedRows == null) {
+          throw UpdateException(
+            message: 'An error occurred, please try again',
+          );
+        }
+
+        final preparationLogs = await txn.query(
+          '''
+            INSERT INTO t_preparation_logs
+              (preparation_id, from_status, to_status, updated_by)
+            VALUES
+              (?, ?, ?, ?)
+            ''',
+          [id, preparation['status'], params, userId],
+        );
+
+        if (preparationLogs.insertId == null) {
+          txn.rollback();
+          throw UpdateException(
+            message: 'An error occurred, please try again',
+          );
+        }
+
+        final newPreparation = await txn.query(
+          '''
+            SELECT
+            	p.id AS id,
+            	p.preparation_code AS code,
+            	p.preparation_type AS type,
+            	p.status AS status,
+            	p.destination_id AS destination_id,
+            	d.name AS destination,
+            	p.temporary_location_id AS temporary_location_id,
+            	t.name AS temporary_location,
+            	p.created_id AS created_id,
+            	c.name AS created,
+            	p.worker_id AS worker_id,
+            	w.name AS worker,
+            	p.approved_id AS approved_id,
+            	a.name AS approved,
+            	p.total_box AS total_box,
+            	p.notes AS notes,
+            	p.created_at AS created_at
+            FROM
+            	t_preparations AS p
+            LEFT JOIN t_locations AS d ON p.destination_id = d.id
+            LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
+            LEFT JOIN t_users AS c ON p.created_id = c.id
+            LEFT JOIN t_users AS w ON p.worker_id = w.id
+            LEFT JOIN t_users AS a ON p.approved_id = a.id
+            WHERE p.id = ?
+            LIMIT 1
+            ''',
+          [id],
+        );
+
+        return newPreparation.first.fields;
+      });
+
+      return PreparationModel.fromJson(response!);
+    } on NotFoundException {
+      rethrow;
+    } on UpdateException {
+      rethrow;
+    } on MySqlException catch (e) {
+      throw DatabaseException(message: e.message);
+    } on TimeoutException {
+      throw DatabaseException(message: 'Database Request time out');
+    } on FormatException catch (e) {
+      throw DatabaseException(message: e.message);
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
   }
 }

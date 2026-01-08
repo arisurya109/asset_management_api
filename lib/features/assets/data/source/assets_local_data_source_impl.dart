@@ -173,7 +173,7 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
       var whereClause = '';
       var queryArgs = <dynamic>[];
 
-      if (params.trim().isNotEmpty) {
+      if (params.isFilled()) {
         final pattern = '%${params.trim()}%';
 
         whereClause = '''

@@ -32,7 +32,7 @@ class PreparationDetailResponse extends Equatable {
       },
       'created_at': preparation?.createdAt?.toIso8601String(),
       'notes': preparation?.notes,
-      'item': preparationDetail?.map((e) => e.toJson()).toList() ?? [],
+      'items': preparationDetail?.map((e) => e.toJson()).toList() ?? [],
     };
   }
 

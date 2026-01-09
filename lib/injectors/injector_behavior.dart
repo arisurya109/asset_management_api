@@ -35,23 +35,19 @@ import 'package:asset_management_api/features/movement/data/source/movement_loca
 import 'package:asset_management_api/features/movement/domain/repositories/movement_repository.dart';
 import 'package:asset_management_api/features/movement/domain/usecases/create_movement_use_case.dart';
 import 'package:asset_management_api/features/preparation/data/repositories/preparation_repository_impl.dart';
+import 'package:asset_management_api/features/preparation/data/repositories/prepartion_detail_repository_impl.dart';
+import 'package:asset_management_api/features/preparation/data/source/preparation_detail_local_data_source.dart';
+import 'package:asset_management_api/features/preparation/data/source/preparation_detail_local_data_source_impl.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source_impl.dart';
+import 'package:asset_management_api/features/preparation/domain/repositories/preparation_detail_repository.dart';
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/add_preparation_detail_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_pagination_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/get_preparation_details_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/get_preparation_types_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/update_preparation_status_use_case.dart';
-import 'package:asset_management_api/features/preparation_detail/data/repositories/preparation_detail_repository_impl.dart';
-import 'package:asset_management_api/features/preparation_detail/data/source/preparation_detail_local_data_source.dart';
-import 'package:asset_management_api/features/preparation_detail/data/source/preparation_detail_local_data_source_impl.dart';
-import 'package:asset_management_api/features/preparation_detail/domain/repositories/preparation_detail_repository.dart';
-import 'package:asset_management_api/features/preparation_detail/domain/usecases/create_preparation_detail_use_case.dart';
-import 'package:asset_management_api/features/preparation_detail/domain/usecases/find_all_preparation_detail_by_preparation_id_use_case.dart';
-import 'package:asset_management_api/features/preparation_detail/domain/usecases/find_preparation_detail_by_id_use_case.dart';
-import 'package:asset_management_api/features/preparation_detail/domain/usecases/update_preparation_detail_use_case.dart';
-import 'package:asset_management_api/features/preparation_detail/domain/usecases/update_status_completed_preparation_detail_use_case.dart';
-import 'package:asset_management_api/features/preparation_detail/domain/usecases/update_status_progress_preparation_detail_use_case.dart';
 import 'package:asset_management_api/features/preparation_item/data/repositories/preparation_item_repository_impl.dart';
 import 'package:asset_management_api/features/preparation_item/data/source/preparation_item_local_data_source.dart';
 import 'package:asset_management_api/features/preparation_item/data/source/preparation_item_local_data_source_impl.dart';
@@ -242,27 +238,6 @@ final FindPurchaseOrderDetailItemUseCase findPurchaseOrderDetailItemUseCase =
 final UpdatePurchaseOrderUseCase updatePurchaseOrderUseCase =
     UpdatePurchaseOrderUseCase(purchaseOrderRepository);
 
-// Preparation Detail
-final PreparationDetailLocalDataSource preparationDetailLocalDataSource =
-    PreparationDetailLocalDataSourceImpl(database);
-final PreparationDetailRepository preparationDetailRepository =
-    PreparationDetailRepositoryImpl(preparationDetailLocalDataSource);
-final CreatePreparationDetailUseCase createPreparationDetailUseCase =
-    CreatePreparationDetailUseCase(preparationDetailRepository);
-final FindAllPreparationDetailByPreparationIdUseCase
-    findAllPreparationDetailByPreparationIdUseCase =
-    FindAllPreparationDetailByPreparationIdUseCase(preparationDetailRepository);
-final FindPreparationDetailByIdUseCase findPreparationDetailByIdUseCase =
-    FindPreparationDetailByIdUseCase(preparationDetailRepository);
-final UpdatePreparationDetailUseCase updatePreparationDetailUseCase =
-    UpdatePreparationDetailUseCase(preparationDetailRepository);
-final UpdateStatusCompletedPreparationDetailUseCase
-    updateStatusCompletedPreparationDetailUseCase =
-    UpdateStatusCompletedPreparationDetailUseCase(preparationDetailRepository);
-final UpdateStatusProgressPreparationDetailUseCase
-    updateStatusProgressPreparationDetailUseCase =
-    UpdateStatusProgressPreparationDetailUseCase(preparationDetailRepository);
-
 // Preparation Item
 final PreparationItemLocalDataSource preparationItemLocalDataSource =
     PreparationItemLocalDataSourceImpl(database);
@@ -327,8 +302,12 @@ final CreateMovementUseCase createMovementUseCase =
 // Preparation
 final PreparationLocalDataSource preparationLocalDataSource =
     PreparationLocalDataSourceImpl(database);
+final PreparationDetailLocalDataSource preparationDetailLocalDataSource =
+    PreparationDetailLocalDataSourceImpl(database);
 final PreparationRepository preparationRepository =
     PreparationRepositoryImpl(preparationLocalDataSource);
+final PreparationDetailRepository preparationDetailRepository =
+    PreparationDetailRepositoryImpl(preparationDetailLocalDataSource);
 final CreatePreparationUseCase createPreparationUseCase =
     CreatePreparationUseCase(preparationRepository);
 final FindPreparationByPaginationUseCase findPreparationByPaginationUseCase =
@@ -337,3 +316,7 @@ final UpdatePreparationStatusUseCase updatePreparationStatusUseCase =
     UpdatePreparationStatusUseCase(preparationRepository);
 final GetPreparationTypesUseCase getPreparationTypesUseCase =
     GetPreparationTypesUseCase(preparationRepository);
+final GetPreparationDetailsUseCase getPreparationDetailsUseCase =
+    GetPreparationDetailsUseCase(preparationDetailRepository);
+final AddPreparationDetailUseCase addPreparationDetailUseCase =
+    AddPreparationDetailUseCase(preparationDetailRepository);

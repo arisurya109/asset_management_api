@@ -228,3 +228,858 @@ SocketException: The remote computer refused the network connection.
 [17:45:29] GET /api/asset
 → Status: 400 (8ms)
 --------------------------------------------------------------------------------
+[23:27:57] POST /api/login
+→ Status: 400 (407ms)
+--------------------------------------------------------------------------------
+[23:51:07] POST /api/login
+→ Status: 400 (17ms)
+--------------------------------------------------------------------------------
+[23:55:07] ERROR HttpMethod.get /api/preparation
+Converting object to an encodable object failed: _Set len:1
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#8      _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#9      JsonEncoder.convert (dart:convert/json.dart:353:30)
+#10     JsonCodec.encode (dart:convert/json.dart:238:45)
+#11     jsonEncode (dart:convert/json.dart:118:12)
+#12     new Response.json (package:dart_frog/src/response.dart:70:32)
+#13     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#14     PreparationResponse.findPreparationByPagination.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:99:41)
+#15     Right.fold (package:dartz/src/either.dart:200:64)
+#16     PreparationResponse.findPreparationByPagination (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:97:35)
+<asynchronous suspension>
+#17     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/index.dart:19:14)
+<asynchronous suspension>
+#18     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#19     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#20     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#21     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#22     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#23     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#24     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#25     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#26     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#27     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#28     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#29     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#30     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#31     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[23:55:16] ERROR HttpMethod.get /api/preparation
+Converting object to an encodable object failed: _Set len:1
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#8      _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#9      JsonEncoder.convert (dart:convert/json.dart:353:30)
+#10     JsonCodec.encode (dart:convert/json.dart:238:45)
+#11     jsonEncode (dart:convert/json.dart:118:12)
+#12     new Response.json (package:dart_frog/src/response.dart:70:32)
+#13     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#14     PreparationResponse.findPreparationByPagination.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:99:41)
+#15     Right.fold (package:dartz/src/either.dart:200:64)
+#16     PreparationResponse.findPreparationByPagination (package:asset_management_api/features/preparation/presentation/response/preparation_response.dart:97:35)
+<asynchronous suspension>
+#17     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/index.dart:19:14)
+<asynchronous suspension>
+#18     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:424:16)
+<asynchronous suspension>
+#19     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#20     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#21     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#22     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#23     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#24     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#25     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#26     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#27     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#28     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#29     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#30     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#31     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[00:00:25] POST /api/preparation/
+→ Status: 400 (239ms)
+--------------------------------------------------------------------------------
+[00:02:19] POST /api/preparation/
+→ Status: 400 (5868ms)
+--------------------------------------------------------------------------------
+[00:29:33] POST /api/login
+→ Status: 400 (20ms)
+--------------------------------------------------------------------------------
+[06:07:09] ERROR HttpMethod.get /api/preparation/1
+Bad state: context.read<GetPreparationDetailsUseCase>() called with a request context that does not contain a GetPreparationDetailsUseCase.
+
+This can happen if GetPreparationDetailsUseCase was not provided to the request context:
+  ```dart
+  // _middleware.dart
+  Handler middleware(Handler handler) {
+    return handler.use(provider<T>((context) => GetPreparationDetailsUseCase());
+  }
+  ```
+
+#0      RequestContext.read (package:dart_frog/src/context.dart:29:7)
+#1      PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:90:31)
+<asynchronous suspension>
+#2      onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#3      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#4      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#5      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#6      Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#7      RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#8      RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#9      Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#10     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#11     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#12     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#13     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#14     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#15     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#16     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:08:30] GET /api/preparation/1
+→ Status: 400 (749ms)
+--------------------------------------------------------------------------------
+[06:09:09] GET /api/preparation/1
+→ Status: 400 (519ms)
+--------------------------------------------------------------------------------
+[06:12:58] GET /api/preparation/3
+→ Status: 400 (64ms)
+--------------------------------------------------------------------------------
+[06:14:51] GET /api/preparation/3
+→ Status: 400 (867ms)
+--------------------------------------------------------------------------------
+[06:18:26] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#11     _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#12     _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#13     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#14     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#15     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#16     JsonCodec.encode (dart:convert/json.dart:238:45)
+#17     jsonEncode (dart:convert/json.dart:118:12)
+#18     new Response.json (package:dart_frog/src/response.dart:70:32)
+#19     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#20     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:98:41)
+#21     Right.fold (package:dartz/src/either.dart:200:64)
+#22     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#23     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#24     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#25     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#26     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#27     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#28     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#29     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#30     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#31     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#32     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#33     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#34     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#35     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#36     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#37     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:19:07] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#11     _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#12     _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#13     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#14     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#15     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#16     JsonCodec.encode (dart:convert/json.dart:238:45)
+#17     jsonEncode (dart:convert/json.dart:118:12)
+#18     new Response.json (package:dart_frog/src/response.dart:70:32)
+#19     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#20     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:98:41)
+#21     Right.fold (package:dartz/src/either.dart:200:64)
+#22     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#23     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#24     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#25     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#26     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#27     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#28     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#29     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#30     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#31     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#32     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#33     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#34     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#35     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#36     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#37     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:19:45] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#11     _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#12     _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#13     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#14     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#15     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#16     JsonCodec.encode (dart:convert/json.dart:238:45)
+#17     jsonEncode (dart:convert/json.dart:118:12)
+#18     new Response.json (package:dart_frog/src/response.dart:70:32)
+#19     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#20     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:98:41)
+#21     Right.fold (package:dartz/src/either.dart:200:64)
+#22     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#23     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#24     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#25     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#26     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#27     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#28     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#29     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#30     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#31     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#32     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#33     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#34     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#35     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#36     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#37     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:21:13] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#11     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#12     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#13     JsonCodec.encode (dart:convert/json.dart:238:45)
+#14     jsonEncode (dart:convert/json.dart:118:12)
+#15     new Response.json (package:dart_frog/src/response.dart:70:32)
+#16     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#17     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:98:41)
+#18     Right.fold (package:dartz/src/either.dart:200:64)
+#19     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#20     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#21     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#22     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#23     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#24     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#25     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#26     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#27     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#28     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#29     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#30     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#31     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#32     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#33     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#34     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:21:41] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#11     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#12     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#13     JsonCodec.encode (dart:convert/json.dart:238:45)
+#14     jsonEncode (dart:convert/json.dart:118:12)
+#15     new Response.json (package:dart_frog/src/response.dart:70:32)
+#16     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#17     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:99:41)
+#18     Right.fold (package:dartz/src/either.dart:200:64)
+#19     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:97:35)
+<asynchronous suspension>
+#20     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#21     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#22     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#23     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#24     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#25     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#26     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#27     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#28     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#29     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#30     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#31     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#32     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#33     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#34     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:22:46] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#11     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#12     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#13     JsonCodec.encode (dart:convert/json.dart:238:45)
+#14     jsonEncode (dart:convert/json.dart:118:12)
+#15     new Response.json (package:dart_frog/src/response.dart:70:32)
+#16     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#17     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:101:33)
+#18     Right.fold (package:dartz/src/either.dart:200:64)
+#19     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#20     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#21     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#22     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#23     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#24     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#25     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#26     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#27     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#28     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#29     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#30     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#31     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#32     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#33     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#34     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:24:05] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#11     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#12     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#13     JsonCodec.encode (dart:convert/json.dart:238:45)
+#14     jsonEncode (dart:convert/json.dart:118:12)
+#15     new Response.json (package:dart_frog/src/response.dart:70:32)
+#16     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#17     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:101:33)
+#18     Right.fold (package:dartz/src/either.dart:200:64)
+#19     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#20     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#21     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#22     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#23     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#24     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#25     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#26     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#27     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#28     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#29     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#30     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#31     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#32     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#33     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#34     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:25:41] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Set<Map<String, dynamic>>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#11     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#12     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#13     JsonCodec.encode (dart:convert/json.dart:238:45)
+#14     jsonEncode (dart:convert/json.dart:118:12)
+#15     new Response.json (package:dart_frog/src/response.dart:70:32)
+#16     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#17     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:101:33)
+#18     Right.fold (package:dartz/src/either.dart:200:64)
+#19     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#20     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#21     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#22     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#23     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#24     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#25     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#26     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#27     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#28     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#29     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#30     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#31     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#32     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#33     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#34     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:27:00] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'PreparationDetail'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#11     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#12     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#13     JsonCodec.encode (dart:convert/json.dart:238:45)
+#14     jsonEncode (dart:convert/json.dart:118:12)
+#15     new Response.json (package:dart_frog/src/response.dart:70:32)
+#16     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#17     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:101:33)
+#18     Right.fold (package:dartz/src/either.dart:200:64)
+#19     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#20     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#21     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#22     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#23     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#24     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#25     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#26     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#27     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#28     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#29     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#30     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#31     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#32     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#33     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#34     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:27:22] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#11     _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#12     _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#13     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#14     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#15     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#16     JsonCodec.encode (dart:convert/json.dart:238:45)
+#17     jsonEncode (dart:convert/json.dart:118:12)
+#18     new Response.json (package:dart_frog/src/response.dart:70:32)
+#19     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#20     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:101:33)
+#21     Right.fold (package:dartz/src/either.dart:200:64)
+#22     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#23     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#24     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#25     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#26     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#27     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#28     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#29     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#30     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#31     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#32     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#33     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#34     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#35     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#36     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#37     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:30:01] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#11     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#12     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#13     JsonCodec.encode (dart:convert/json.dart:238:45)
+#14     jsonEncode (dart:convert/json.dart:118:12)
+#15     new Response.json (package:dart_frog/src/response.dart:70:32)
+#16     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#17     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:101:33)
+#18     Right.fold (package:dartz/src/either.dart:200:64)
+#19     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#20     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#21     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#22     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#23     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#24     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#25     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#26     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#27     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#28     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#29     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#30     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#31     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#32     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#33     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#34     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[06:31:47] ERROR HttpMethod.get /api/preparation/3
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PreparationDetailItem, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeList (dart:convert/json.dart:875:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:857:7)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#8      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#9      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#10     _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#11     _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#12     JsonEncoder.convert (dart:convert/json.dart:353:30)
+#13     JsonCodec.encode (dart:convert/json.dart:238:45)
+#14     jsonEncode (dart:convert/json.dart:118:12)
+#15     new Response.json (package:dart_frog/src/response.dart:70:32)
+#16     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#17     PreparationDetailResponseUser.findPreparationDetails.<anonymous closure> (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:101:33)
+#18     Right.fold (package:dartz/src/either.dart:200:64)
+#19     PreparationDetailResponseUser.findPreparationDetails (package:asset_management_api/features/preparation/presentation/response/preparation_detail_response.dart:96:35)
+<asynchronous suspension>
+#20     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/preparation/%5Bid%5D.dart:17:12)
+<asynchronous suspension>
+#21     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#22     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#23     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#24     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#25     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#26     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#27     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#28     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#29     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#30     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#31     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#32     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#33     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#34     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[07:24:24] POST /api/login
+→ Status: 400 (19ms)
+--------------------------------------------------------------------------------
+[08:34:05] POST /api/login
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------

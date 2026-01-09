@@ -10,7 +10,7 @@ import 'package:dart_frog/dart_frog.dart';
 Future<Response> onRequest(RequestContext context) async {
   final queryParams = context.request.uri.queryParameters;
   final page = queryParams['page'];
-  final limit = queryParams['page'];
+  final limit = queryParams['limit'];
   final params = queryParams['query'];
   if (context.httpMethodPost) {
     return await PreparationResponse.createPreparation(context);

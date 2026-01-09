@@ -92,7 +92,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
         await txn.query('''
           INSERT INTO t_preparation_logs
-            (preparation_id, status_to, changed_by, remarks)
+            (preparation_id, to_status, updated_by, notes)
           VALUES
             (?, ?, ?, ?)
           ''', [
@@ -219,7 +219,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
         await txn.query('''
           INSERT INTO t_preparation_logs
-            (preparation_id, status_to, changed_by, remarks)
+            (preparation_id, to_status, updated_by, notes)
           VALUES
             (?, ?, ?, ?)
           ''', [
@@ -340,7 +340,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
       LEFT JOIN t_users AS w ON p.worker_id = w.id
       LEFT JOIN t_users AS a ON p.approved_id = a.id
       $whereClause
-      ORDER BY p.created_at DESC
+      ORDER BY p.created_at ASC
       LIMIT ? OFFSET ?
       ''',
         dataArgs,

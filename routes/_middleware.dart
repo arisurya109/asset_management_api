@@ -2,6 +2,7 @@ import 'package:asset_management_api/injectors/cors_injector.dart';
 import 'package:asset_management_api/injectors/injector_export.dart';
 import 'package:asset_management_api/injectors/inventory_injector.dart';
 import 'package:asset_management_api/injectors/movement_injector.dart';
+import 'package:asset_management_api/injectors/picking_injector.dart';
 import 'package:asset_management_api/injectors/preparation_injector.dart';
 import 'package:asset_management_api/injectors/preparation_item_injector.dart';
 import 'package:asset_management_api/injectors/preparation_template_injector.dart';
@@ -29,5 +30,6 @@ Handler middleware(Handler handler) {
       .use(reprintInjector)
       .use(inventoryInjector)
       .use(movementInjector)
-      .use(preparationInjector);
+      .use(preparationInjector)
+      .use(pickingInjector);
 }

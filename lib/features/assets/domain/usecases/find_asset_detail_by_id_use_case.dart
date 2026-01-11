@@ -2,7 +2,7 @@
 
 import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/assets/assets_export.dart';
-import 'package:asset_management_api/features/assets/domain/entities/assets_detail.dart';
+import 'package:asset_management_api/features/assets/domain/entities/asset_detail_response.dart';
 import 'package:dartz/dartz.dart';
 
 class FindAssetDetailByIdUseCase {
@@ -10,7 +10,7 @@ class FindAssetDetailByIdUseCase {
 
   final AssetsRepository _repository;
 
-  Future<Either<Failure, List<AssetsDetail>>> call(int params) async {
+  Future<Either<Failure, AssetDetailResponse>> call(int params) async {
     return _repository.findAssetDetailById(params);
   }
 }

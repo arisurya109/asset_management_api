@@ -163,7 +163,7 @@ class AssetsResponseUser {
         (r) => ResponseHelper.json(
           code: HttpStatus.ok,
           status: 'Successfully get asset detail',
-          body: r.map((e) => e.toJson()).toList(),
+          body: r.toJson(),
         ),
       );
     }

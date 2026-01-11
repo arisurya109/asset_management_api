@@ -181,6 +181,8 @@ class PreparationDetailLocalDataSourceImpl
               ast.asset_model_id = ? AND
               ast.status = 'READY' AND
               ast.is_reserved = 0 AND
+              (ast.purchase_order IS NULL OR ast.purchase_order = '') AND
+              (l.location_type = 'RACK' OR l.location_type = 'BOX') AND
               l.is_storage = 1 AND
               (ast.conditions = 'NEW' OR ast.conditions = 'GOOD')
             ORDER BY
@@ -203,6 +205,7 @@ class PreparationDetailLocalDataSourceImpl
               ast.asset_model_id = ? AND
               ast.status = 'READY' AND
               ast.is_reserved = 0 AND
+              (l.location_type = 'RACK' OR l.location_type = 'BOX') AND
               l.is_storage = 1 AND
               ast.purchase_order = ? AND
               (ast.conditions = 'NEW' OR ast.conditions = 'GOOD')
@@ -219,6 +222,8 @@ class PreparationDetailLocalDataSourceImpl
           throw NotFoundException(message: 'Stock assets are unavailable');
         }
 
+        final quantity = responseAsset.length;
+
         final insertedDetail = await txn.query('''
           INSERT INTO t_preparation_details
             (preparation_id, asset_model_id, purchase_order, quantity)
@@ -228,7 +233,7 @@ class PreparationDetailLocalDataSourceImpl
           params.preparationId,
           params.modelId,
           params.purchaseOrder,
-          params.quantity,
+          quantity,
         ]);
 
         final detailId = insertedDetail.insertId;
@@ -306,6 +311,7 @@ class PreparationDetailLocalDataSourceImpl
         WHERE ast.asset_model_id = ? 
           AND (ast.quantity - ast.quantity_reserved) >= ?
           AND l.is_storage = 1
+          AND (l.location_type = 'RACK' OR l.location_type = 'BOX')
         ORDER BY ast.registred_at ASC
         LIMIT 1
         FOR UPDATE

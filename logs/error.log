@@ -1146,3 +1146,340 @@ Converting object to an encodable object failed: Instance of 'MappedListIterable
 [15:39:35] GET /api/inventory
 → Status: 400 (8ms)
 --------------------------------------------------------------------------------
+[08:15:36] PATCH /api/preparation/5/
+→ Status: 404 (12ms)
+--------------------------------------------------------------------------------
+[08:16:53] PATCH /api/preparation/5/
+→ Status: 404 (2ms)
+--------------------------------------------------------------------------------
+[22:24:13] POST /api/login
+→ Status: 400 (12ms)
+--------------------------------------------------------------------------------
+[14:33:35] GET /api/preparation
+→ Status: 400 (62ms)
+--------------------------------------------------------------------------------
+[14:33:36] GET /api/preparation
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[14:33:36] GET /api/preparation
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[14:33:48] GET /api/preparation
+→ Status: 400 (8ms)
+--------------------------------------------------------------------------------
+[14:33:48] GET /api/preparation
+→ Status: 400 (5ms)
+--------------------------------------------------------------------------------
+[14:44:55] GET /api/preparation
+→ Status: 400 (43ms)
+--------------------------------------------------------------------------------
+[14:44:56] GET /api/preparation
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[14:44:56] GET /api/preparation
+→ Status: 400 (16ms)
+--------------------------------------------------------------------------------
+[14:44:58] GET /api/preparation
+→ Status: 400 (9ms)
+--------------------------------------------------------------------------------
+[14:44:59] GET /api/preparation
+→ Status: 400 (11ms)
+--------------------------------------------------------------------------------
+[14:46:27] GET /api/preparation
+→ Status: 400 (17ms)
+--------------------------------------------------------------------------------
+[14:46:27] GET /api/preparation
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[14:47:35] GET /api/preparation
+→ Status: 400 (6ms)
+--------------------------------------------------------------------------------
+[15:02:09] POST /api/login
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[15:02:56] POST /api/preparation/1
+→ Status: 400 (56ms)
+--------------------------------------------------------------------------------
+[15:02:59] POST /api/preparation/1
+→ Status: 400 (18ms)
+--------------------------------------------------------------------------------
+[15:07:05] POST /api/login
+→ Status: 400 (39ms)
+--------------------------------------------------------------------------------
+[15:08:11] POST /api/preparation/1
+→ Status: 400 (46ms)
+--------------------------------------------------------------------------------
+[15:08:46] POST /api/preparation/1
+→ Status: 400 (53ms)
+--------------------------------------------------------------------------------
+[15:08:53] POST /api/preparation/1
+→ Status: 400 (17ms)
+--------------------------------------------------------------------------------
+[15:09:00] POST /api/preparation/1
+→ Status: 400 (23ms)
+--------------------------------------------------------------------------------
+[15:09:18] POST /api/preparation/1
+→ Status: 400 (15ms)
+--------------------------------------------------------------------------------
+[15:11:58] POST /api/preparation/1
+→ Status: 400 (54ms)
+--------------------------------------------------------------------------------
+[15:12:01] POST /api/preparation/1
+→ Status: 400 (50ms)
+--------------------------------------------------------------------------------
+[19:15:12] POST /api/login
+→ Status: 400 (14ms)
+--------------------------------------------------------------------------------
+[19:16:48] POST /api/preparation/1
+→ Status: 400 (58ms)
+--------------------------------------------------------------------------------
+[21:37:24] POST /api/login
+→ Status: 400 (16ms)
+--------------------------------------------------------------------------------
+[22:30:08] GET /api/picking
+→ Status: 400 (40ms)
+--------------------------------------------------------------------------------
+[22:30:34] GET /api/picking
+→ Status: 400 (312ms)
+--------------------------------------------------------------------------------
+[22:31:52] GET /api/picking
+→ Status: 400 (212ms)
+--------------------------------------------------------------------------------
+[22:32:11] GET /api/picking
+→ Status: 400 (17ms)
+--------------------------------------------------------------------------------
+[22:33:21] GET /api/picking
+→ Status: 400 (248ms)
+--------------------------------------------------------------------------------
+[22:33:35] GET /api/picking
+→ Status: 400 (217ms)
+--------------------------------------------------------------------------------
+[22:33:48] GET /api/picking
+→ Status: 400 (347ms)
+--------------------------------------------------------------------------------
+[22:34:09] GET /api/picking
+→ Status: 400 (199ms)
+--------------------------------------------------------------------------------
+[22:34:44] GET /api/picking
+→ Status: 400 (191ms)
+--------------------------------------------------------------------------------
+[22:38:48] POST /api/picking/1
+→ Status: 405 (5ms)
+--------------------------------------------------------------------------------
+[22:39:34] POST /api/picking/1
+→ Status: 405 (2ms)
+--------------------------------------------------------------------------------
+[22:39:41] GET /api/picking/1
+→ Status: 401 (4ms)
+--------------------------------------------------------------------------------
+[22:39:52] ERROR HttpMethod.get /api/picking/1
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PickingDetail, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#8      _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#9      JsonEncoder.convert (dart:convert/json.dart:353:30)
+#10     JsonCodec.encode (dart:convert/json.dart:238:45)
+#11     jsonEncode (dart:convert/json.dart:118:12)
+#12     new Response.json (package:dart_frog/src/response.dart:70:32)
+#13     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#14     PickingResponse.findPickingDetail.<anonymous closure> (package:asset_management_api/features/picking/presentation/response/picking_response.dart:68:43)
+#15     Right.fold (package:dartz/src/either.dart:200:64)
+#16     PickingResponse.findPickingDetail (package:asset_management_api/features/picking/presentation/response/picking_response.dart:66:37)
+<asynchronous suspension>
+#17     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/picking/%5Bid%5D.dart:14:12)
+<asynchronous suspension>
+#18     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#19     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#20     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#21     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#22     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#23     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#24     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#25     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#26     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#27     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#28     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#29     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#30     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#31     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:41:01] ERROR HttpMethod.get /api/picking/1
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PickingDetail, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#8      _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#9      JsonEncoder.convert (dart:convert/json.dart:353:30)
+#10     JsonCodec.encode (dart:convert/json.dart:238:45)
+#11     jsonEncode (dart:convert/json.dart:118:12)
+#12     new Response.json (package:dart_frog/src/response.dart:70:32)
+#13     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#14     PickingResponse.findPickingDetail.<anonymous closure> (package:asset_management_api/features/picking/presentation/response/picking_response.dart:70:43)
+#15     Right.fold (package:dartz/src/either.dart:200:64)
+#16     PickingResponse.findPickingDetail (package:asset_management_api/features/picking/presentation/response/picking_response.dart:68:37)
+<asynchronous suspension>
+#17     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/picking/%5Bid%5D.dart:14:12)
+<asynchronous suspension>
+#18     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#19     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#20     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#21     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#22     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#23     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#24     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#25     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#26     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#27     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#28     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#29     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#30     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#31     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:42:06] ERROR HttpMethod.get /api/picking/1
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PickingDetail, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#8      _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#9      JsonEncoder.convert (dart:convert/json.dart:353:30)
+#10     JsonCodec.encode (dart:convert/json.dart:238:45)
+#11     jsonEncode (dart:convert/json.dart:118:12)
+#12     new Response.json (package:dart_frog/src/response.dart:70:32)
+#13     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#14     PickingResponse.findPickingDetail.<anonymous closure> (package:asset_management_api/features/picking/presentation/response/picking_response.dart:70:55)
+#15     Right.fold (package:dartz/src/either.dart:200:64)
+#16     PickingResponse.findPickingDetail (package:asset_management_api/features/picking/presentation/response/picking_response.dart:68:37)
+<asynchronous suspension>
+#17     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/picking/%5Bid%5D.dart:14:12)
+<asynchronous suspension>
+#18     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#19     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#20     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#21     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#22     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#23     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#24     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#25     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#26     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#27     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#28     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#29     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#30     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#31     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[22:42:41] ERROR HttpMethod.get /api/picking/1
+Converting object to an encodable object failed: Instance of 'MappedListIterable<PickingDetail, Map<String, dynamic>>'
+#0      _JsonStringifier.writeObject (dart:convert/json.dart:824:7)
+#1      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#2      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#3      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#4      _JsonStringifier.writeMap (dart:convert/json.dart:908:7)
+#5      _JsonStringifier.writeJsonValue (dart:convert/json.dart:863:21)
+#6      _JsonStringifier.writeObject (dart:convert/json.dart:815:9)
+#7      _JsonStringStringifier.printOn (dart:convert/json.dart:1024:17)
+#8      _JsonStringStringifier.stringify (dart:convert/json.dart:1005:5)
+#9      JsonEncoder.convert (dart:convert/json.dart:353:30)
+#10     JsonCodec.encode (dart:convert/json.dart:238:45)
+#11     jsonEncode (dart:convert/json.dart:118:12)
+#12     new Response.json (package:dart_frog/src/response.dart:70:32)
+#13     ResponseHelper.json (package:asset_management_api/core/helpers/response_helper.dart:78:21)
+#14     PickingResponse.findPickingDetail.<anonymous closure> (package:asset_management_api/features/picking/presentation/response/picking_response.dart:71:33)
+#15     Right.fold (package:dartz/src/either.dart:200:64)
+#16     PickingResponse.findPickingDetail (package:asset_management_api/features/picking/presentation/response/picking_response.dart:66:37)
+<asynchronous suspension>
+#17     onRequest (file:///C:/Users/Kira/Desktop/Development/asset_management_api/routes/api/picking/%5Bid%5D.dart:14:12)
+<asynchronous suspension>
+#18     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:427:30)
+<asynchronous suspension>
+#19     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#20     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#21     Router._invokeMountedHandler (package:dart_frog/src/router.dart:166:12)
+<asynchronous suspension>
+#22     RouterEntry.invoke.<anonymous closure> (package:dart_frog/src/router.dart:418:16)
+<asynchronous suspension>
+#23     RouterEntry.invoke (package:dart_frog/src/router.dart:413:12)
+<asynchronous suspension>
+#24     Router.call (package:dart_frog/src/router.dart:189:26)
+<asynchronous suspension>
+#25     logger.<anonymous closure> (package:asset_management_api/injectors/logger_injector.dart:20:18)
+<asynchronous suspension>
+#26     fromShelfMiddleware.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:9:28)
+<asynchronous suspension>
+#27     fromShelfMiddleware.<anonymous closure>.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:7:24)
+<asynchronous suspension>
+#28     toShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:43:22)
+<asynchronous suspension>
+#29     fromShelfHandler.<anonymous closure> (package:dart_frog/src/shelf_adapters.dart:34:22)
+<asynchronous suspension>
+#30     serve.<anonymous closure> (package:dart_frog/src/serve.dart:26:24)
+<asynchronous suspension>
+#31     handleRequest (package:shelf/shelf_io.dart:140:16)
+<asynchronous suspension>
+
+--------------------------------------------------------------------------------
+[00:19:36] PATCH /api/picking
+→ Status: 400 (28ms)
+--------------------------------------------------------------------------------

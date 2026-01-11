@@ -7,7 +7,7 @@ import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/extensions/string_ext.dart';
 import 'package:asset_management_api/core/helpers/asset.dart';
-import 'package:asset_management_api/features/assets/data/model/assets_detail_model.dart';
+import 'package:asset_management_api/features/assets/data/model/asset_detail_response_model.dart';
 import 'package:asset_management_api/features/assets/data/model/assets_request_model.dart';
 import 'package:asset_management_api/features/assets/data/model/assets_response_model.dart';
 import 'package:asset_management_api/features/assets/data/model/assets_response_pagination_model.dart';
@@ -118,38 +118,78 @@ class AssetsLocalDataSourceImpl implements AssetsLocalDataSource {
   }
 
   @override
-  Future<List<AssetsDetailModel>> findAssetDetailById(int params) async {
+  Future<AssetDetailResponseModel> findAssetDetailById(int params) async {
     try {
       final db = await _database.connection;
 
-      final response = await db.query(
+      final responseAsset = await db.query(
         '''
-      SELECT
-        am.id AS id,
-	      am.movement_type AS movement_type,
-	      l1.name AS from_location,
-	      l2.name AS to_location,
-	      u.name AS movement_by,
-	      am.movement_date,
-	      am.references_number AS references_number,
-	      am.notes AS notes
-      FROM 
-      	t_asset_movements AS am
-      LEFT JOIN t_locations AS l1 ON am.from_location_id = l1.id
-      LEFT JOIN t_locations AS l2 ON am.to_location_id  = l2.id
-      LEFT JOIN t_users AS u ON am.movement_by = u.id
-      WHERE am.asset_id = ?
-      ''',
+        SELECT
+	        a.id AS id,
+	        a.serial_number AS serial_number,
+	        a.asset_code AS asset_code,
+	        a.status AS status,
+	        a.conditions AS conditions,
+	        a.quantity AS quantity,
+	        am.unit AS uom,
+	        am.name AS model,
+	        ac.name AS category,
+	        ab.name AS brand,
+	        ats.name AS types,
+	        c.name AS color,
+	        l2.name AS location,
+	        l1.name AS location_detail,
+	        a.purchase_order AS purchase_order,
+	        a.remarks AS remarks
+        FROM
+          t_assets AS a
+        LEFT JOIN t_asset_models AS am ON a.asset_model_id  = am.id
+        LEFT JOIN t_asset_brands AS ab ON am.brand_id  = ab.id
+        LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
+        LEFT JOIN t_asset_types AS ats ON am.type_id = ats.id
+        LEFT JOIN t_colors AS c ON a.color_id  = c.id
+        LEFT JOIN t_locations AS l1 ON a.location_id  = l1.id
+        LEFT JOIN t_locations AS l2 ON l1.parent_id  = l2.id
+        WHERE a.id = ? 
+        LIMIT 1
+        ''',
         [params],
       );
 
-      if (response.firstOrNull == null) {
-        throw NotFoundException(message: 'Assets no history movement');
+      if (responseAsset.firstOrNull == null) {
+        throw NotFoundException(message: 'An error occurred, asset not found');
       }
 
-      return response
-          .map((e) => AssetsDetailModel.fromDatabase(e.fields))
-          .toList();
+      final asset = responseAsset.first.fields;
+
+      final response = await db.query(
+        '''
+        SELECT
+          am.id AS id,
+	        am.movement_type AS movement_type,
+	        l1.name AS from_location,
+	        l2.name AS to_location,
+	        u.name AS movement_by,
+	        am.movement_date,
+	        am.references_number AS references_number,
+	        am.notes AS notes
+        FROM 
+        	t_asset_movements AS am
+        LEFT JOIN t_locations AS l1 ON am.from_location_id = l1.id
+        LEFT JOIN t_locations AS l2 ON am.to_location_id  = l2.id
+        LEFT JOIN t_users AS u ON am.movement_by = u.id
+        WHERE am.asset_id = ?
+        ''',
+        [params],
+      );
+
+      final history = response.map((e) => e.fields).toList();
+
+      asset.addAll({
+        'history': history,
+      });
+
+      return AssetDetailResponseModel.fromMap(asset);
     } on NotFoundException {
       rethrow;
     } on MySqlException catch (e) {

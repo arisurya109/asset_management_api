@@ -14,6 +14,7 @@ Future<Response> onRequest(RequestContext context) async {
     final query = queryParams['query'];
     final limit = queryParams['limit'];
     final page = queryParams['page'];
+    final id = queryParams['id'];
 
     if (limit.isFilled() && page.isFilled()) {
       return await AssetsResponseUser.findAssetByPagination(
@@ -26,6 +27,10 @@ Future<Response> onRequest(RequestContext context) async {
 
     if (query.isFilled()) {
       return await AssetsResponseUser.findAssetByQuery(context, query!);
+    }
+
+    if (id.isFilled()) {
+      return await AssetsResponseUser.findAssetDetailById(context, id!);
     }
 
     return await AssetsResponseUser.findAllAssets(context);

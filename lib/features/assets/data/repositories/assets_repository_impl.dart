@@ -4,7 +4,7 @@ import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/error/failure.dart';
 import 'package:asset_management_api/features/assets/data/model/assets_request_model.dart';
 import 'package:asset_management_api/features/assets/data/source/assets_local_data_source.dart';
-import 'package:asset_management_api/features/assets/domain/entities/assets_detail.dart';
+import 'package:asset_management_api/features/assets/domain/entities/asset_detail_response.dart';
 import 'package:asset_management_api/features/assets/domain/entities/assets_request.dart';
 import 'package:asset_management_api/features/assets/domain/entities/assets_response.dart';
 import 'package:asset_management_api/features/assets/domain/entities/assets_response_pagination.dart';
@@ -29,12 +29,12 @@ class AssetsRepositoryImpl implements AssetsRepository {
   }
 
   @override
-  Future<Either<Failure, List<AssetsDetail>>> findAssetDetailById(
+  Future<Either<Failure, AssetDetailResponse>> findAssetDetailById(
     int params,
   ) async {
     try {
       final response = await _source.findAssetDetailById(params);
-      return Right(response.map((e) => e.toEntity()).toList());
+      return Right(response.toEntity());
     } on DatabaseException catch (e) {
       return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {

@@ -34,6 +34,13 @@ import 'package:asset_management_api/features/movement/data/source/movement_loca
 import 'package:asset_management_api/features/movement/data/source/movement_local_data_source_impl.dart';
 import 'package:asset_management_api/features/movement/domain/repositories/movement_repository.dart';
 import 'package:asset_management_api/features/movement/domain/usecases/create_movement_use_case.dart';
+import 'package:asset_management_api/features/picking/data/repositories/picking_repository_impl.dart';
+import 'package:asset_management_api/features/picking/data/source/picking_local_data_source.dart';
+import 'package:asset_management_api/features/picking/data/source/picking_local_data_source_impl.dart';
+import 'package:asset_management_api/features/picking/domain/repositories/picking_repository.dart';
+import 'package:asset_management_api/features/picking/domain/usecases/find_all_picking_task_use_case.dart';
+import 'package:asset_management_api/features/picking/domain/usecases/find_picking_detail_use_case.dart';
+import 'package:asset_management_api/features/picking/domain/usecases/picked_asset_use_case.dart';
 import 'package:asset_management_api/features/preparation/data/repositories/preparation_repository_impl.dart';
 import 'package:asset_management_api/features/preparation/data/repositories/prepartion_detail_repository_impl.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_detail_local_data_source.dart';
@@ -320,3 +327,14 @@ final GetPreparationDetailsUseCase getPreparationDetailsUseCase =
     GetPreparationDetailsUseCase(preparationDetailRepository);
 final AddPreparationDetailUseCase addPreparationDetailUseCase =
     AddPreparationDetailUseCase(preparationDetailRepository);
+
+final PickingLocalDataSource pickingLocalDataSource =
+    PickingLocalDataSourceImpl(database);
+final PickingRepository pickingRepository =
+    PickingRepositoryImpl(pickingLocalDataSource);
+final FindAllPickingTaskUseCase findAllPickingTaskUseCase =
+    FindAllPickingTaskUseCase(pickingRepository);
+final FindPickingDetailUseCase findPickingDetailUseCase =
+    FindPickingDetailUseCase(pickingRepository);
+final PickedAssetUseCase pickedAssetUseCase =
+    PickedAssetUseCase(pickingRepository);

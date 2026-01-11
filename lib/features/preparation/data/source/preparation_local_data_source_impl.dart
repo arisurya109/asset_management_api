@@ -433,7 +433,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           responseUpdate = await txn.query(
             '''
             UPDATE t_preparations
-            SET status = ?, total_box = ?
+            SET status = ?, total_box = ?, updated_at = CURRENT_TIMESTAMP
             WHERE id = ? AND created_id = ?
             ''',
             [params, totalBox, id, userId],
@@ -442,7 +442,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           responseUpdate = await txn.query(
             '''
             UPDATE t_preparations
-            SET status = ?
+            SET status = ?, updated_at = CURRENT_TIMESTAMP
             WHERE id = ? AND created_id = ?
             ''',
             [params, id, userId],
@@ -560,7 +560,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           responseUpdate = await txn.query(
             '''
             UPDATE t_preparations
-            SET status = ?, temporary_location_id = ?
+            SET status = ?, temporary_location_id = ?, updated_at = CURRENT_TIMESTAMP
             WHERE id = ? AND worker_id = ?
             ''',
             [params, temporaryLocationId, id, userId],
@@ -569,7 +569,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           responseUpdate = await txn.query(
             '''
             UPDATE t_preparations
-            SET status = ?
+            SET status = ?, updated_at = CURRENT_TIMESTAMP
             WHERE id = ? AND worker_id = ?
             ''',
             [params, id, userId],
@@ -685,7 +685,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
         responseUpdate = await txn.query(
           '''
             UPDATE t_preparations
-            SET status = ?
+            SET status = ?, updated_at = CURRENT_TIMESTAMP
             WHERE id = ? AND approved_id = ?
             ''',
           [params, id, userId],

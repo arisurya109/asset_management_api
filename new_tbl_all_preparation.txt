@@ -2,7 +2,7 @@ CREATE TABLE t_preparations (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	preparation_code VARCHAR(255) NOT NULL,
 	preparation_type ENUM('INTERNAL', 'EXTERNAL'),
-	status ENUM('DRAFT', 'ASSIGNED', 'PICKING', 'WAITING CHECK', 'ON CHECK', 'WAITING APPROVAL', 'APPROVED', 'COMPLETED', 'CANCELLED') DEFAULT 'DRAFT',
+	status ENUM('DRAFT', 'ASSIGNED', 'PICKING', 'CHECKED', 'READY', 'READY_TO_DELIVERY', 'COMPLETED', 'CANCELLED') DEFAULT 'DRAFT',
 	destination_id INT NOT NULL,
 	created_id INT NOT NULL,
 	worker_id INT NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE t_preparations (
 	temporary_location_id INT,
 	total_box INT,
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	updated_at DATETIME DEFAULT NULL,
 	notes VARCHAR(255),
 	FOREIGN KEY(temporary_location_id) REFERENCES t_locations(id),
 	FOREIGN KEY(destination_id) REFERENCES t_locations(id),
@@ -29,4 +29,27 @@ CREATE TABLE t_preparation_logs(
 	notes VARCHAR(255),
 	FOREIGN KEY(preparation_id) REFERENCES t_preparations(id),
 	FOREIGN KEY(updated_by) REFERENCES t_users(id)
+);
+
+CREATE TABLE t_preparation_details (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	preparation_id INT NOT NULL,
+	asset_model_id INT NOT NULL,
+	purchase_order VARCHAR(255),
+	quantity INT NOT NULL,
+	FOREIGN KEY(preparation_id) REFERENCES t_preparations(id),
+	FOREIGN KEY(asset_model_id) REFERENCES t_asset_models(id)
+);
+
+CREATE TABLE t_preparation_detail_items (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	preparation_detail_id INT NOT NULL,
+	asset_id INT,
+	quantity INT DEFAULT 0,
+	status ENUM('PENDING', 'PICKED') DEFAULT 'PENDING',
+	scanned_at DATETIME DEFAULT NULL,
+	FOREIGN KEY(preparation_detail_id) REFERENCES t_preparation_details(id),
+	FOREIGN KEY(asset_id) REFERENCES t_assets(id),
+	INDEX (asset_id),
+    INDEX (status)
 );

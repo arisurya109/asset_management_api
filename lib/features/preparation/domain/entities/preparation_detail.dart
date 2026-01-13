@@ -1,47 +1,53 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:asset_management_api/features/preparation/domain/entities/preparation_detail_item.dart';
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class PreparationDetail extends Equatable {
   int? id;
   int? preparationId;
-  int? modelId;
-  int? isConsumable;
-  String? purchaseOrder;
+  int? assetId;
   int? quantity;
+  String? status;
+  String? assetCode;
+  int? locationId;
+  String? purchaseOrder;
+  String? location;
+  int? modelId;
   String? model;
-  String? type;
+  int? isConsumable;
   String? category;
-  String? brand;
-  List<PreparationDetailItem>? items;
 
   PreparationDetail({
     this.id,
     this.preparationId,
-    this.modelId,
-    this.isConsumable,
-    this.purchaseOrder,
+    this.assetId,
     this.quantity,
+    this.status,
+    this.assetCode,
+    this.locationId,
+    this.purchaseOrder,
+    this.location,
+    this.modelId,
     this.model,
-    this.type,
+    this.isConsumable,
     this.category,
-    this.brand,
-    this.items,
   });
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
-      'model_id': modelId,
-      'is_consumable': isConsumable,
-      'purchase_order': purchaseOrder,
+      'preparation_id': preparationId,
+      'asset_id': assetId,
       'quantity': quantity,
+      'status': status,
+      'asset_code': assetCode,
+      'location_id': locationId,
+      'purchase_order': purchaseOrder,
+      'location': location,
       'model': model,
-      'type': type,
+      'is_consumable': isConsumable,
       'category': category,
-      'brand': brand,
-      'allocated_items': items?.map((e) => e.toJson()).toList() ?? [],
     };
   }
 
@@ -76,14 +82,17 @@ class PreparationDetail extends Equatable {
     return [
       id,
       preparationId,
+      assetId,
       modelId,
-      purchaseOrder,
       quantity,
+      status,
+      assetCode,
+      locationId,
+      purchaseOrder,
+      location,
       model,
-      type,
+      isConsumable,
       category,
-      brand,
-      items,
     ];
   }
 }

@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:asset_management_api/features/picking/data/model/picking_detail_item_model.dart';
 import 'package:asset_management_api/features/picking/domain/entities/picking_detail.dart';
 import 'package:equatable/equatable.dart';
 
@@ -13,7 +12,13 @@ class PickingDetailModel extends Equatable {
   String? model;
   String? types;
   String? category;
-  List<PickingDetailItemModel>? allocatedItems;
+  int? assetId;
+  String? status;
+  String? assetCode;
+  String? serialNumber;
+  int? locationId;
+  String? purchaseOrder;
+  String? location;
 
   PickingDetailModel({
     this.id,
@@ -23,7 +28,13 @@ class PickingDetailModel extends Equatable {
     this.model,
     this.types,
     this.category,
-    this.allocatedItems,
+    this.assetId,
+    this.status,
+    this.assetCode,
+    this.serialNumber,
+    this.locationId,
+    this.purchaseOrder,
+    this.location,
   });
 
   factory PickingDetailModel.fromDatabase(Map<String, dynamic> map) {
@@ -36,15 +47,35 @@ class PickingDetailModel extends Equatable {
       model: map['model'] != null ? map['model'] as String : null,
       types: map['types'] != null ? map['types'] as String : null,
       category: map['category'] != null ? map['category'] as String : null,
-      allocatedItems: map['allocated_items'] != null
-          ? (map['allocated_items'] as List)
-              .map(
-                (e) => PickingDetailItemModel.fromDatabase(
-                  e as Map<String, dynamic>,
-                ),
-              )
-              .toList()
+      assetCode: map['asset_code'] != null ? map['asset_code'] as String : null,
+      assetId: map['asset_id'] != null ? map['asset_id'] as int : null,
+      location: map['location'] != null ? map['location'] as String : null,
+      locationId: map['location_id'] != null ? map['location_id'] as int : null,
+      purchaseOrder: map['purchase_order'] != null
+          ? map['purchase_order'] as String
           : null,
+      serialNumber:
+          map['serial_number'] != null ? map['serial_number'] as String : null,
+      status: map['status'] != null ? map['status'] as String : null,
+    );
+  }
+
+  factory PickingDetailModel.fromEntity(PickingDetail params) {
+    return PickingDetailModel(
+      id: params.id,
+      assetCode: params.assetCode,
+      assetId: params.assetId,
+      category: params.category,
+      isConsumable: params.isConsumable,
+      location: params.location,
+      locationId: params.locationId,
+      model: params.model,
+      modelId: params.modelId,
+      purchaseOrder: params.purchaseOrder,
+      quantity: params.quantity,
+      serialNumber: params.serialNumber,
+      status: params.status,
+      types: params.types,
     );
   }
 
@@ -57,7 +88,13 @@ class PickingDetailModel extends Equatable {
       modelId: modelId,
       quantity: quantity,
       types: types,
-      allocatedItems: allocatedItems?.map((e) => e.toEntity()).toList(),
+      assetCode: assetCode,
+      assetId: assetId,
+      location: location,
+      locationId: locationId,
+      purchaseOrder: purchaseOrder,
+      serialNumber: serialNumber,
+      status: status,
     );
   }
 
@@ -71,6 +108,13 @@ class PickingDetailModel extends Equatable {
       model,
       types,
       category,
+      assetId,
+      status,
+      assetCode,
+      serialNumber,
+      locationId,
+      location,
+      purchaseOrder
     ];
   }
 }

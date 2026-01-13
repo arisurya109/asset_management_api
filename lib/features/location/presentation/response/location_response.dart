@@ -71,16 +71,8 @@ class LocationResponse {
 
     final validateToken = await jwt.verifyToken(context);
 
-    final validatePermission = await jwt.checkPermissionUser(
-      context,
-      'master',
-      'view',
-    );
-
     if (!validateToken) {
       return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
-    } else if (!validatePermission) {
-      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
     } else {
       final usecase = context.read<FindAllLocationUseCase>();
 

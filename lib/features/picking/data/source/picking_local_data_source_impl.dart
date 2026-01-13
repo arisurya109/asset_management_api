@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
-import 'package:asset_management_api/features/picking/data/model/picking_detail_item_model.dart';
+import 'package:asset_management_api/features/picking/data/model/picking_detail_model.dart';
 import 'package:asset_management_api/features/picking/data/model/picking_detail_response_model.dart';
 import 'package:asset_management_api/features/picking/data/model/picking_header_model.dart';
 import 'package:asset_management_api/features/picking/data/source/picking_local_data_source.dart';
@@ -51,7 +51,7 @@ class PickingLocalDataSourceImpl implements PickingLocalDataSource {
       );
 
       if (response.firstOrNull == null) {
-        throw NotFoundException(message: 'There is no task to picking assets');
+        return [];
       }
 
       return response
@@ -124,49 +124,30 @@ class PickingLocalDataSourceImpl implements PickingLocalDataSource {
           '''
           SELECT
           	pd.id AS id,
-          	pd.asset_model_id AS model_id,
+          	pd.preparation_id AS preparation_id,
+          	pd.asset_id AS asset_id,
           	pd.quantity AS quantity,
-          	am.is_consumable AS is_consumable,
+          	pd.status AS status,
+          	ast.asset_code AS asset_code,
+          	ast.location_id AS location_id,
+          	ast.purchase_order AS purchase_order,
+          	l.name AS location,
           	am.name AS model,
-          	at.name AS types,
+          	am.is_consumable AS is_consumable,
           	ac.name AS category
-          FROM 
+          FROM
           	t_preparation_details AS pd
-          LEFT JOIN t_asset_models AS am ON pd.asset_model_id = am.id
-          LEFT JOIN t_asset_types AS at ON am.type_id = at.id
+          LEFT JOIN t_assets AS ast ON pd.asset_id = ast.id
+          LEFT JOIN t_locations AS l ON ast.location_id = l.id
+          LEFT JOIN t_asset_models AS am ON ast.asset_model_id = am.id
           LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
-          WHERE pd.preparation_id = ?
+          WHERE pd.preparation_id = ? AND pd.status = 'PENDING'
+          ORDER BY l.name ASC
           ''',
           [id],
         );
 
         final pickingDetails = rPickingDetails.map((e) => e.fields).toList();
-
-        for (final pickingDetail in pickingDetails) {
-          final resPickItems = await db.query(
-            '''
-            SELECT
-            	pdi.id AS id,
-            	pdi.asset_id AS asset_id,
-            	pdi.quantity AS quantity,
-            	pdi.status AS status,
-            	ast.asset_code AS asset_code,
-            	ast.serial_number AS serial_number,
-            	ast.location_id AS location_id,
-            	l.name AS location
-            FROM
-            	t_preparation_detail_items AS pdi
-            LEFT JOIN t_assets AS ast ON pdi.asset_id = ast.id
-            LEFT JOIN t_locations AS l ON ast.location_id = l.id
-            WHERE pdi.preparation_detail_id = ?
-            ''',
-            [pickingDetail['id']],
-          );
-
-          pickingDetail.addAll(
-            {'allocated_items': resPickItems.map((e) => e.fields).toList()},
-          );
-        }
 
         pickingHeader.addAll({'items': pickingDetails});
 
@@ -190,7 +171,7 @@ class PickingLocalDataSourceImpl implements PickingLocalDataSource {
   @override
   Future<String> pickedAsset({
     required int userId,
-    required PickingDetailItemModel params,
+    required PickingDetailModel params,
   }) async {
     try {
       final db = await _database.connection;
@@ -201,10 +182,9 @@ class PickingLocalDataSourceImpl implements PickingLocalDataSource {
           SELECT 
           	p.worker_id AS worker_id
           FROM
-          	t_preparation_detail_items AS pdi
-          LEFT JOIN t_preparation_details AS pd ON pdi.preparation_detail_id = pd.id
+          	t_preparation_details AS pd
           LEFT JOIN t_preparations AS p ON pd.preparation_id = p.id
-          WHERE pdi.id = ?
+          WHERE pd.id = ?
           ''',
           [params.id],
         );
@@ -220,11 +200,11 @@ class PickingLocalDataSourceImpl implements PickingLocalDataSource {
         final prepItems = await txn.query(
           '''
           SELECT 
-          	pdi.*,
+          	pd.*,
           	ast.location_id AS location_id
-          FROM  t_preparation_detail_items AS pdi
-          LEFT JOIN t_assets AS ast ON pdi.asset_id = ast.id
-          WHERE pdi.id = ?
+          FROM  t_preparation_details AS pd
+          LEFT JOIN t_assets AS ast ON pd.asset_id = ast.id
+          WHERE pd.id = ?
           LIMIT 1
           ''',
           [params.id],
@@ -245,7 +225,7 @@ class PickingLocalDataSourceImpl implements PickingLocalDataSource {
         } else {
           final updatedItems = await txn.query(
             '''
-            UPDATE t_preparation_detail_items
+            UPDATE t_preparation_details
             SET status = 'PICKED', scanned_at = CURRENT_TIMESTAMP
             WHERE id = ?
             ''',

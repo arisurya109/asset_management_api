@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:asset_management_api/features/picking/data/model/picking_detail_item_model.dart';
+import 'package:asset_management_api/features/picking/data/model/picking_detail_model.dart';
 import 'package:asset_management_api/features/picking/data/model/picking_detail_response_model.dart';
 import 'package:asset_management_api/features/picking/data/model/picking_header_model.dart';
 
@@ -14,6 +14,6 @@ abstract class PickingLocalDataSource {
   });
   Future<String> pickedAsset({
     required int userId,
-    required PickingDetailItemModel params,
+    required PickingDetailModel params,
   });
 }

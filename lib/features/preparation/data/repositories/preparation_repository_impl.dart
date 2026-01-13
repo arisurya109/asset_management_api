@@ -85,6 +85,8 @@ class PreparationRepositoryImpl implements PreparationRepository {
       return Left(NotFoundFailure(e.message));
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));
+    } on UpdateException catch (e) {
+      return Left(UpdateFailure(e.message));
     }
   }
 }

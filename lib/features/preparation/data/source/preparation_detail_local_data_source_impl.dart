@@ -80,54 +80,29 @@ class PreparationDetailLocalDataSourceImpl
         SELECT
         	pd.id AS id,
         	pd.preparation_id AS preparation_id,
-        	am.id AS model_id,
+        	pd.asset_id AS asset_id,
+        	pd.quantity AS quantity,
+        	pd.status AS status,
+        	ast.asset_code AS asset_code,
+        	ast.location_id AS location_id,
+        	ast.purchase_order AS purchase_order,
+        	l.name AS location,
         	am.name AS model,
-        	am.is_consumable AS is_consumable ,
-        	at.name AS type,
-        	ac.name AS category,
-        	ab.name AS brand,
-        	pd.purchase_order AS purchase_order,
-        	pd.quantity AS quantity
+        	am.is_consumable AS is_consumable,
+        	ac.name AS category
         FROM
         	t_preparation_details AS pd
-        LEFT JOIN t_asset_models AS am ON pd.asset_model_id = am.id
-        LEFT JOIN t_asset_types AS at ON am.type_id = at.id
+        LEFT JOIN t_assets AS ast ON pd.asset_id = ast.id
+        LEFT JOIN t_locations AS l ON ast.location_id = l.id
+        LEFT JOIN t_asset_models AS am ON ast.asset_model_id = am.id
         LEFT JOIN t_asset_categories AS ac ON am.category_id = ac.id
-        LEFT JOIN t_asset_brands AS ab ON am.brand_id = ab.id
         WHERE pd.preparation_id =  ?
+        ORDER BY l.name ASC
         ''',
         [preparation['id']],
       );
 
       final preparationDetails = resPrepDetail.map((e) => e.fields).toList();
-
-      for (final prep in preparationDetails) {
-        final resPrepItems = await db.query(
-          '''
-          SELECT 
-          	pdi.id AS id,
-          	pdi.preparation_detail_id AS preparation_detail_id,
-          	pdi.asset_id AS asset_id,
-          	pdi.quantity AS quantity,
-          	pdi.status AS status,
-          	ast.asset_code AS asset_code,
-          	ast.serial_number AS serial_number,
-          	ast.conditions AS conditions,
-          	l.name AS location
-          FROM
-          	t_preparation_detail_items AS pdi
-          LEFT JOIN t_preparation_details AS pd ON pdi.preparation_detail_id = pd.id
-          LEFT JOIN t_assets AS ast ON pdi.asset_id = ast.id 
-          LEFT JOIN t_locations AS l ON ast.location_id = l.id
-          WHERE pdi.preparation_detail_id = ?
-          ''',
-          [prep['id']],
-        );
-
-        prep.addAll(
-          {'allocated_items': resPrepItems.map((e) => e.fields).toList()},
-        );
-      }
 
       preparation.addAll({'items': preparationDetails});
 
@@ -222,22 +197,6 @@ class PreparationDetailLocalDataSourceImpl
           throw NotFoundException(message: 'Stock assets are unavailable');
         }
 
-        final quantity = responseAsset.length;
-
-        final insertedDetail = await txn.query('''
-          INSERT INTO t_preparation_details
-            (preparation_id, asset_model_id, purchase_order, quantity)
-          VALUES
-            (?, ?, ?, ?)
-          ''', [
-          params.preparationId,
-          params.modelId,
-          params.purchaseOrder,
-          quantity,
-        ]);
-
-        final detailId = insertedDetail.insertId;
-
         for (final row in responseAsset) {
           final asset = row.fields;
           final assetId = asset['id'];
@@ -249,12 +208,12 @@ class PreparationDetailLocalDataSourceImpl
 
           await txn.query(
             '''
-            INSERT INTO t_preparation_detail_items
-              (preparation_detail_id, asset_id, quantity)
+            INSERT INTO t_preparation_details
+              (preparation_id, asset_id, quantity)
             VALUES
               (?, ?, 1)
             ''',
-            [detailId, assetId],
+            [params.preparationId, assetId],
           );
         }
 
@@ -334,26 +293,14 @@ class PreparationDetailLocalDataSourceImpl
           [needed, assetId],
         );
 
-        final insertedDetail = await txn.query(
-          '''
-        INSERT INTO t_preparation_details
-          (preparation_id, asset_model_id, quantity)
-        VALUES
-          (?, ?, ?)
-        ''',
-          [params.preparationId, params.modelId, needed],
-        );
-
-        final detailId = insertedDetail.insertId;
-
         await txn.query(
           '''
-        INSERT INTO t_preparation_detail_items
-          (preparation_detail_id, asset_id, quantity)
+        INSERT INTO t_preparation_details
+          (preparation_id, asset_id, quantity)
         VALUES
           (?, ?, ?)
         ''',
-          [detailId, assetId, needed],
+          [params.preparationId, assetId, needed],
         );
 
         return 'Successfully added asset';

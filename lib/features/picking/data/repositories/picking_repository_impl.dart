@@ -2,9 +2,9 @@
 
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/error/failure.dart';
-import 'package:asset_management_api/features/picking/data/model/picking_detail_item_model.dart';
+import 'package:asset_management_api/features/picking/data/model/picking_detail_model.dart';
 import 'package:asset_management_api/features/picking/data/source/picking_local_data_source.dart';
-import 'package:asset_management_api/features/picking/domain/entities/picking_detail_item.dart';
+import 'package:asset_management_api/features/picking/domain/entities/picking_detail.dart';
 import 'package:asset_management_api/features/picking/domain/entities/picking_detail_response.dart';
 import 'package:asset_management_api/features/picking/domain/entities/picking_header.dart';
 import 'package:asset_management_api/features/picking/domain/repositories/picking_repository.dart';
@@ -50,12 +50,12 @@ class PickingRepositoryImpl implements PickingRepository {
   @override
   Future<Either<Failure, String>> pickedAsset({
     required int userId,
-    required PickingDetailItem params,
+    required PickingDetail params,
   }) async {
     try {
       final response = await _source.pickedAsset(
         userId: userId,
-        params: PickingDetailItemModel.fromEntity(params),
+        params: PickingDetailModel.fromEntity(params),
       );
       return Right(response);
     } on DatabaseException catch (e) {

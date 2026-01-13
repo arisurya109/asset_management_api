@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:asset_management_api/features/picking/domain/entities/picking_detail_item.dart';
+import 'package:asset_management_api/core/extensions/string_ext.dart';
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
@@ -12,7 +12,13 @@ class PickingDetail extends Equatable {
   String? model;
   String? types;
   String? category;
-  List<PickingDetailItem>? allocatedItems;
+  int? assetId;
+  String? status;
+  String? assetCode;
+  String? serialNumber;
+  int? locationId;
+  String? purchaseOrder;
+  String? location;
 
   PickingDetail({
     this.id,
@@ -22,34 +28,14 @@ class PickingDetail extends Equatable {
     this.model,
     this.types,
     this.category,
-    this.allocatedItems,
+    this.assetId,
+    this.status,
+    this.assetCode,
+    this.serialNumber,
+    this.locationId,
+    this.purchaseOrder,
+    this.location,
   });
-
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'id': id,
-      'model_id': modelId,
-      'quantity': quantity,
-      'is_consumable': isConsumable,
-      'model': model,
-      'types': types,
-      'category': category,
-      'allocated_items': allocatedItems?.map((e) => e.toJson()).toList(),
-    };
-  }
-
-  factory PickingDetail.fromJson(Map<String, dynamic> map) {
-    return PickingDetail(
-      id: map['id'] != null ? map['id'] as int : null,
-      modelId: map['modelId'] != null ? map['modelId'] as int : null,
-      quantity: map['quantity'] != null ? map['quantity'] as int : null,
-      isConsumable:
-          map['isConsumable'] != null ? map['isConsumable'] as int : null,
-      model: map['model'] != null ? map['model'] as String : null,
-      types: map['types'] != null ? map['types'] as String : null,
-      category: map['category'] != null ? map['category'] as String : null,
-    );
-  }
 
   @override
   List<Object?> get props {
@@ -61,6 +47,58 @@ class PickingDetail extends Equatable {
       model,
       types,
       category,
+      assetId,
+      status,
+      assetCode,
+      serialNumber,
+      locationId,
+      location,
+      purchaseOrder
     ];
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'model_id': modelId,
+      'quantity': quantity,
+      'is_consumable': isConsumable,
+      'model': model,
+      'types': types,
+      'category': category,
+      'asset_id': assetId,
+      'status': status,
+      'asset_code': assetCode,
+      'serial_number': serialNumber,
+      'location_id': locationId,
+      'purchase_order': purchaseOrder,
+      'location': location,
+    };
+  }
+
+  factory PickingDetail.fromJsonPickAsset(Map<String, dynamic> map) {
+    return PickingDetail(
+      id: map['id'] != null ? map['id'] as int : null,
+      assetId: map['asset_id'] != null ? map['asset_id'] as int : null,
+      quantity: map['quantity'] != null ? map['quantity'] as int : null,
+      status: map['status'] != null ? map['status'] as String : null,
+      locationId: map['location_id'] != null ? map['location_id'] as int : null,
+    );
+  }
+
+  String? validatePickAsset() {
+    if (id == null) {
+      return 'Id cannot empty';
+    } else if (assetId == null) {
+      return 'Asset cannot empty';
+    } else if (quantity == null) {
+      return 'Quantity cannot empty';
+    } else if (!status.isFilled()) {
+      return 'Status cannot empty';
+    } else if (locationId == null) {
+      return 'Location cannot empty';
+    } else {
+      return null;
+    }
   }
 }

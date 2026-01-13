@@ -6,7 +6,7 @@ import 'package:asset_management_api/core/extensions/request_method_ext.dart';
 import 'package:asset_management_api/core/helpers/constant.dart';
 import 'package:asset_management_api/core/helpers/response_helper.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
-import 'package:asset_management_api/features/picking/domain/entities/picking_detail_item.dart';
+import 'package:asset_management_api/features/picking/domain/entities/picking_detail.dart';
 import 'package:asset_management_api/features/picking/domain/usecases/find_all_picking_task_use_case.dart';
 import 'package:asset_management_api/features/picking/domain/usecases/find_picking_detail_use_case.dart';
 import 'package:asset_management_api/features/picking/domain/usecases/picked_asset_use_case.dart';
@@ -100,6 +100,7 @@ class PickingResponse {
         userId: userId,
         params: json['status'] as String,
         temporaryLocationId: json['temporary_location_id'] as int?,
+        totalBox: json['total_box'] as int?,
       );
 
       return failureOrPickingDetail.fold(
@@ -129,7 +130,7 @@ class PickingResponse {
 
       final json = await context.requestJSON();
 
-      final params = PickingDetailItem.fromJson(json);
+      final params = PickingDetail.fromJsonPickAsset(json);
 
       final validateParams = params.validatePickAsset();
 

@@ -378,14 +378,15 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
     int? totalBox,
     int? temporaryLocationId,
   }) async {
-    if (params == 'APPROVED') {
+    if (params == 'READY TO DELIVERY') {
       return await _updateByApproved(id: id, params: params, userId: userId);
-    } else if (params == 'PICKING' || params == 'WAITING CHECK') {
+    } else if (params == 'PICKING' || params == 'READY') {
       return await _updateByWorker(
         id: id,
         params: params,
         userId: userId,
         temporaryLocationId: temporaryLocationId,
+        totalBox: totalBox,
       );
     } else {
       return await _updateByCreated(
@@ -529,6 +530,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
     required String params,
     required int userId,
     int? temporaryLocationId,
+    int? totalBox,
   }) async {
     try {
       final db = await _database.connection;
@@ -547,7 +549,6 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
         final preparation = responseGetPreparation.first.fields;
 
-        // Check update preparation
         if (preparation['worker_id'] != userId) {
           throw UpdateException(
             message: 'An error occurred, you do not have access',
@@ -560,10 +561,10 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           responseUpdate = await txn.query(
             '''
             UPDATE t_preparations
-            SET status = ?, temporary_location_id = ?, updated_at = CURRENT_TIMESTAMP
+            SET status = ?, temporary_location_id = ?, total_box = ? ,updated_at = CURRENT_TIMESTAMP
             WHERE id = ? AND worker_id = ?
             ''',
-            [params, temporaryLocationId, id, userId],
+            [params, temporaryLocationId, totalBox, id, userId],
           );
         } else {
           responseUpdate = await txn.query(

@@ -9,9 +9,11 @@ class PreparationModel extends Equatable {
   String? type;
   String? status;
   int? destinationId;
+  int? destinationCode;
+  String? destinationInit;
   String? destination;
-  int? temporaryLocationId;
-  String? temporaryLocation;
+  int? locationId;
+  String? location;
   int? createdId;
   String? created;
   int? workerId;
@@ -28,9 +30,11 @@ class PreparationModel extends Equatable {
     this.type,
     this.status,
     this.destinationId,
+    this.destinationCode,
+    this.destinationInit,
     this.destination,
-    this.temporaryLocationId,
-    this.temporaryLocation,
+    this.locationId,
+    this.location,
     this.createdId,
     this.created,
     this.workerId,
@@ -42,7 +46,7 @@ class PreparationModel extends Equatable {
     this.createdAt,
   });
 
-  factory PreparationModel.fromJson(Map<String, dynamic> map) {
+  factory PreparationModel.fromMap(Map<String, dynamic> map) {
     return PreparationModel(
       id: map['id'] != null ? map['id'] as int : null,
       code: map['code'] != null ? map['code'] as String : null,
@@ -50,14 +54,16 @@ class PreparationModel extends Equatable {
       status: map['status'] != null ? map['status'] as String : null,
       destinationId:
           map['destination_id'] != null ? map['destination_id'] as int : null,
+      destinationCode: map['destination_code'] != null
+          ? map['destination_code'] as int
+          : null,
+      destinationInit: map['destination_init'] != null
+          ? map['destination_init'] as String
+          : null,
       destination:
           map['destination'] != null ? map['destination'] as String : null,
-      temporaryLocationId: map['temporary_location_id'] != null
-          ? map['temporary_location_id'] as int
-          : null,
-      temporaryLocation: map['temporary_location'] != null
-          ? map['temporary_location'] as String
-          : null,
+      locationId: map['location_id'] != null ? map['location_id'] as int : null,
+      location: map['location'] != null ? map['location'] as String : null,
       createdId: map['created_id'] != null ? map['created_id'] as int : null,
       created: map['created'] != null ? map['created'] as String : null,
       workerId: map['worker_id'] != null ? map['worker_id'] as int : null,
@@ -71,28 +77,6 @@ class PreparationModel extends Equatable {
     );
   }
 
-  factory PreparationModel.fromEntity(Preparation params) {
-    return PreparationModel(
-      id: params.id,
-      code: params.code,
-      type: params.type,
-      status: params.status,
-      destination: params.destination,
-      destinationId: params.destinationId,
-      temporaryLocation: params.temporaryLocation,
-      temporaryLocationId: params.temporaryLocationId,
-      createdId: params.createdId,
-      created: params.created,
-      worker: params.worker,
-      workerId: params.workerId,
-      approved: params.approved,
-      approvedId: params.approvedId,
-      createdAt: params.createdAt,
-      notes: params.notes,
-      totalBox: params.totalBox,
-    );
-  }
-
   Preparation toEntity() {
     return Preparation(
       id: id,
@@ -101,8 +85,10 @@ class PreparationModel extends Equatable {
       status: status,
       destination: destination,
       destinationId: destinationId,
-      temporaryLocation: temporaryLocation,
-      temporaryLocationId: temporaryLocationId,
+      destinationCode: destinationCode,
+      destinationInit: destinationInit,
+      location: location,
+      locationId: locationId,
       created: created,
       createdId: createdId,
       createdAt: createdAt,
@@ -124,8 +110,8 @@ class PreparationModel extends Equatable {
       status,
       destinationId,
       destination,
-      temporaryLocationId,
-      temporaryLocation,
+      locationId,
+      location,
       createdId,
       created,
       workerId,

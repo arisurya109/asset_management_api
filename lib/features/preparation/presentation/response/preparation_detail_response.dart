@@ -6,8 +6,9 @@ import 'package:asset_management_api/core/extensions/request_method_ext.dart';
 import 'package:asset_management_api/core/helpers/constant.dart';
 import 'package:asset_management_api/core/helpers/response_helper.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
-import 'package:asset_management_api/features/preparation/domain/entities/preparation_detail.dart';
+import 'package:asset_management_api/features/preparation/domain/entities/preparation_detail_request.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/add_preparation_detail_use_case.dart';
+import 'package:asset_management_api/features/preparation/domain/usecases/delete_preparation_detail_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/get_preparation_details_use_case.dart';
 import 'package:dart_frog/dart_frog.dart';
 
@@ -43,9 +44,9 @@ class PreparationDetailResponseUser {
 
       final usecase = context.read<AddPreparationDetailUseCase>();
 
-      final params = PreparationDetail.fromJsonAdd(jsonMap);
+      final params = PreparationDetailRequest.jsonCreate(jsonMap);
 
-      final paramsIsValid = params.validateAdd();
+      final paramsIsValid = params.validateCreateRequest();
 
       if (paramsIsValid != null) {
         return ResponseHelper.badRequest(description: paramsIsValid);
@@ -62,6 +63,62 @@ class PreparationDetailResponseUser {
         ),
         (response) => ResponseHelper.json(
           code: HttpStatus.created,
+          status: response,
+        ),
+      );
+    }
+  }
+
+  static Future<Response> deletePreparationDetail(
+    RequestContext context,
+    int id,
+    int preparationId,
+  ) async {
+    final jwt = context.read<JwtService>();
+
+    final validateToken = await jwt.verifyToken(context);
+
+    final validatePermission = await jwt.checkPermissionUser(
+      context,
+      'preparation',
+      'delete',
+    );
+
+    if (!validateToken) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.unAuthorized);
+    } else if (!validatePermission) {
+      return ResponseHelper.unAuthorized(description: ErrorMsg.notAccessModul);
+    } else {
+      final jsonMap = await context.requestJSON();
+
+      final userId = await jwt.getIdUser(context);
+
+      jsonMap.addAll({
+        'id': id,
+        'preparation_id': preparationId,
+      });
+
+      final usecase = context.read<DeletePreparationDetailUseCase>();
+
+      final params = PreparationDetailRequest.jsonCreate(jsonMap);
+
+      final paramsIsValid = params.validateDeleteRequest();
+
+      if (paramsIsValid != null) {
+        return ResponseHelper.badRequest(description: paramsIsValid);
+      }
+
+      final failureOrResponse = await usecase(
+        params: params,
+        userId: userId,
+      );
+
+      return failureOrResponse.fold(
+        (failure) => ResponseHelper.badRequest(
+          description: failure.message!,
+        ),
+        (response) => ResponseHelper.json(
+          code: HttpStatus.ok,
           status: response,
         ),
       );

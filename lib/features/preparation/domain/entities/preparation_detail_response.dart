@@ -18,6 +18,8 @@ class PreparationDetailResponse extends Equatable {
       'total_box': preparation?.totalBox,
       'destination': {
         'id': preparation?.destinationId,
+        'code': preparation?.destinationCode,
+        'init': preparation?.destinationInit,
         'name': preparation?.destination,
       },
       'created': {'id': preparation?.createdId, 'name': preparation?.created},
@@ -26,9 +28,9 @@ class PreparationDetailResponse extends Equatable {
         'name': preparation?.approved,
       },
       'worker': {'id': preparation?.workerId, 'name': preparation?.worker},
-      'temporary_location': {
-        'id': preparation?.temporaryLocationId,
-        'name': preparation?.temporaryLocation,
+      'location': {
+        'id': preparation?.locationId,
+        'name': preparation?.location,
       },
       'created_at': preparation?.createdAt?.toIso8601String(),
       'notes': preparation?.notes,

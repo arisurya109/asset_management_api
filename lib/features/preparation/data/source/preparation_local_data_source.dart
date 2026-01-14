@@ -2,11 +2,12 @@
 
 import 'package:asset_management_api/features/preparation/data/model/preparation_model.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_pagination_model.dart';
+import 'package:asset_management_api/features/preparation/domain/entities/preparation_request.dart';
 
 abstract class PreparationLocalDataSource {
   Future<List<String>> getPreparationTypes();
   Future<PreparationModel> createPreparation({
-    required PreparationModel params,
+    required PreparationRequest params,
   });
   Future<PreparationPaginationModel> findPreparationByPagination({
     required int page,
@@ -14,10 +15,7 @@ abstract class PreparationLocalDataSource {
     String? query,
   });
   Future<PreparationModel> updatePreparationStatus({
-    required int id,
-    required String params,
     required int userId,
-    int? totalBox,
-    int? temporaryLocationId,
+    required PreparationRequest params,
   });
 }

@@ -9,6 +9,7 @@ import 'package:asset_management_api/core/helpers/asset.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_model.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_pagination_model.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
+import 'package:asset_management_api/features/preparation/domain/entities/preparation_request.dart';
 import 'package:mysql1/mysql1.dart';
 
 class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
@@ -18,17 +19,17 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
   @override
   Future<PreparationModel> createPreparation({
-    required PreparationModel params,
+    required PreparationRequest params,
   }) async {
-    if (params.type == 'INTERNAL') {
-      return await _createPreparationInternal(params);
+    if (params.type == 'NEWSTORE') {
+      return await _createPreparationNewstore(params);
     } else {
-      return await _createPreparationExternal(params);
+      return await _createPreparationAdditional(params);
     }
   }
 
-  Future<PreparationModel> _createPreparationExternal(
-    PreparationModel params,
+  Future<PreparationModel> _createPreparationAdditional(
+    PreparationRequest params,
   ) async {
     try {
       final db = await _database.connection;
@@ -36,7 +37,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
       final response = await db.transaction((txn) async {
         final checkDestination = await txn.query(
           'SELECT * FROM t_locations WHERE id = ? AND is_active = 1 LIMIT 1',
-          [params.destinationId],
+          [params.destination],
         );
 
         if (checkDestination.firstOrNull == null) {
@@ -66,7 +67,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
         final lastCode = (count + 1).toString().padLeft(width, '0');
 
-        final preparationCode = 'AP-$templateCode$lastCode';
+        final preparationCode = 'PREP-$templateCode$lastCode';
 
         final newPreparation = await txn.query('''
           INSERT INTO t_preparations
@@ -75,11 +76,11 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             (?, ?, ?, ?, ?, ?, ?)
           ''', [
           preparationCode,
-          'EXTERNAL',
-          params.destinationId,
-          params.createdId,
-          params.workerId,
-          params.approvedId,
+          'ADDITIONAL',
+          params.destination,
+          params.created,
+          params.worker,
+          params.approved,
           params.notes,
         ]);
 
@@ -98,7 +99,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           ''', [
           newPreparation.insertId,
           'DRAFT',
-          params.createdId,
+          params.created,
           'CREATE DOCUMENT',
         ]);
 
@@ -110,9 +111,11 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           	p.preparation_type AS type,
           	p.status AS status,
           	p.destination_id AS destination_id,
+          	d.code AS destination_code,
+          	d.init AS destination_init,
           	d.name AS destination,
-          	p.temporary_location_id AS temporary_location_id,
-          	t.name AS temporary_location,
+          	p.location_id AS location_id,
+          	t.name AS location,
           	p.created_id AS created_id,
           	c.name AS created,
           	p.worker_id AS worker_id,
@@ -125,7 +128,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           FROM
           	t_preparations AS p
           LEFT JOIN t_locations AS d ON p.destination_id = d.id
-          LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
+          LEFT JOIN t_locations AS t ON p.location_id = t.id
           LEFT JOIN t_users AS c ON p.created_id = c.id
           LEFT JOIN t_users AS w ON p.worker_id = w.id
           LEFT JOIN t_users AS a ON p.approved_id = a.id
@@ -138,7 +141,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
         return responsePrep.first.fields;
       });
 
-      return PreparationModel.fromJson(response!);
+      return PreparationModel.fromMap(response!);
     } on NotFoundException {
       rethrow;
     } on CreateException {
@@ -154,8 +157,8 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
     }
   }
 
-  Future<PreparationModel> _createPreparationInternal(
-    PreparationModel params,
+  Future<PreparationModel> _createPreparationNewstore(
+    PreparationRequest params,
   ) async {
     try {
       final db = await _database.connection;
@@ -163,7 +166,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
       final response = await db.transaction((txn) async {
         final checkDestination = await txn.query(
           'SELECT * FROM t_locations WHERE id = ? AND is_active = 1 LIMIT 1',
-          [params.destinationId],
+          [params.destination],
         );
 
         if (checkDestination.firstOrNull == null) {
@@ -175,7 +178,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
         final destinationMap = checkDestination.first.fields;
 
         if (destinationMap['is_storage'] == 1 ||
-            destinationMap['location_type'] == 'VENDOR') {
+            destinationMap['location_type'] != 'STORE') {
           throw CreateException(
             message: 'An error occurred, destination cannot valid',
           );
@@ -193,7 +196,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
         final lastCode = (count + 1).toString().padLeft(width, '0');
 
-        final preparationCode = 'AP-$templateCode$lastCode';
+        final preparationCode = 'PREP-$templateCode$lastCode';
 
         final newPreparation = await txn.query('''
           INSERT INTO t_preparations
@@ -202,11 +205,11 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             (?, ?, ?, ?, ?, ?, ?)
           ''', [
           preparationCode,
-          'INTERNAL',
-          params.destinationId,
-          params.createdId,
-          params.workerId,
-          params.approvedId,
+          'NEWSTORE',
+          params.destination,
+          params.created,
+          params.worker,
+          params.approved,
           params.notes,
         ]);
 
@@ -225,7 +228,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           ''', [
           newPreparation.insertId,
           'DRAFT',
-          params.createdId,
+          params.created,
           'CREATE DOCUMENT',
         ]);
 
@@ -237,9 +240,11 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           	p.preparation_type AS type,
           	p.status AS status,
           	p.destination_id AS destination_id,
+          	d.code AS destination_code,
+          	d.init AS destination_init,
           	d.name AS destination,
-          	p.temporary_location_id AS temporary_location_id,
-          	t.name AS temporary_location,
+          	p.location_id AS location_id,
+          	t.name AS location,
           	p.created_id AS created_id,
           	c.name AS created,
           	p.worker_id AS worker_id,
@@ -252,7 +257,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           FROM
           	t_preparations AS p
           LEFT JOIN t_locations AS d ON p.destination_id = d.id
-          LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
+          LEFT JOIN t_locations AS t ON p.location_id = t.id
           LEFT JOIN t_users AS c ON p.created_id = c.id
           LEFT JOIN t_users AS w ON p.worker_id = w.id
           LEFT JOIN t_users AS a ON p.approved_id = a.id
@@ -265,7 +270,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
         return responsePrep.first.fields;
       });
 
-      return PreparationModel.fromJson(response!);
+      return PreparationModel.fromMap(response!);
     } on NotFoundException {
       rethrow;
     } on CreateException {
@@ -319,10 +324,12 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
         p.preparation_code AS code,
         p.preparation_type AS type,
         p.status AS status,
-        p.destination_id AS destination_id,
+       	p.destination_id AS destination_id,
+        d.code AS destination_code,
+        d.init AS destination_init,
         d.name AS destination,
-        p.temporary_location_id AS temporary_location_id,
-        t.name AS temporary_location,
+        p.location_id AS location_id,
+        t.name AS location,
         p.created_id AS created_id,
         c.name AS created,
         p.worker_id AS worker_id,
@@ -335,7 +342,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
       FROM
         t_preparations AS p
       LEFT JOIN t_locations AS d ON p.destination_id = d.id
-      LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
+      LEFT JOIN t_locations AS t ON p.location_id = t.id
       LEFT JOIN t_users AS c ON p.created_id = c.id
       LEFT JOIN t_users AS w ON p.worker_id = w.id
       LEFT JOIN t_users AS a ON p.approved_id = a.id
@@ -367,42 +374,27 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
   @override
   Future<List<String>> getPreparationTypes() async {
-    return ['INTERNAL', 'EXTERNAL'];
+    return ['NEWSTORE', 'ADDITIONAL'];
   }
 
   @override
   Future<PreparationModel> updatePreparationStatus({
-    required int id,
-    required String params,
     required int userId,
-    int? totalBox,
-    int? temporaryLocationId,
+    required PreparationRequest params,
   }) async {
-    if (params == 'READY TO DELIVERY') {
-      return await _updateByApproved(id: id, params: params, userId: userId);
-    } else if (params == 'PICKING' || params == 'READY') {
-      return await _updateByWorker(
-        id: id,
-        params: params,
-        userId: userId,
-        temporaryLocationId: temporaryLocationId,
-        totalBox: totalBox,
-      );
+    if (params.status == 'READY TO DELIVERY') {
+      return await _updateByApproved(params: params, userId: userId);
     } else {
       return await _updateByCreated(
-        id: id,
         params: params,
         userId: userId,
-        totalBox: totalBox,
       );
     }
   }
 
   Future<PreparationModel> _updateByCreated({
-    required int id,
-    required String params,
     required int userId,
-    int? totalBox,
+    required PreparationRequest params,
   }) async {
     try {
       final db = await _database.connection;
@@ -410,7 +402,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
       final response = await db.transaction((txn) async {
         final responseGetPreparation = await txn.query(
           'SELECT * FROM t_preparations WHERE id = ? LIMIT 1',
-          [id],
+          [params.id],
         );
 
         if (responseGetPreparation.firstOrNull == null) {
@@ -428,27 +420,14 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           );
         }
 
-        Results responseUpdate;
-
-        if (totalBox != null) {
-          responseUpdate = await txn.query(
-            '''
-            UPDATE t_preparations
-            SET status = ?, total_box = ?, updated_at = CURRENT_TIMESTAMP
-            WHERE id = ? AND created_id = ?
-            ''',
-            [params, totalBox, id, userId],
-          );
-        } else {
-          responseUpdate = await txn.query(
-            '''
+        final responseUpdate = await txn.query(
+          '''
             UPDATE t_preparations
             SET status = ?, updated_at = CURRENT_TIMESTAMP
             WHERE id = ? AND created_id = ?
             ''',
-            [params, id, userId],
-          );
-        }
+          [params.status, params.id, userId],
+        );
 
         if (responseUpdate.affectedRows == null) {
           throw UpdateException(
@@ -463,7 +442,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             VALUES
               (?, ?, ?, ?)
             ''',
-          [id, preparation['status'], params, userId],
+          [params.id, preparation['status'], params.status, userId],
         );
 
         if (preparationLogs.insertId == null) {
@@ -481,9 +460,11 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             	p.preparation_type AS type,
             	p.status AS status,
             	p.destination_id AS destination_id,
-            	d.name AS destination,
-            	p.temporary_location_id AS temporary_location_id,
-            	t.name AS temporary_location,
+              d.code AS destination_code,
+              d.init AS destination_init,
+              d.name AS destination,
+              p.location_id AS location_id,
+              t.name AS location,
             	p.created_id AS created_id,
             	c.name AS created,
             	p.worker_id AS worker_id,
@@ -496,147 +477,20 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             FROM
             	t_preparations AS p
             LEFT JOIN t_locations AS d ON p.destination_id = d.id
-            LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
+            LEFT JOIN t_locations AS t ON p.location_id = t.id
             LEFT JOIN t_users AS c ON p.created_id = c.id
             LEFT JOIN t_users AS w ON p.worker_id = w.id
             LEFT JOIN t_users AS a ON p.approved_id = a.id
             WHERE p.id = ?
             LIMIT 1
             ''',
-          [id],
+          [params.id],
         );
 
         return newPreparation.first.fields;
       });
 
-      return PreparationModel.fromJson(response!);
-    } on NotFoundException {
-      rethrow;
-    } on UpdateException {
-      rethrow;
-    } on MySqlException catch (e) {
-      throw DatabaseException(message: e.message);
-    } on TimeoutException {
-      throw DatabaseException(message: 'Database Request time out');
-    } on FormatException catch (e) {
-      throw DatabaseException(message: e.message);
-    } catch (e) {
-      throw DatabaseException(message: e.toString());
-    }
-  }
-
-  Future<PreparationModel> _updateByWorker({
-    required int id,
-    required String params,
-    required int userId,
-    int? temporaryLocationId,
-    int? totalBox,
-  }) async {
-    try {
-      final db = await _database.connection;
-
-      final response = await db.transaction((txn) async {
-        final responseGetPreparation = await txn.query(
-          'SELECT * FROM t_preparations WHERE id = ? LIMIT 1',
-          [id],
-        );
-
-        if (responseGetPreparation.firstOrNull == null) {
-          throw NotFoundException(
-            message: 'An error occurred, not found picking tasks',
-          );
-        }
-
-        final preparation = responseGetPreparation.first.fields;
-
-        if (preparation['worker_id'] != userId) {
-          throw UpdateException(
-            message: 'An error occurred, you do not have access',
-          );
-        }
-
-        Results responseUpdate;
-
-        if (temporaryLocationId != null) {
-          responseUpdate = await txn.query(
-            '''
-            UPDATE t_preparations
-            SET status = ?, temporary_location_id = ?, total_box = ? ,updated_at = CURRENT_TIMESTAMP
-            WHERE id = ? AND worker_id = ?
-            ''',
-            [params, temporaryLocationId, totalBox, id, userId],
-          );
-        } else {
-          responseUpdate = await txn.query(
-            '''
-            UPDATE t_preparations
-            SET status = ?, updated_at = CURRENT_TIMESTAMP
-            WHERE id = ? AND worker_id = ?
-            ''',
-            [params, id, userId],
-          );
-        }
-
-        if (responseUpdate.affectedRows == null) {
-          throw UpdateException(
-            message: 'An error occurred, please try again',
-          );
-        }
-
-        final preparationLogs = await txn.query(
-          '''
-            INSERT INTO t_preparation_logs
-              (preparation_id, from_status, to_status, updated_by)
-            VALUES
-              (?, ?, ?, ?)
-            ''',
-          [id, preparation['status'], params, userId],
-        );
-
-        if (preparationLogs.insertId == null) {
-          txn.rollback();
-          throw UpdateException(
-            message: 'An error occurred, please try again',
-          );
-        }
-
-        final newPreparation = await txn.query(
-          '''
-            SELECT
-            	p.id AS id,
-            	p.preparation_code AS code,
-            	p.preparation_type AS type,
-            	p.status AS status,
-            	p.destination_id AS destination_id,
-            	d.name AS destination,
-            	p.temporary_location_id AS temporary_location_id,
-            	t.name AS temporary_location,
-            	p.created_id AS created_id,
-            	c.name AS created,
-            	p.worker_id AS worker_id,
-            	w.name AS worker,
-            	p.approved_id AS approved_id,
-            	a.name AS approved,
-            	p.total_box AS total_box,
-            	p.notes AS notes,
-            	p.created_at AS created_at
-            FROM
-            	t_preparations AS p
-            LEFT JOIN t_locations AS d ON p.destination_id = d.id
-            LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
-            LEFT JOIN t_users AS c ON p.created_id = c.id
-            LEFT JOIN t_users AS w ON p.worker_id = w.id
-            LEFT JOIN t_users AS a ON p.approved_id = a.id
-            WHERE p.id = ?
-            LIMIT 1
-            ''',
-          [id],
-        );
-
-        return newPreparation.first.fields;
-      });
-
-      return PreparationModel.fromJson(response!);
+      return PreparationModel.fromMap(response!);
     } on NotFoundException {
       rethrow;
     } on UpdateException {
@@ -653,9 +507,8 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
   }
 
   Future<PreparationModel> _updateByApproved({
-    required int id,
-    required String params,
     required int userId,
+    required PreparationRequest params,
   }) async {
     try {
       final db = await _database.connection;
@@ -663,7 +516,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
       final response = await db.transaction((txn) async {
         final responseGetPreparation = await txn.query(
           'SELECT * FROM t_preparations WHERE id = ? LIMIT 1',
-          [id],
+          [params.id],
         );
 
         if (responseGetPreparation.firstOrNull == null) {
@@ -681,15 +534,13 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
           );
         }
 
-        Results responseUpdate;
-
-        responseUpdate = await txn.query(
+        final responseUpdate = await txn.query(
           '''
             UPDATE t_preparations
             SET status = ?, updated_at = CURRENT_TIMESTAMP
             WHERE id = ? AND approved_id = ?
             ''',
-          [params, id, userId],
+          [params.status, params.id, userId],
         );
 
         if (responseUpdate.affectedRows == null) {
@@ -705,7 +556,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             VALUES
               (?, ?, ?, ?)
             ''',
-          [id, preparation['status'], params, userId],
+          [params.id, preparation['status'], params, userId],
         );
 
         if (preparationLogs.insertId == null) {
@@ -723,9 +574,11 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             	p.preparation_type AS type,
             	p.status AS status,
             	p.destination_id AS destination_id,
-            	d.name AS destination,
-            	p.temporary_location_id AS temporary_location_id,
-            	t.name AS temporary_location,
+              d.code AS destination_code,
+              d.init AS destination_init,
+              d.name AS destination,
+              p.location_id AS location_id,
+              t.name AS location,
             	p.created_id AS created_id,
             	c.name AS created,
             	p.worker_id AS worker_id,
@@ -738,20 +591,20 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
             FROM
             	t_preparations AS p
             LEFT JOIN t_locations AS d ON p.destination_id = d.id
-            LEFT JOIN t_locations AS t ON p.temporary_location_id = t.id
+            LEFT JOIN t_locations AS t ON p.location_id = t.id
             LEFT JOIN t_users AS c ON p.created_id = c.id
             LEFT JOIN t_users AS w ON p.worker_id = w.id
             LEFT JOIN t_users AS a ON p.approved_id = a.id
             WHERE p.id = ?
             LIMIT 1
             ''',
-          [id],
+          [params.id],
         );
 
         return newPreparation.first.fields;
       });
 
-      return PreparationModel.fromJson(response!);
+      return PreparationModel.fromMap(response!);
     } on NotFoundException {
       rethrow;
     } on UpdateException {

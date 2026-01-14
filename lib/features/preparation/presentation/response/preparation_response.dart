@@ -6,7 +6,7 @@ import 'package:asset_management_api/core/extensions/request_method_ext.dart';
 import 'package:asset_management_api/core/helpers/constant.dart';
 import 'package:asset_management_api/core/helpers/response_helper.dart';
 import 'package:asset_management_api/core/services/jwt.dart';
-import 'package:asset_management_api/features/preparation/domain/entities/preparation.dart';
+import 'package:asset_management_api/features/preparation/domain/entities/preparation_request.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/create_preparation_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/find_preparation_by_pagination_use_case.dart';
 import 'package:asset_management_api/features/preparation/domain/usecases/get_preparation_types_use_case.dart';
@@ -37,12 +37,12 @@ class PreparationResponse {
       final userId = await jwt.getIdUser(context);
 
       jsonMap.addAll({
-        'created_id': userId,
+        'created': userId,
       });
 
-      final params = Preparation.fromJson(jsonMap);
+      final params = PreparationRequest.jsonCreate(jsonMap);
 
-      final validateParams = params.validateCreatePreparation();
+      final validateParams = params.validateCreateRequest();
 
       if (validateParams != null) {
         return ResponseHelper.badRequest(description: validateParams);
@@ -132,12 +132,13 @@ class PreparationResponse {
 
       final usecase = context.read<UpdatePreparationStatusUseCase>();
 
+      final params = PreparationRequest.jsonUpdate(
+        {'id': paramsId, 'status': jsonMap['status']},
+      );
+
       final failureOrPreparation = await usecase(
-        id: paramsId,
-        params: jsonMap['status'] as String,
+        params: params,
         userId: userId,
-        temporaryLocationId: jsonMap['temporary_location_id'] as int?,
-        totalBox: jsonMap['total_box'] as int?,
       );
 
       return failureOrPreparation.fold(

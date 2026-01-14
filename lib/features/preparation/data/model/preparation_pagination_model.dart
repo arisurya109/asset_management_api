@@ -32,7 +32,7 @@ class PreparationPaginationModel extends Equatable {
       preparations: datas['data'] != null
           ? (datas['data'] as List)
               .map(
-                (e) => PreparationModel.fromJson(e as Map<String, dynamic>),
+                (e) => PreparationModel.fromMap(e as Map<String, dynamic>),
               )
               .toList()
           : [],

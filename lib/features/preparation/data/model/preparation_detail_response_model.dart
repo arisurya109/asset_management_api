@@ -15,7 +15,7 @@ class PreparationDetailResponseModel extends Equatable {
     Map<String, dynamic> map,
   ) {
     return PreparationDetailResponseModel(
-      preparation: PreparationModel.fromJson(map),
+      preparation: PreparationModel.fromMap(map),
       preparationDetail: map['items'] != null
           ? (map['items'] as List)
               .map(

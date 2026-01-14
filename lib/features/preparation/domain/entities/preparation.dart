@@ -9,8 +9,10 @@ class Preparation extends Equatable {
   String? status;
   int? destinationId;
   String? destination;
-  int? temporaryLocationId;
-  String? temporaryLocation;
+  int? destinationCode;
+  String? destinationInit;
+  int? locationId;
+  String? location;
   int? createdId;
   String? created;
   int? workerId;
@@ -28,8 +30,10 @@ class Preparation extends Equatable {
     this.status,
     this.destinationId,
     this.destination,
-    this.temporaryLocationId,
-    this.temporaryLocation,
+    this.destinationCode,
+    this.destinationInit,
+    this.locationId,
+    this.location,
     this.createdId,
     this.created,
     this.workerId,
@@ -47,10 +51,15 @@ class Preparation extends Equatable {
       'code': code,
       'type': type,
       'status': status,
-      'destination': {'id': destinationId, 'name': destination},
-      'temporary_location': {
-        'id': temporaryLocationId,
-        'name': temporaryLocation,
+      'destination': {
+        'id': destinationId,
+        'code': destinationCode,
+        'init': destinationInit,
+        'name': destination,
+      },
+      'location': {
+        'id': locationId,
+        'name': location,
       },
       'created': {'id': createdId, 'name': created},
       'worker': {'id': workerId, 'name': worker},
@@ -61,70 +70,19 @@ class Preparation extends Equatable {
     };
   }
 
-  String? validateCreatePreparation() {
-    const validTypes = ['INTERNAL', 'EXTERNAL'];
-
-    if (type == null || type!.isEmpty || !validTypes.contains(type)) {
-      return 'Type is not valid';
-    }
-
-    if (destinationId == null) {
-      return 'Destination cannot be empty';
-    }
-
-    if (workerId == null) {
-      return 'Worker cannot be empty';
-    }
-
-    if (approvedId == null) {
-      return 'Approved cannot be empty';
-    }
-
-    if (workerId == approvedId) {
-      return 'Workers and approved users cannot be the same person.';
-    }
-
-    return null;
-  }
-
-  factory Preparation.fromJson(Map<String, dynamic> map) {
-    return Preparation(
-      id: map['id'] != null ? map['id'] as int : null,
-      code: map['code'] != null ? map['code'] as String : null,
-      type: map['type'] != null ? map['type'] as String : null,
-      status: map['status'] != null ? map['status'] as String : null,
-      destinationId:
-          map['destination_id'] != null ? map['destination_id'] as int : null,
-      destination:
-          map['destination'] != null ? map['destination'] as String : null,
-      temporaryLocationId: map['temporary_location_id'] != null
-          ? map['temporary_location_id'] as int
-          : null,
-      temporaryLocation: map['temporary_location'] != null
-          ? map['temporary_location'] as String
-          : null,
-      createdId: map['created_id'] != null ? map['created_id'] as int : null,
-      created: map['created'] != null ? map['created'] as String : null,
-      workerId: map['worker_id'] != null ? map['worker_id'] as int : null,
-      worker: map['worker'] != null ? map['worker'] as String : null,
-      approvedId: map['approved_id'] != null ? map['approved_id'] as int : null,
-      approved: map['approved'] != null ? map['approved'] as String : null,
-      totalBox: map['total_box'] != null ? map['total_box'] as int : null,
-      notes: map['notes'] != null ? map['notes'] as String : null,
-    );
-  }
-
   @override
   List<Object?> get props {
     return [
       id,
       code,
       type,
+      destinationCode,
+      destinationInit,
       status,
       destinationId,
       destination,
-      temporaryLocationId,
-      temporaryLocation,
+      locationId,
+      location,
       createdId,
       created,
       workerId,

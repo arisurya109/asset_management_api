@@ -4,10 +4,10 @@ import 'dart:async';
 
 import 'package:asset_management_api/core/error/exception.dart';
 import 'package:asset_management_api/core/error/failure.dart';
-import 'package:asset_management_api/features/preparation/data/model/preparation_model.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_local_data_source.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation_pagination.dart';
+import 'package:asset_management_api/features/preparation/domain/entities/preparation_request.dart';
 import 'package:asset_management_api/features/preparation/domain/repositories/preparation_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -18,11 +18,11 @@ class PreparationRepositoryImpl implements PreparationRepository {
 
   @override
   Future<Either<Failure, Preparation>> createPreparation({
-    required Preparation params,
+    required PreparationRequest params,
   }) async {
     try {
       final response = await _source.createPreparation(
-        params: PreparationModel.fromEntity(params),
+        params: params,
       );
       return Right(response.toEntity());
     } on DatabaseException catch (e) {
@@ -66,19 +66,13 @@ class PreparationRepositoryImpl implements PreparationRepository {
 
   @override
   Future<Either<Failure, Preparation>> updatePreparationStatus({
-    required int id,
-    required String params,
     required int userId,
-    int? totalBox,
-    int? temporaryLocationId,
+    required PreparationRequest params,
   }) async {
     try {
       final response = await _source.updatePreparationStatus(
-        id: id,
-        params: params,
         userId: userId,
-        totalBox: totalBox,
-        temporaryLocationId: temporaryLocationId,
+        params: params,
       );
       return Right(response.toEntity());
     } on DatabaseException catch (e) {

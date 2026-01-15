@@ -67,7 +67,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
         final lastCode = (count + 1).toString().padLeft(width, '0');
 
-        final preparationCode = 'PREP-$templateCode$lastCode';
+        final preparationCode = 'PREP-ADD-$templateCode$lastCode';
 
         final newPreparation = await txn.query('''
           INSERT INTO t_preparations
@@ -196,7 +196,7 @@ class PreparationLocalDataSourceImpl implements PreparationLocalDataSource {
 
         final lastCode = (count + 1).toString().padLeft(width, '0');
 
-        final preparationCode = 'PREP-$templateCode$lastCode';
+        final preparationCode = 'PREP-NEW-$templateCode$lastCode';
 
         final newPreparation = await txn.query('''
           INSERT INTO t_preparations

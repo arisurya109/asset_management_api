@@ -22,8 +22,7 @@ class PreparationDetailRequest extends Equatable {
     return PreparationDetailRequest(
       preparationId:
           map['preparation_id'] != null ? map['preparation_id'] as int : null,
-      assetModelId:
-          map['asset_model_id'] != null ? map['asset_model_id'] as int : null,
+      assetModelId: map['model_id'] != null ? map['model_id'] as int : null,
       purchaseOrder: map['purchase_order'] != null
           ? map['purchase_order'] as String
           : null,

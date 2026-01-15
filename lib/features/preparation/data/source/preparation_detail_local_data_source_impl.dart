@@ -1,10 +1,10 @@
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, unnecessary_await_in_return
 
 import 'dart:async';
 
 import 'package:asset_management_api/core/config/database.dart';
 import 'package:asset_management_api/core/error/exception.dart';
-import 'package:asset_management_api/features/preparation/data/model/preparation_detail_model.dart';
+import 'package:asset_management_api/core/extensions/string_ext.dart';
 import 'package:asset_management_api/features/preparation/data/model/preparation_detail_response_model.dart';
 import 'package:asset_management_api/features/preparation/data/source/preparation_detail_local_data_source.dart';
 import 'package:asset_management_api/features/preparation/domain/entities/preparation_detail_request.dart';
@@ -25,6 +25,7 @@ class PreparationDetailLocalDataSourceImpl
 
     final rIsConsumable = await db.query(
       'SELECT is_consumable FROM t_asset_models WHERE id = ? LIMIT 1',
+      [params.assetModelId],
     );
 
     if (rIsConsumable.firstOrNull == null) {
@@ -36,9 +37,9 @@ class PreparationDetailLocalDataSourceImpl
     final isConsumable = rIsConsumable.first.fields['is_consumable'] as int;
 
     if (isConsumable == 0) {
-      return _addNonConsumable(params, userId);
+      return await _addNonConsumable(params, userId);
     } else {
-      return _addConsumable(params, userId);
+      return await _addConsumable(params, userId);
     }
   }
 
@@ -156,91 +157,109 @@ class PreparationDetailLocalDataSourceImpl
           );
         }
 
-        Results responseAsset;
+        if (preparation['preparation_type'] == 'NEWSTORE') {
+          // NEWSTORE
+          if (!params.purchaseOrder.isFilled()) {
+            throw CreateException(
+              message: 'An error occurred, purchase order cannot empty',
+            );
+          }
 
-        // if (params.purchaseOrder == null) {
-        //   responseAsset = await txn.query(
-        //     '''
-        //     SELECT
-        //       ast.*,
-        //       l.name AS location_name
-        //     FROM
-        //       t_assets AS ast
-        //     LEFT JOIN t_locations AS l ON ast.location_id = l.id
-        //     WHERE
-        //       ast.asset_model_id = ? AND
-        //       ast.status = 'READY' AND
-        //       ast.is_reserved = 0 AND
-        //       (ast.purchase_order IS NULL OR ast.purchase_order = '') AND
-        //       (l.location_type = 'RACK' OR l.location_type = 'BOX') AND
-        //       l.is_storage = 1 AND
-        //       (ast.conditions = 'NEW' OR ast.conditions = 'GOOD')
-        //     ORDER BY
-        //       ast.registred_at ASC
-        //     LIMIT ?
-        //     FOR UPDATE
-        //     ''',
-        //     [params.modelId, params.quantity],
-        //   );
-        // } else {
-        //   responseAsset = await txn.query(
-        //     '''
-        //     SELECT
-        //       ast.*,
-        //       l.name AS location_name
-        //     FROM
-        //       t_assets AS ast
-        //     LEFT JOIN t_locations AS l ON ast.location_id = l.id
-        //     WHERE
-        //       ast.asset_model_id = ? AND
-        //       ast.status = 'READY' AND
-        //       ast.is_reserved = 0 AND
-        //       (l.location_type = 'RACK' OR l.location_type = 'BOX') AND
-        //       l.is_storage = 1 AND
-        //       ast.purchase_order = ? AND
-        //       (ast.conditions = 'NEW' OR ast.conditions = 'GOOD')
-        //     ORDER BY
-        //       ast.registred_at ASC
-        //     LIMIT ?
-        //     FOR UPDATE
-        //     ''',
-        //     [params.modelId, params.purchaseOrder, params.quantity],
-        //   );
-        // }
+          final rAssetsAvailable = await txn.query(
+            '''
+            SELECT
+              ast.*,
+              l.name AS location_name
+            FROM
+              t_assets AS ast
+            LEFT JOIN t_locations AS l ON ast.location_id = l.id
+            WHERE
+              ast.asset_model_id = ? AND
+              ast.status = 'READY' AND
+              ast.is_reserved = 0 AND
+              ast.purchase_order = ? AND
+              (l.location_type = 'RACK' OR l.location_type = 'BOX') AND
+              l.is_storage = 1 AND
+              ast.conditions = 'NEW'
+            ORDER BY
+              ast.registred_at ASC
+            LIMIT ?
+            FOR UPDATE
+            ''',
+            [params.assetModelId, params.purchaseOrder, params.quantity],
+          );
 
-        // if (responseAsset.isEmpty) {
-        //   throw NotFoundException(message: 'Stock assets are unavailable');
-        // }
+          if (rAssetsAvailable.isEmpty) {
+            throw NotFoundException(message: 'Stock assets are unavailable');
+          }
 
-        // for (final row in responseAsset) {
-        //   final asset = row.fields;
-        //   final assetId = asset['id'];
+          final response = await txn.query('''
+            INSERT INTO t_preparation_details
+              (preparation_id, asset_model_id, purchase_order, quantity)
+            VALUES
+              (?, ?, ?, ?)
+            ''', [
+            params.preparationId,
+            params.assetModelId,
+            params.purchaseOrder,
+            params.quantity,
+          ]);
 
-        //   await txn.query(
-        //     'UPDATE t_assets SET is_reserved = 1 WHERE id = ?',
-        //     [assetId],
-        //   );
+          if (response.insertId == null) {
+            throw NotFoundException(
+              message: 'An error occurred, please try again',
+            );
+          } else {
+            return 'Successfully added assets';
+          }
+        } else {
+          // ADDITIONAL
+          final rAssetsAvailable = await txn.query(
+            '''
+            SELECT
+              ast.*,
+              l.name AS location_name
+            FROM
+              t_assets AS ast
+            LEFT JOIN t_locations AS l ON ast.location_id = l.id
+            WHERE
+              ast.asset_model_id = ? AND
+              ast.status = 'READY' AND
+              ast.is_reserved = 0 AND
+              ast.purchase_order = ? AND
+              (l.location_type = 'RACK' OR l.location_type = 'BOX') AND
+              l.is_storage = 1
+            ORDER BY
+              ast.registred_at ASC
+            LIMIT ?
+            FOR UPDATE
+            ''',
+            [params.assetModelId, params.purchaseOrder, params.quantity],
+          );
+          if (rAssetsAvailable.isEmpty) {
+            throw NotFoundException(message: 'Stock assets are unavailable');
+          }
 
-        //   await txn.query(
-        //     '''
-        //     INSERT INTO t_preparation_details
-        //       (preparation_id, asset_id, quantity)
-        //     VALUES
-        //       (?, ?, 1)
-        //     ''',
-        //     [params.preparationId, assetId],
-        //   );
-        // }
+          final response = await txn.query('''
+            INSERT INTO t_preparation_details
+              (preparation_id, asset_model_id, purchase_order, quantity)
+            VALUES
+              (?, ?, ?, ?)
+            ''', [
+            params.preparationId,
+            params.assetModelId,
+            params.purchaseOrder,
+            params.quantity,
+          ]);
 
-        String response = '';
-
-        // if (responseAsset.length == params.quantity) {
-        //   response = 'Successfully added all assets';
-        // } else {
-        //   response = 'Only ${responseAsset.length} assets available and added';
-        // }
-
-        return response;
+          if (response.insertId == null) {
+            throw NotFoundException(
+              message: 'An error occurred, please try again',
+            );
+          } else {
+            return 'Successfully added assets';
+          }
+        }
       });
       return response!;
     } on NotFoundException {
@@ -330,8 +349,45 @@ class PreparationDetailLocalDataSourceImpl
   Future<String> deletePreparationDetail({
     required PreparationDetailRequest params,
     required int userId,
-  }) {
-    // TODO: implement deletePreparationDetail
-    throw UnimplementedError();
+  }) async {
+    try {
+      final db = await _database.connection;
+
+      final response = await db.transaction((txn) async {
+        final checkStatus = await txn.query(
+          'SELECT * FROM t_preparations WHERE id = ? LIMIT 1',
+          [params.preparationId],
+        );
+
+        if (checkStatus.firstOrNull == null) {
+          throw NotFoundException(
+            message: 'An error occurred, preparations not found',
+          );
+        }
+
+        final preparation = checkStatus.first.fields;
+
+        if (preparation['status'] != 'DRAFT') {
+          throw CreateException(
+            message: 'An error occurred, cannot delete assets',
+          );
+        } else {
+          await txn.query(
+            'DELETE FROM t_preparation_details WHERE id = ? AND preparation_id = ?',
+            [params.id, params.preparationId],
+          );
+
+          return 'Successfully delete assets';
+        }
+      });
+
+      return response!;
+    } on NotFoundException {
+      rethrow;
+    } on CreateException {
+      rethrow;
+    } catch (e) {
+      throw DatabaseException(message: e.toString());
+    }
   }
 }
